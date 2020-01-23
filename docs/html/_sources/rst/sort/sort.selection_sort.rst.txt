@@ -1,0 +1,7 @@
+sort.selection\_sort module
+===========================
+
+.. automodule:: sort.selection_sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

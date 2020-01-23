@@ -1,0 +1,7 @@
+greedy\_algorithm.fractional\_knapsack module
+=============================================
+
+.. automodule:: greedy_algorithm.fractional_knapsack
+   :members:
+   :undoc-members:
+   :show-inheritance:

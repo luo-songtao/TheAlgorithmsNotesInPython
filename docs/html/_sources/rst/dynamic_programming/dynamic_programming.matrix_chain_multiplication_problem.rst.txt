@@ -1,0 +1,7 @@
+dynamic\_programming.matrix\_chain\_multiplication\_problem module
+==================================================================
+
+.. automodule:: dynamic_programming.matrix_chain_multiplication_problem
+   :members:
+   :undoc-members:
+   :show-inheritance:

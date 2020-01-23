@@ -1,0 +1,7 @@
+sort.shell\_sort module
+=======================
+
+.. automodule:: sort.shell_sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

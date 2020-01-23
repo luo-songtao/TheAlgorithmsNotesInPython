@@ -1,0 +1,7 @@
+sort.merge\_sort module
+=======================
+
+.. automodule:: sort.merge_sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

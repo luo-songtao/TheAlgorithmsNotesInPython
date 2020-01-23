@@ -1,0 +1,7 @@
+greedy\_algorithm.hoffman\_code module
+======================================
+
+.. automodule:: greedy_algorithm.hoffman_code
+   :members:
+   :undoc-members:
+   :show-inheritance:

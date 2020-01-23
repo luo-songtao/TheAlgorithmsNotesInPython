@@ -1,0 +1,14 @@
+data\_structures.queues package
+===============================
+
+.. automodule:: data_structures.queues
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   data_structures.queues.queue_on_list

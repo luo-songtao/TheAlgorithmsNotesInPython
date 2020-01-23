@@ -1,0 +1,7 @@
+dynamic\_programming.dynamic\_0\_1\_knapsack module
+===================================================
+
+.. automodule:: dynamic_programming.dynamic_0_1_knapsack
+   :members:
+   :undoc-members:
+   :show-inheritance:

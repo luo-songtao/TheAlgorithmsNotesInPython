@@ -1,0 +1,7 @@
+sort.radix\_sort module
+=======================
+
+.. automodule:: sort.radix_sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

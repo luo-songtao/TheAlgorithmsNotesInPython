@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>dynamic_programming.optimal_binary_search_tree module &#8212; TheAlgorithmsNotesInPython  文档</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="trees" href="../trees/modules.html" />
+    <link rel="prev" title="dynamic_programming.matrix_chain_multiplication_problem module" href="dynamic_programming.matrix_chain_multiplication_problem.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dynamic_programming.optimal_binary_search_tree">
+<span id="dynamic-programming-optimal-binary-search-tree-module"></span><h1>dynamic_programming.optimal_binary_search_tree module<a class="headerlink" href="#module-dynamic_programming.optimal_binary_search_tree" title="永久链接至标题">¶</a></h1>
+<p>Author: luo-songtao
+最优二叉搜索树： 每个节点的信息被搜索的概率不一，被搜索概率越高的节点信息应当离根节点越近，这样搜索的代价会更低
+（深度+1）* 节点概率 = 该节点的搜索代价</p>
+<dl class="function">
+<dt id="dynamic_programming.optimal_binary_search_tree.direct_recursion_optimal_bst">
+<code class="sig-prename descclassname">dynamic_programming.optimal_binary_search_tree.</code><code class="sig-name descname">direct_recursion_optimal_bst</code><span class="sig-paren">(</span><em class="sig-param">keys</em>, <em class="sig-param">fake_keys</em>, <em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/optimal_binary_search_tree.html#direct_recursion_optimal_bst"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.optimal_binary_search_tree.direct_recursion_optimal_bst" title="永久链接至目标">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">keys</span><span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k2&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k4&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k5&quot;</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_keys</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;d0&quot;</span><span class="p">,</span><span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d1&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d2&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d4&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d5&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">direct_recursion_optimal_bst</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">fake_keys</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">(2.75, &#39;k2&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.optimal_binary_search_tree.buttom_up_recursion_bst">
+<code class="sig-prename descclassname">dynamic_programming.optimal_binary_search_tree.</code><code class="sig-name descname">buttom_up_recursion_bst</code><span class="sig-paren">(</span><em class="sig-param">keys</em>, <em class="sig-param">fake_keys</em>, <em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/optimal_binary_search_tree.html#buttom_up_recursion_bst"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.optimal_binary_search_tree.buttom_up_recursion_bst" title="永久链接至目标">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">keys</span><span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k2&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k4&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k5&quot;</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_keys</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;d0&quot;</span><span class="p">,</span><span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d1&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d2&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d4&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d5&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">buttom_up_recursion_bst</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">fake_keys</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)],</span> <span class="n">r</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+<span class="go">(2.75, &#39;k2&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">TheAlgorithmsNotesInPython</a></h1>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../divide_and_conquer/modules.html">divide_and_conquer</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">dynamic_programming</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="dynamic_programming.html">dynamic_programming package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="dynamic_programming.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="dynamic_programming.cut_rod.html">dynamic_programming.cut_rod module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dynamic_programming.dynamic_0_1_knapsack.html">dynamic_programming.dynamic_0_1_knapsack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dynamic_programming.longest_common_subsequence.html">dynamic_programming.longest_common_subsequence module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dynamic_programming.matrix_chain_multiplication_problem.html">dynamic_programming.matrix_chain_multiplication_problem module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">dynamic_programming.optimal_binary_search_tree module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../trees/modules.html">trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_structures/modules.html">data_structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../greedy_algorithm/modules.html">greedy_algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sort/modules.html">sort</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">dynamic_programming</a><ul>
+  <li><a href="dynamic_programming.html">dynamic_programming package</a><ul>
+      <li>Previous: <a href="dynamic_programming.matrix_chain_multiplication_problem.html" title="上一章">dynamic_programming.matrix_chain_multiplication_problem module</a></li>
+      <li>Next: <a href="../trees/modules.html" title="下一章">trees</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, luo-songtao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/rst/dynamic_programming/dynamic_programming.optimal_binary_search_tree.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,7 @@
+sort.insertion\_sort module
+===========================
+
+.. automodule:: sort.insertion_sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

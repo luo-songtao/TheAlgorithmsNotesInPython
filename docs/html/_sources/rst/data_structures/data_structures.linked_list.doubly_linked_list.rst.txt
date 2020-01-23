@@ -1,0 +1,7 @@
+data\_structures.linked\_list.doubly\_linked\_list module
+=========================================================
+
+.. automodule:: data_structures.linked_list.doubly_linked_list
+   :members:
+   :undoc-members:
+   :show-inheritance:

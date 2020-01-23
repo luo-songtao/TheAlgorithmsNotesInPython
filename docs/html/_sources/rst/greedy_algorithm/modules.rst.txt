@@ -1,0 +1,7 @@
+greedy_algorithm
+================
+
+.. toctree::
+   :maxdepth: 4
+
+   greedy_algorithm

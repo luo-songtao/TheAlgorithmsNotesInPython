@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>divide_and_conquer.square_matrix_multiply_strassen &#8212; TheAlgorithmsNotesInPython  文档</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>divide_and_conquer.square_matrix_multiply_strassen 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@Author  : luo-songtao</span>
+<span class="sd">基于Strassen算法的方阵乘</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="get_dim"><a class="viewcode-back" href="../../rst/divide_and_conquer/divide_and_conquer.square_matrix_multiply_strassen.html#divide_and_conquer.square_matrix_multiply_strassen.get_dim">[文档]</a><span class="k">def</span> <span class="nf">get_dim</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="divide_matrix"><a class="viewcode-back" href="../../rst/divide_and_conquer/divide_and_conquer.square_matrix_multiply_strassen.html#divide_and_conquer.square_matrix_multiply_strassen.divide_matrix">[文档]</a><span class="k">def</span> <span class="nf">divide_matrix</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">dim_M</span> <span class="o">=</span> <span class="n">get_dim</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+
+    <span class="n">r_mid</span> <span class="o">=</span> <span class="n">dim_M</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span>
+    <span class="n">c_mid</span> <span class="o">=</span> <span class="n">dim_M</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span>
+
+    <span class="n">M11</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">M12</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">M21</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">M22</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">M</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">r_mid</span><span class="p">:</span>
+            <span class="n">M11</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">[:</span><span class="n">c_mid</span><span class="p">])</span>
+            <span class="n">M12</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">c_mid</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">M21</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">[:</span><span class="n">c_mid</span><span class="p">])</span>
+            <span class="n">M22</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">c_mid</span><span class="p">:])</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">M11</span><span class="p">,</span> <span class="n">M12</span><span class="p">,</span> <span class="n">M21</span><span class="p">,</span> <span class="n">M22</span></div>
+
+
+<div class="viewcode-block" id="add_matrix"><a class="viewcode-back" href="../../rst/divide_and_conquer/divide_and_conquer.square_matrix_multiply_strassen.html#divide_and_conquer.square_matrix_multiply_strassen.add_matrix">[文档]</a><span class="k">def</span> <span class="nf">add_matrix</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2</span><span class="p">):</span>
+    <span class="n">dim_A</span> <span class="o">=</span> <span class="n">get_dim</span><span class="p">(</span><span class="n">M1</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim_A</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">M</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">M1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">M2</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim_A</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">M</span></div>
+
+<div class="viewcode-block" id="sub_matrix"><a class="viewcode-back" href="../../rst/divide_and_conquer/divide_and_conquer.square_matrix_multiply_strassen.html#divide_and_conquer.square_matrix_multiply_strassen.sub_matrix">[文档]</a><span class="k">def</span> <span class="nf">sub_matrix</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2</span><span class="p">):</span>
+    <span class="n">dim_A</span> <span class="o">=</span> <span class="n">get_dim</span><span class="p">(</span><span class="n">M1</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim_A</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">M</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">M1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">M2</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dim_A</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">M</span></div>
+
+<div class="viewcode-block" id="multi_2q_2q"><a class="viewcode-back" href="../../rst/divide_and_conquer/divide_and_conquer.square_matrix_multiply_strassen.html#divide_and_conquer.square_matrix_multiply_strassen.multi_2q_2q">[文档]</a><span class="k">def</span> <span class="nf">multi_2q_2q</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">m2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">_11</span> <span class="o">=</span> <span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">_12</span> <span class="o">=</span> <span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">m1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">_21</span> <span class="o">=</span> <span class="n">m1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">m1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">_22</span> <span class="o">=</span> <span class="n">m1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">m1</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">m2</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">_11</span><span class="p">,</span> <span class="n">_12</span><span class="p">],[</span><span class="n">_21</span><span class="p">,</span> <span class="n">_22</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="matrix_multiply_strassen"><a class="viewcode-back" href="../../rst/divide_and_conquer/divide_and_conquer.square_matrix_multiply_strassen.html#divide_and_conquer.square_matrix_multiply_strassen.matrix_multiply_strassen">[文档]</a><span class="k">def</span> <span class="nf">matrix_multiply_strassen</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+
+    <span class="n">dim_A</span> <span class="o">=</span> <span class="n">get_dim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">dim_B</span> <span class="o">=</span> <span class="n">get_dim</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dim_A</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">dim_B</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Can&#39;t multiply matrix A</span><span class="si">{}</span><span class="s2"> and B</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dim_A</span><span class="p">,</span> <span class="n">dim_B</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">dim_A</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dim_B</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">multi_2q_2q</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">A11</span><span class="p">,</span> <span class="n">A12</span><span class="p">,</span> <span class="n">A21</span><span class="p">,</span> <span class="n">A22</span> <span class="o">=</span> <span class="n">divide_matrix</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="n">B11</span><span class="p">,</span> <span class="n">B12</span><span class="p">,</span> <span class="n">B21</span><span class="p">,</span> <span class="n">B22</span> <span class="o">=</span> <span class="n">divide_matrix</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+
+        <span class="n">S1</span> <span class="o">=</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">B12</span><span class="p">,</span><span class="n">B22</span><span class="p">)</span>
+        <span class="n">S2</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">A11</span><span class="p">,</span><span class="n">A12</span><span class="p">)</span>
+        <span class="n">S3</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">A21</span><span class="p">,</span><span class="n">A22</span><span class="p">)</span>
+        <span class="n">S4</span> <span class="o">=</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">B21</span><span class="p">,</span><span class="n">B11</span><span class="p">)</span>
+        <span class="n">S5</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">A11</span><span class="p">,</span><span class="n">A22</span><span class="p">)</span>
+        <span class="n">S6</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">B11</span><span class="p">,</span><span class="n">B22</span><span class="p">)</span>
+        <span class="n">S7</span> <span class="o">=</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">A12</span><span class="p">,</span><span class="n">A22</span><span class="p">)</span>
+        <span class="n">S8</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">B21</span><span class="p">,</span><span class="n">B22</span><span class="p">)</span>
+        <span class="n">S9</span> <span class="o">=</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">A11</span><span class="p">,</span><span class="n">A21</span><span class="p">)</span>
+        <span class="n">S10</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">B11</span><span class="p">,</span><span class="n">B12</span><span class="p">)</span>
+
+        <span class="n">P1</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">A11</span><span class="p">,</span> <span class="n">S1</span><span class="p">)</span>
+        <span class="n">P2</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">S2</span><span class="p">,</span> <span class="n">B22</span><span class="p">)</span>
+        <span class="n">P3</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">S3</span><span class="p">,</span> <span class="n">B11</span><span class="p">)</span>
+        <span class="n">P4</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">A22</span><span class="p">,</span> <span class="n">S4</span><span class="p">)</span>
+        <span class="n">P5</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">S5</span><span class="p">,</span> <span class="n">S6</span><span class="p">)</span>
+        <span class="n">P6</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">S7</span><span class="p">,</span> <span class="n">S8</span><span class="p">)</span>
+        <span class="n">P7</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">S9</span><span class="p">,</span> <span class="n">S10</span><span class="p">)</span>
+
+        <span class="n">C11</span> <span class="o">=</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">add_matrix</span><span class="p">(</span><span class="n">P5</span><span class="p">,</span> <span class="n">P4</span><span class="p">),</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">P2</span><span class="p">,</span><span class="n">P6</span><span class="p">))</span>
+        <span class="n">C12</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">)</span>
+        <span class="n">C21</span> <span class="o">=</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">P3</span><span class="p">,</span> <span class="n">P4</span><span class="p">)</span>
+        <span class="n">C22</span> <span class="o">=</span> <span class="n">sub_matrix</span><span class="p">(</span><span class="n">add_matrix</span><span class="p">(</span><span class="n">P5</span><span class="p">,</span><span class="n">P1</span><span class="p">),</span> <span class="n">add_matrix</span><span class="p">(</span><span class="n">P3</span><span class="p">,</span><span class="n">P7</span><span class="p">))</span>
+
+        <span class="n">C</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">C11</span><span class="p">)):</span>
+            <span class="n">C</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">C11</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">C12</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">C21</span><span class="p">)):</span>
+            <span class="n">C</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">C21</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">C22</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">C</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]]</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">matrix_multiply_strassen</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">TheAlgorithmsNotesInPython</a></h1>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/divide_and_conquer/modules.html">divide_and_conquer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/dynamic_programming/modules.html">dynamic_programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/trees/modules.html">trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/data_structures/modules.html">data_structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/greedy_algorithm/modules.html">greedy_algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rst/sort/modules.html">sort</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">模块代码</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, luo-songtao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

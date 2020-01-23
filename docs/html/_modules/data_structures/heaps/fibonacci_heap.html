@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>data_structures.heaps.fibonacci_heap &#8212; TheAlgorithmsNotesInPython  文档</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>data_structures.heaps.fibonacci_heap 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Author: luo-songtao</span>
+<span class="sd">可合并最小堆</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.Node">[文档]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
+    
+<div class="viewcode-block" id="Node.__init__"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.Node.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degree</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="kc">False</span></div></div>
+
+
+<div class="viewcode-block" id="FibonacciHeap"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap">[文档]</a><span class="k">class</span> <span class="nc">FibonacciHeap</span><span class="p">:</span>
+    
+<div class="viewcode-block" id="FibonacciHeap.__init__"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span> <span class="n">Node</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># 最小节点</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">=</span> <span class="mi">0</span></div>
+            
+<div class="viewcode-block" id="FibonacciHeap.create"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.insert"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.insert">[文档]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        插入新节点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">degree</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>    <span class="c1"># 如果堆为空</span>
+            <span class="c1"># 建立根链表，且当前只有一个节点</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 将node添加到跟链表中</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">+=</span> <span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.minmum"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.minmum">[文档]</a>    <span class="k">def</span> <span class="nf">minmum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        返回最小节点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HeapUnderflowError</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.extract_min"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.extract_min">[文档]</a>    <span class="k">def</span> <span class="nf">extract_min</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">child</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># 将node的所有孩子添加到根链表中</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">degree</span><span class="p">):</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>    <span class="c1"># 处理只有一个节点的情况</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 随机设置一个最小节点，这里默认是node.right</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+                <span class="c1"># 重新调整堆</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">consolidate</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.get_max_degree"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.get_max_degree">[文档]</a>    <span class="k">def</span> <span class="nf">get_max_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        计算具备size个节点的堆中，单个节点的最大度数(度数上界)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">golden_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heap_size</span><span class="p">,</span> <span class="n">golden_ratio</span><span class="p">))</span></div>
+            
+<div class="viewcode-block" id="FibonacciHeap.consolidate"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.consolidate">[文档]</a>    <span class="k">def</span> <span class="nf">consolidate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        合并根链表：如果发现根链表中两个节点的度相等，那么就进行合并直到根链表中的节点的度两两不相等</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">max_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_degree</span><span class="p">()</span>
+        <span class="c1"># 记录degree的数值</span>
+        <span class="n">degree_record</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_degree</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="c1"># 对根链表进行遍历</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+        <span class="k">while</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
+            <span class="n">the_degree</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">degree</span>
+            <span class="k">while</span> <span class="n">degree_record</span><span class="p">[</span><span class="n">the_degree</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">the_node</span> <span class="o">=</span> <span class="n">degree_record</span><span class="p">[</span><span class="n">the_degree</span><span class="p">]</span>
+                <span class="c1"># 将key值高的节点从根节点移除并作为key值低的节点的子节点</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">the_node</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">the_node</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">the_node</span><span class="p">)</span>
+                <span class="n">degree_record</span><span class="p">[</span><span class="n">the_degree</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">the_degree</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">degree_record</span><span class="p">[</span><span class="n">the_degree</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># 重置min node</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_degree</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">degree_record</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">degree_record</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">degree_record</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
+                    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">node</span></div>
+        
+<div class="viewcode-block" id="FibonacciHeap.link"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.link">[文档]</a>    <span class="k">def</span> <span class="nf">link</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">Node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        1. remove node x from heap&#39;s root list</span>
+<span class="sd">        2. make node x as a child of y, incrementing y.degree</span>
+<span class="sd">        3. x.mark = False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 1. ···</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">right</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">left</span>
+        
+        <span class="c1"># 2. ···</span>
+        <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">child</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">child</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">child</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">x</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">parnet</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">degree</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># 3. ···</span>
+        <span class="n">x</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="kc">False</span></div>
+        
+<div class="viewcode-block" id="FibonacciHeap.decrease_key"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.decrease_key">[文档]</a>    <span class="k">def</span> <span class="nf">decrease_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        降低node节点的关键值</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;New key is greater than current key&quot;</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">parent</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">parent</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cascading_cut</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">node</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.cut"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.cut">[文档]</a>    <span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        切断node与其parent之间的联系，并将node放入根链表作为根节点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># </span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="n">node</span><span class="p">:</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parent</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+        <span class="n">parent</span><span class="o">.</span><span class="n">degree</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="c1"># </span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.cascading_cut"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.cascading_cut">[文档]</a>    <span class="k">def</span> <span class="nf">cascading_cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        级联切断：判断node是否已经是第二次失去子节点(如果mark==True)，并作出相应处理</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>    
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">mark</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">mark</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cascading_cut</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span></div>
+                
+<div class="viewcode-block" id="FibonacciHeap.delete"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.delete">[文档]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decrease_key</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extract_min</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="FibonacciHeap.union"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.FibonacciHeap.union">[文档]</a>    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heap</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        合并两个FibonacciHeap为新的FibonacciHeap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">heap</span><span class="p">)</span></div></div>
+ 
+<div class="viewcode-block" id="union"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.union">[文档]</a><span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="n">h1</span><span class="p">:</span> <span class="n">FibonacciHeap</span><span class="p">,</span> <span class="n">h2</span><span class="p">:</span> <span class="n">FibonacciHeap</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FibonacciHeap</span><span class="p">:</span>
+    <span class="n">heap</span> <span class="o">=</span> <span class="n">FibonacciHeap</span><span class="p">()</span>    
+    <span class="n">heap</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">h1</span><span class="o">.</span><span class="n">min</span>
+     
+    <span class="n">temp_right</span> <span class="o">=</span> <span class="n">heap</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">right</span>
+    <span class="n">temp_left</span> <span class="o">=</span> <span class="n">h2</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span>
+     
+    <span class="n">temp_right</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">temp_left</span>
+    <span class="n">temp_left</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">temp_right</span>
+     
+    <span class="n">heap</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">h2</span><span class="o">.</span><span class="n">min</span>
+    <span class="n">h2</span><span class="o">.</span><span class="n">min</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">heap</span><span class="o">.</span><span class="n">min</span>
+     
+    <span class="k">if</span> <span class="n">h2</span><span class="o">.</span><span class="n">min</span> <span class="o">&gt;</span> <span class="n">h1</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
+        <span class="n">heap</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">h2</span><span class="o">.</span><span class="n">min</span>
+    <span class="n">heap</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">=</span> <span class="n">h1</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">+</span> <span class="n">h2</span><span class="o">.</span><span class="n">heap_size</span>
+    <span class="k">return</span> <span class="n">heap</span></div>
+
+<div class="viewcode-block" id="HeapUnderflowError"><a class="viewcode-back" href="../../../rst/data_structures/data_structures.heaps.fibonacci_heap.html#data_structures.heaps.fibonacci_heap.HeapUnderflowError">[文档]</a><span class="k">class</span> <span class="nc">HeapUnderflowError</span><span class="p">(</span><span class="ne">BaseException</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">TheAlgorithmsNotesInPython</a></h1>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../rst/divide_and_conquer/modules.html">divide_and_conquer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rst/dynamic_programming/modules.html">dynamic_programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rst/trees/modules.html">trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rst/data_structures/modules.html">data_structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rst/greedy_algorithm/modules.html">greedy_algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rst/sort/modules.html">sort</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">模块代码</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, luo-songtao.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

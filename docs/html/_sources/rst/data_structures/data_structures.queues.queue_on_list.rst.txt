@@ -1,0 +1,7 @@
+data\_structures.queues.queue\_on\_list module
+==============================================
+
+.. automodule:: data_structures.queues.queue_on_list
+   :members:
+   :undoc-members:
+   :show-inheritance:

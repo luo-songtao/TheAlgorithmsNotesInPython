@@ -1,0 +1,7 @@
+greedy\_algorithm.activity\_selector module
+===========================================
+
+.. automodule:: greedy_algorithm.activity_selector
+   :members:
+   :undoc-members:
+   :show-inheritance:

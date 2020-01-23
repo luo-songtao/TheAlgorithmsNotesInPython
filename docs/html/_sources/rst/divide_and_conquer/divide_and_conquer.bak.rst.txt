@@ -1,0 +1,7 @@
+divide\_and\_conquer.bak module
+===============================
+
+.. automodule:: divide_and_conquer.bak
+   :members:
+   :undoc-members:
+   :show-inheritance:

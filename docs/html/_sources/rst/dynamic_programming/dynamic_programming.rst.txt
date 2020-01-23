@@ -1,0 +1,18 @@
+dynamic\_programming package
+============================
+
+.. automodule:: dynamic_programming
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   dynamic_programming.cut_rod
+   dynamic_programming.dynamic_0_1_knapsack
+   dynamic_programming.longest_common_subsequence
+   dynamic_programming.matrix_chain_multiplication_problem
+   dynamic_programming.optimal_binary_search_tree

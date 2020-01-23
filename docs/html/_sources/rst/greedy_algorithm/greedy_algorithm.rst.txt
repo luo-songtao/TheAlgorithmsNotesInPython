@@ -1,0 +1,16 @@
+greedy\_algorithm package
+=========================
+
+.. automodule:: greedy_algorithm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   greedy_algorithm.activity_selector
+   greedy_algorithm.fractional_knapsack
+   greedy_algorithm.hoffman_code

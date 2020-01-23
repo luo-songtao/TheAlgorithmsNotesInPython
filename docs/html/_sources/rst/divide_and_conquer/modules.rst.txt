@@ -1,0 +1,7 @@
+divide_and_conquer
+==================
+
+.. toctree::
+   :maxdepth: 4
+
+   divide_and_conquer

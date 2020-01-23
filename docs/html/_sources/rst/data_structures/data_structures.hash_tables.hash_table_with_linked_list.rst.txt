@@ -1,0 +1,7 @@
+data\_structures.hash\_tables.hash\_table\_with\_linked\_list module
+====================================================================
+
+.. automodule:: data_structures.hash_tables.hash_table_with_linked_list
+   :members:
+   :undoc-members:
+   :show-inheritance:

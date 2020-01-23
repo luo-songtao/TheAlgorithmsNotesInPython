@@ -1,0 +1,7 @@
+sort.bubble\_sort module
+========================
+
+.. automodule:: sort.bubble_sort
+   :members:
+   :undoc-members:
+   :show-inheritance:

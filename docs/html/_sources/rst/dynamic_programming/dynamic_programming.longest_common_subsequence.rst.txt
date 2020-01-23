@@ -1,0 +1,7 @@
+dynamic\_programming.longest\_common\_subsequence module
+========================================================
+
+.. automodule:: dynamic_programming.longest_common_subsequence
+   :members:
+   :undoc-members:
+   :show-inheritance:

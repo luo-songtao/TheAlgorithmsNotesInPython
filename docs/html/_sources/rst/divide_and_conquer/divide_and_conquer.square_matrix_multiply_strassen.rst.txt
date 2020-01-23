@@ -1,0 +1,7 @@
+divide\_and\_conquer.square\_matrix\_multiply\_strassen module
+==============================================================
+
+.. automodule:: divide_and_conquer.square_matrix_multiply_strassen
+   :members:
+   :undoc-members:
+   :show-inheritance:

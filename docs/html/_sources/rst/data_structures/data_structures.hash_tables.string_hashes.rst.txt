@@ -1,0 +1,7 @@
+data\_structures.hash\_tables.string\_hashes module
+===================================================
+
+.. automodule:: data_structures.hash_tables.string_hashes
+   :members:
+   :undoc-members:
+   :show-inheritance:

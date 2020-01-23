@@ -1,0 +1,7 @@
+dynamic\_programming.optimal\_binary\_search\_tree module
+=========================================================
+
+.. automodule:: dynamic_programming.optimal_binary_search_tree
+   :members:
+   :undoc-members:
+   :show-inheritance:
