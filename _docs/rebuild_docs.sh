@@ -5,4 +5,4 @@ python update_rst.py
 make html
 
 rm -rf ../docs
-mv build ../docs
+mv build/html ../docs
