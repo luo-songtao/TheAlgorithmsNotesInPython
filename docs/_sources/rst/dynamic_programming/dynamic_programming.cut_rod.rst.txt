@@ -1,7 +1,0 @@
-dynamic\_programming.cut\_rod module
-====================================
-
-.. automodule:: dynamic_programming.cut_rod
-   :members:
-   :undoc-members:
-   :show-inheritance:

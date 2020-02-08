@@ -1,7 +1,0 @@
-sort.count\_sort module
-=======================
-
-.. automodule:: sort.count_sort
-   :members:
-   :undoc-members:
-   :show-inheritance:

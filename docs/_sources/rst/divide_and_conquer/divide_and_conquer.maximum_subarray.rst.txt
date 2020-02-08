@@ -1,7 +1,0 @@
-divide\_and\_conquer.maximum\_subarray module
-=============================================
-
-.. automodule:: divide_and_conquer.maximum_subarray
-   :members:
-   :undoc-members:
-   :show-inheritance:

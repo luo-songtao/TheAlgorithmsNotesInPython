@@ -1,7 +1,0 @@
-dynamic_programming
-===================
-
-.. toctree::
-   :maxdepth: 4
-
-   dynamic_programming

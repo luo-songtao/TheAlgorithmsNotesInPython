@@ -1,7 +1,0 @@
-sort.heap\_sort module
-======================
-
-.. automodule:: sort.heap_sort
-   :members:
-   :undoc-members:
-   :show-inheritance:

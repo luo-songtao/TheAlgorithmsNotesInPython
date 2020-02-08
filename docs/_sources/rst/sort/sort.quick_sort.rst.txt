@@ -1,7 +1,0 @@
-sort.quick\_sort module
-=======================
-
-.. automodule:: sort.quick_sort
-   :members:
-   :undoc-members:
-   :show-inheritance:

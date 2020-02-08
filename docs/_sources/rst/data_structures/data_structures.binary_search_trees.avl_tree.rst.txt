@@ -1,7 +1,0 @@
-data\_structures.binary\_search\_trees.avl\_tree module
-=======================================================
-
-.. automodule:: data_structures.binary_search_trees.avl_tree
-   :members:
-   :undoc-members:
-   :show-inheritance:

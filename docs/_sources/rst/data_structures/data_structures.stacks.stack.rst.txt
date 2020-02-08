@@ -1,7 +1,0 @@
-data\_structures.stacks.stack module
-====================================
-
-.. automodule:: data_structures.stacks.stack
-   :members:
-   :undoc-members:
-   :show-inheritance:

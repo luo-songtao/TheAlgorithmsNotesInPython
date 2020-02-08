@@ -1,7 +1,0 @@
-data\_structures.heaps.fibonacci\_heap module
-=============================================
-
-.. automodule:: data_structures.heaps.fibonacci_heap
-   :members:
-   :undoc-members:
-   :show-inheritance:

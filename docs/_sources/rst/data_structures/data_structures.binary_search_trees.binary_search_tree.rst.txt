@@ -1,7 +1,0 @@
-data\_structures.binary\_search\_trees.binary\_search\_tree module
-==================================================================
-
-.. automodule:: data_structures.binary_search_trees.binary_search_tree
-   :members:
-   :undoc-members:
-   :show-inheritance:

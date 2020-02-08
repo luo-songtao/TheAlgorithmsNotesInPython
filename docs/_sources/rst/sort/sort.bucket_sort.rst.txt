@@ -1,7 +1,0 @@
-sort.bucket\_sort module
-========================
-
-.. automodule:: sort.bucket_sort
-   :members:
-   :undoc-members:
-   :show-inheritance:
