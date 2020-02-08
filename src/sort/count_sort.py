@@ -13,6 +13,12 @@ def count_sort(array, k):
     
     Returns:
         list: 新创建的已排序数组
+    
+    Example:
+        >>> x = 10
+        >>> x*x
+        100
+    
     """
     count_array = [0 for i in range(k+1)]
     result_array = [0 for i in range(len(array))]

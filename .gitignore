@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 .DS_Store
-_docs/source/rst/*
+docs/source/rst/*
