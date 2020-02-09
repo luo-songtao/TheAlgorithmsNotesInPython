@@ -3,47 +3,12 @@
 # Author: Luo-Songtao
 # Email: ryomawithlst@gmail/outlook.com
 
+
 import math
 
 
-def heap_sort(array: list):
-    """堆排序
-    
-    堆排序步骤：
-        - 对待排序数组建立二叉最大堆，得到堆顶最大元素
-        - 然后堆顶元素放到堆尾，再剔除出堆，并对剩下的元素回到第一步处理，最终数组的元素就会按升序排列
-    
-    算法复杂度：
-        - 时间复杂度:
-            - 最坏：:math:`O(n\lg n)`
-            - 平均：:math:`O(n\lg n)`
-            - 最好：:math:`O(n\lg n)`
-        - 空间复杂度：:math:`O(1)`
-        - 稳定性：不稳定
-    
-    Args:
-        array (list): 待排序数组
-        
-    Returns:
-        None
-    
-    Example:
-        >>> the_array = [41, 22, 36, 7, 21, 27, 18, 3, 79, 8, 43, 27, 45, 36, 84, 7, 47]
-        >>> heap_sort(the_array, max(the_array))
-        >>> the_array
-        [3, 7, 7, 8, 18, 21, 22, 27, 27, 36, 36, 41, 43, 45, 47, 79, 84]
-    """
-    heap = BinaryMaxHeap()
-    heap.build_max_heap(array)
-    heap_size = len(array)
-    for i in range(len(array)-1, 0, -1):
-        array[0], array[i] = array[i], array[0]
-        heap_size -= 1
-        heap.max_heapify(array, 0, heap_size)
-
-
 class BinaryMaxHeap:
-    
+
     @staticmethod
     def get_parent_index(index: int):
         """计算父节点索引
@@ -67,7 +32,7 @@ class BinaryMaxHeap:
         
         最大堆性质：父节点必须大于等于左右子节点
         
-        根据最大堆的性质将指定索引处的数调整到堆的它合适的位置
+        根据最大堆的性质将指定索引处的数调整到堆的它合适的位置:
             - 将指定index处的值x与其左右孩子的进行比较，将最大的孩子与其交换位置，以满足最大堆性质，并再次递归处理x
             - 当指定index处的值x比其左右孩子的都大，则不用再递归
 
@@ -107,8 +72,3 @@ class BinaryMaxHeap:
         for index in range(len(array)//2, -1, -1):
             self.max_heapify(array, index, len(array))
 
-
-if __name__ == '__main__':
-    the_array = [41,22,36,7,21,27,18,3,79,8,43,27,45,36,84,7,47]
-    heap_sort(the_array)
-    print(the_array)
