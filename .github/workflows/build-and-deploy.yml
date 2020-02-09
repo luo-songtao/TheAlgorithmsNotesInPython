@@ -28,8 +28,9 @@ jobs:
         git config user.name "luo-songtao"
         git config user.email "ryomawithlst@gmail.com"
         git subtree add --prefix=dev origin gh-pages
-        rm dev/notes
-        mv docs/build/html/ dev/notes/
-        git add -A
+        rm -rf dev/*
+        mv docs/build/html/* dev/notes/
+        mv docs/build/html/.* dev/notes/
+        git add dev
         git commit -m "${{ github.sha }}"
         git subtree push --prefix=dev origin gh-pages
