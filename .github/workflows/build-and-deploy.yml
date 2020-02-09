@@ -29,8 +29,8 @@ jobs:
         git config user.email "ryomawithlst@gmail.com"
         git subtree add --prefix=dev origin gh-pages
         rm -rf dev/*
-        mv docs/build/html/* dev/notes/
-        mv docs/build/html/.* dev/notes/
+        mv docs/build/html/* dev/
+        mv docs/build/html/.* dev/
         git add dev
         git commit -m "${{ github.sha }}"
         git subtree push --prefix=dev origin gh-pages
