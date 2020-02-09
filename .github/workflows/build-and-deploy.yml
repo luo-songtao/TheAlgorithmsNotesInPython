@@ -17,13 +17,11 @@ jobs:
         # The target architecture (x86, x64) of the Python interpreter.
         # architecture: # optional, default is x64
     - name: Install Dependence
-      run: 
+      run: |
         pip install sphinx
-        git clone https://github.com/romnnn/sphinx_press_theme.git
-        cd sphinx_press_theme
-        python setup.py install
+        pip install romnnn_sphinx_press_theme
     - name: Deploy Html To Branch "gh-pages"
-      run: 
+      run: |
         cd docs
         make html
         git config user.name "luo-songtao"
