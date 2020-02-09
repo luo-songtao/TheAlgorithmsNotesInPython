@@ -19,7 +19,8 @@ jobs:
     - name: Install Dependence and Build Html
       run: 
         pip install sphinx
-        pip install romnnn_sphinx_press_theme
+        git clone https://github.com/romnnn/sphinx_press_theme.git
+        python sphinx_press_theme/setup.py install
         cd docs
         make html
     - name: Deploy Html To Branch "gh-pages"
