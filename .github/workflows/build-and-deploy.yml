@@ -1,0 +1,34 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python environment
+      uses: actions/setup-python@v1.1.1
+      with:
+        # Version range or exact version of a Python version to use, using semvers version range syntax.
+        python-version: 3.7
+        # The target architecture (x86, x64) of the Python interpreter.
+        # architecture: # optional, default is x64
+    - name: Install Dependence and Build Html
+      run: 
+        pip install sphinx
+        pip install romnnn_sphinx_press_theme
+        cd docs
+        make html
+    - name: Deploy Html To Branch "gh-pages"
+      run: 
+        git config user.name "luo-songtao"
+        git config user.email "ryomawithlst@gmail.com"
+        git subtree add --prefix=dev origin gh-pages
+        rm dev/notes
+        mv docs/build/html/ dev/notes/
+        git add -A
+        git commit -m "${{ github.sha }}"
+        git subtree push --prefix=dev origin gh-pages
