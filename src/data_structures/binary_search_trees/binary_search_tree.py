@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-基本的二叉搜索树
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
 
 class Node:
@@ -87,7 +85,7 @@ class BinarySearchTree:
             new_child_node.parent = old_child_node.parent
             
     def left_rotate(self, old_root):
-        """
+        r"""
         left rotate(左旋)：(这里root指树的根节点或子树的根节点)
                 old_root
                /        \

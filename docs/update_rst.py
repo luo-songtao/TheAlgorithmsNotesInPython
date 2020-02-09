@@ -9,4 +9,4 @@ modules = ["data_structures", "divide_and_conquer", "dynamic_programming", "gree
 
 for module in modules:
     os.system("rm -rf source/{module}".format(module=module))
-    os.system("sphinx-apidoc -f -e -l -a -M -o source/rst/{module} ../src/{module}".format(module=module))
+    os.system("sphinx-apidoc -f -E -a -M -o source/rst/{module} ../src/{module}".format(module=module))

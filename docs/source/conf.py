@@ -30,7 +30,8 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
-    "sphinx.ext.githubpages"
+    "sphinx.ext.githubpages",
+    "sphinx.ext.doctest",
 ]
 
 autodoc_default_options = {
@@ -60,8 +61,8 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = 'alabaster'
+# romnnn_sphinx_press_theme
+html_theme = 'press'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
