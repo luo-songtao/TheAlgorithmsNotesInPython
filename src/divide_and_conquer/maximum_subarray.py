@@ -1,7 +1,7 @@
-"""
-@Author  : luo-songtao
-最大子数组问题
-"""
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 import math
 
 

@@ -1,4 +1,4 @@
-data\_structures.queues package
+队列
 ===============================
 
 .. automodule:: data_structures.queues
@@ -6,10 +6,8 @@ data\_structures.queues package
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
-
+基于列表的队列
+--------------
 .. automodule:: data_structures.queues.queue_on_list
    :members:
    :undoc-members:

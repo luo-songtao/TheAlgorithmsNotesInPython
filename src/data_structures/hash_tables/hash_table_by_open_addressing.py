@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-哈希表：开发寻址+线性探查
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
+
 
 from hash_table import BaseHashTable, HashTableKeyError
 
 
-class HashTable(BaseHashTable):
+class HashTableByOpenAdressing(BaseHashTable):
+    """基于开放寻址方法的哈希表
+    
+    开放寻址方法的哈希表没有使用额外的容器存储元素，而是直接将元素存储在散列表的槽中。同时这里使用的是线性探查方法进行查找槽位。
+    
+    """
 
     def _insert(self, key, value):
         hash_value = self.hash(key)
@@ -47,6 +51,8 @@ class HashTable(BaseHashTable):
                     hash_value = 0
     
     def search(self, key):
+        """查询指定key值的元素并返回其value
+        """
         result = self._search(key)
         return result if result is None else result[0]
         
@@ -57,8 +63,14 @@ class HashTable(BaseHashTable):
 
 
 if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.insert(0, os.path.abspath('../../hashes/'))
+    from numberic_hashes.multiplicative_hash import multiplicative_hash
+    from string_hashes.elf import elf_hash
+    
     table_size = 2**16
-    hash_table = HashTable(table_size)
+    hash_table = HashTableByOpenAdressing(table_size, multiplicative_hash, elf_hash)
     data_size = 2**13
     data = [("k%d"%i, "v%d"%i) for i in range(data_size)]
     

@@ -14,6 +14,7 @@ B树
    :undoc-members:
    :show-inheritance:
 
+
 van_emde_boas_tree
 ------------------
 .. automodule:: trees.van_emde_boas_tree

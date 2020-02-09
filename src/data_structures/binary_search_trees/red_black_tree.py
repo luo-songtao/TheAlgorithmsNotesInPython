@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-红黑树
-"""
-from binary_search_tree import Node as BaseNode
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
+from binary_search_tree import BinarySearchTreeNode as BaseNode
 from binary_search_tree import BinarySearchTree as BaseBinarySearchTree
 
 
-class Node(BaseNode):
+class RedBlackTreeNode(BaseNode):
+    """红黑树节点
+    
+    相比二叉搜索树节点，增加了color属性
+    
+    Attributes:
+        color: 节点颜色
+    """
     
     def __init__(self, key):
-        super(Node, self).__init__(key)
+        super(RedBlackTreeNode, self).__init__(key)
         self.color = None
     
     def __repr__(self):
@@ -19,6 +24,24 @@ class Node(BaseNode):
 
 
 class RedBlackTree(BaseBinarySearchTree):
+    """红黑树
+    
+    红黑树是一颗满足以下性质的二叉搜索树：
+        - 每个节点或是红色的、或是黑色的
+        - 根节点是黑色的
+        - 叶节点都是黑色的
+        - 如果一个节点是红色的，则它的两个子节点都是黑色的
+        - 对每个节点，从该节点到其所有后代叶节点的简单路径上，均包含相同数目的黑色节点
+
+    红黑树确保没有一条路径会比其他路径长出2倍，因为它是近似于平衡的
+    
+    **一颗有n个内部节点的红黑树的高度至多为 :math:`2\lg (n+1)`**
+    
+    红黑树插入新节点：红黑树中插入新节点后，新节点颜色需要着为红色，同时为了保证红黑性质能继续保持，需要对树中相应的节点重新着色并旋转进行修复
+    
+    红黑树删除节点：红黑树删除节点后，同样为了保证红黑性质能继续保持，需要对树中相应的节点重新着色并旋转进行修复
+    
+    """
     
     RED = "red"
     BLACK = "black"
@@ -103,7 +126,6 @@ class RedBlackTree(BaseBinarySearchTree):
     def _delete_fixup(self, node):
         """
         修复红黑树的性质
-        :params node: 被删除节点的替换节点(当替换节点的父节点是删除节点时)或替换节点的子节点(当...不是...时)
         """
         # 如果节点的颜色不是黑色，那么红黑树的性质没有被破坏：但需要把node颜色改为黑色，因为它顶替的节点原先颜色应该黑色(最后一行)
         while node != None and node != self.root and node.color == self.BLACK:
@@ -172,7 +194,7 @@ if __name__ == "__main__":
     
     red_black_tree = RedBlackTree()
     for i in data:
-        red_black_tree.insert(Node(i))
+        red_black_tree.insert(RedBlackTreeNode(i))
     inorder = list(red_black_tree.traversal())
     print("中序遍历结果: ", inorder) 
     print("Minmum: ", red_black_tree.minimum(red_black_tree.root).key)

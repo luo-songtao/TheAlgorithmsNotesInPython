@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
+
 
 def elf_hash(string: str):
-    """
+    """ELF 字符串hash算法
+    
     >>> elf_hash("中文")
     346199
     >>> elf_hash("abcdefg")

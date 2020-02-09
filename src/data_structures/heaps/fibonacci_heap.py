@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-可合并最小堆
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 import math
 
 
-class Node:
+class FibonacciHeapNode:
     
     def __init__(self, key):
         self.key = key
@@ -20,6 +18,8 @@ class Node:
 
 
 class FibonacciHeap:
+    """斐波那契堆
+    """
     
     def __init__(self):
         self.min: Node = None    # 最小节点
@@ -28,9 +28,8 @@ class FibonacciHeap:
     def create(self):
         pass
     
-    def insert(self, node: Node):
-        """
-        插入新节点
+    def insert(self, node: FibonacciHeapNode):
+        """插入新节点
         """
         node.degree = 0
         node.parent = None
@@ -52,15 +51,14 @@ class FibonacciHeap:
         self.heap_size += 1
     
     def minmum(self):
-        """
-        返回最小节点
+        """返回最小节点
         """
         if self.heap_size < 1:
             raise HeapUnderflowError
         return self.min
     
     def extract_min(self):
-        """
+        """弹出最小节点
         """
         node = self.min
         if node != None:
@@ -82,15 +80,15 @@ class FibonacciHeap:
         return node
     
     def get_max_degree(self):
-        """
-        计算具备size个节点的堆中，单个节点的最大度数(度数上界)
+        """计算具备size个节点的堆中，单个节点的最大度数(度数上界)
         """
         golden_ratio = (1+math.sqrt(5))/2
         return int(math.log(self.heap_size, golden_ratio))
             
     def consolidate(self):
-        """
-        合并根链表：如果发现根链表中两个节点的度相等，那么就进行合并直到根链表中的节点的度两两不相等
+        """合并根链表
+        
+        如果发现根链表中两个节点的度相等，那么就进行合并直到根链表中的节点的度两两不相等
         """
         max_degree = self.get_max_degree()
         # 记录degree的数值
@@ -127,11 +125,13 @@ class FibonacciHeap:
                     if node.key < self.min.key:
                         self.min = node
         
-    def link(self, x: Node, y: Node):
-        """
-        1. remove node x from heap's root list
-        2. make node x as a child of y, incrementing y.degree
-        3. x.mark = False
+    def link(self, x: FibonacciHeapNode, y: FibonacciHeapNode):
+        """链接两个斐波那契堆
+        
+        实现步骤：
+            1. remove node x from heap's root list
+            2. make node x as a child of y, incrementing y.degree
+            3. x.mark = False
         """
         # 1. ···
         x.left.right = x.right
@@ -153,8 +153,7 @@ class FibonacciHeap:
         x.mark = False
         
     def decrease_key(self, node, key):
-        """
-        降低node节点的关键值
+        """减小node节点的关键值
         """
         if key > node.key:
             raise Exception("New key is greater than current key")
@@ -166,9 +165,10 @@ class FibonacciHeap:
         if node.key < self.min.key:
             self.min = node
     
-    def cut(self, node: Node, parent: Node):
-        """
-        切断node与其parent之间的联系，并将node放入根链表作为根节点
+    def cut(self, node: FibonacciHeapNode, parent: FibonacciHeapNode):
+        """剪枝
+        
+        将node节点从当前子堆中剔除，并将node节点放入根链表作为一个根节点
         """
         # 
         if node.left == node:
@@ -185,8 +185,9 @@ class FibonacciHeap:
         self.min.left = node
     
     def cascading_cut(self, node):
-        """
-        级联切断：判断node是否已经是第二次失去子节点(如果mark==True)，并作出相应处理
+        """级联切断剪枝
+        
+        判断node节点是否已经是第二次失去子节点(如果mark==True)，如果是那么就要对它进行剪枝
         """
         if node.parent != None:    
             if node.mark == False:
@@ -195,17 +196,21 @@ class FibonacciHeap:
                 self.cut(node, node.parent)
                 self.cascading_cut(node.parent)
                 
-    def delete(self, node: Node):
+    def delete(self, node: FibonacciHeapNode):
+        """从堆中删除一个节点
+        """
         self.decrease_key(node, -math.inf)
         self.extract_min()
     
     def union(self, heap):
-        """
-        合并两个FibonacciHeap为新的FibonacciHeap
+        """合并两个FibonacciHeap为新的FibonacciHeap
         """
         return union(self, heap)
  
+ 
 def union(h1: FibonacciHeap, h2: FibonacciHeap) -> FibonacciHeap:
+    """合并斐波那契堆
+    """
     heap = FibonacciHeap()    
     heap.min = h1.min
      
@@ -222,6 +227,7 @@ def union(h1: FibonacciHeap, h2: FibonacciHeap) -> FibonacciHeap:
         heap.min = h2.min
     heap.heap_size = h1.heap_size + h2.heap_size
     return heap
+
 
 class HeapUnderflowError(BaseException):
     pass

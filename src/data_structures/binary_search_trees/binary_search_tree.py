@@ -3,10 +3,21 @@
 # Author: Luo-Songtao
 # Email: ryomawithlst@gmail/outlook.com
 
-
-class Node:
+class BinarySearchTreeNode:
+    """树节点对象
+    
+    Attributes:
+        parent: 父节点，默认为None
+        left: 左子节点，默认为None
+        right: 右子节点，默认为None
+        key: 节点上存储的关键值
+    """
     
     def __init__(self, key):
+        """
+        Args:
+            key (int): 节点存储的关键字值
+        """
         self.parent = None
         self.left = None
         self.right = None
@@ -14,19 +25,23 @@ class Node:
     
     def __repr__(self):
         return str(self.key)
-        
+
 
 class BinarySearchTree:
+    """二叉搜索树
+    
+    Attributes:
+        root: 父节点，默认为None
+        count: 节点数，默认为0
+        depth: 树高度，默认为0
+    """
     
     def __init__(self):
         self.root = None
         self.count = 0
         self.depth = 0
     
-    def _insert(self, new_node):
-        """
-        将新节点放置进二叉搜索树中，作为新的叶子节点（注意：新节点将是新的叶节点）
-        """
+    def _insert(self, new_node: BinarySearchTreeNode):
         the_node = None
         temp = self.root    # 从根节点向下找
         
@@ -46,9 +61,6 @@ class BinarySearchTree:
             the_node.right = new_node
     
     def _delete(self, node):
-        """
-        删除当前树中删除node节点，并调整树的相关节点以保持二叉搜索树的性质
-        """
         if node.left == None:    # 只有一个孩子时，那么就直接让他来上位，这样所有后代都会满意，所以只用考虑父亲的感受
             self.transplant(node, node.right) 
         elif node.right == None:   # 同理
@@ -69,24 +81,114 @@ class BinarySearchTree:
             replacement_node.left = node.left
             replacement_node.left.parent = replacement_node
 
-    def transplant(self, old_child_node, new_child_node):
+        
+    def insert(self, node):
+        """将新节点插入二叉搜索树中，将作为新的叶子节点
+        
+        Args:
+            new_node (BinarySearchTreeNode): 新节点对象
         """
-        当要删除old_child_node并用new_child_node进行替换时
-        用于建立old_child_node的父节点与new_child_node之间的关系
-        (交代：your parent will be my parent)
+        self._insert(node)
+        self.count += 1
+    
+    def delete(self, node):
+        """删除当前树中的node节点，并调整树的相关节点以保持二叉搜索树的性质
+        
+        Args:
+            node (BinarySearchTreeNode): 将要删除的节点
+        
         """
-        if old_child_node.parent == None:
-            self.root = new_child_node
-        elif old_child_node == old_child_node.parent.left:
-            old_child_node.parent.left = new_child_node
+        self._delete(node)
+        self.count -= 1
+    
+    def search(self, node: BinarySearchTreeNode, key: int):
+        """从指定节点开始搜索关键值为key的节点并返回
+        
+        Args:
+            node (BinarySearchTreeNode): 要寻找的树或子树的根节点
+            key (int): 要寻找的节点的关键值
+        """
+        while node != None and node.key != key:
+            if key < node.key:
+                node = node.left
+            else:
+                node = node.right
+        return node
+    
+    def is_empty(self):
+        """判断树是否为空
+        """
+        return True if self.root is None else False
+    
+    def minimum(self, node):
+        """从指定节点开始获取其子树中关键值最小的节点
+        
+        Args:
+            node (BinarySearchTreeNode): 要查找的树或子树的根节点
+        """
+        while node.left != None:
+            node = node.left
+        return node
+
+    def maximum(self, node):
+        """从指定节点开始获取其子树中关键值最大的节点
+        
+        Args:
+            node (BinarySearchTreeNode): 要查找的树或子树的根节点
+        """
+        while node.right != None:
+            node = node.right
+        return node
+
+    def traversal(self, order="inorder"):
+        """遍历
+        
+        按指定的方式遍历树。先序("preorder")、中序("postorder")、后序("inorder")。
+        
+        Args:
+            order (str):  遍历方式。默认"inorder"
+        
+        Returns:
+            生成器
+        
+        """
+        if order == "preorder":
+            yield from self.preorder_tree_walk(self.root)
+        elif order == "postorder":
+            yield from self.postorder_tree_walk(self.root)
         else:
-            old_child_node.parent.right = new_child_node
-        if new_child_node != None:
-            new_child_node.parent = old_child_node.parent
+            yield from self.inorder_tree_walk(self.root)
+    
+    def transplant(self, node, transplanted_node):
+        """节点移植
+        
+        将transplanted_node移植到node节点位置。主要处理父节点与其的关系
+            - 设置node的父节点是transplanted_node的新父节点
+            - 设置node的父节点的对应孩子是transplanted_node
+
+        Args:
+            node (BinarySearchTreeNode): 原节点
+            transplanted_node (BinarySearchTreeNode): 移植节点
+        
+        """
+        if node.parent == None:
+            self.root = transplanted_node
+        elif node == node.parent.left:
+            node.parent.left = transplanted_node
+        else:
+            node.parent.right = transplanted_node
+        if transplanted_node != None:
+            transplanted_node.parent = node.parent
             
     def left_rotate(self, old_root):
-        r"""
+        r"""子树左旋
+        
         left rotate(左旋)：(这里root指树的根节点或子树的根节点)
+        
+        左旋和右旋是一种可以保持二叉搜索树性质的搜索树局部操作
+        
+        左旋示意图:
+        .. math::
                 old_root
                /        \
               a           new_root
@@ -117,19 +219,26 @@ class BinarySearchTree:
         old_root.parent = new_root
 
     def right_rotate(self, old_root):
-        """
+        r"""子树右旋
+        
         right rotate(右旋)：(这里root指树的根节点或子树的根节点)
+
+        左旋和右旋是一种可以保持二叉搜索树性质的搜索树局部操作
+        
+        右旋示意图:
+        .. math::
                     old_root
-                   /        \\
+                   /        \
                 new_root     c
-                /       \\
+                /       \
                a         b 
             -----------------------
                 new_root
-               /        \\
+               /        \
               a           old_root
-                        /         \\
+                        /         \
                        b            c
+        
         """ 
         new_root = old_root.left
         
@@ -145,43 +254,6 @@ class BinarySearchTree:
             old_root.parent.right = new_root
         new_root.right = old_root
         old_root.parent = new_root
-    
-    def insert(self, node):
-        self._insert(node)
-        self.count += 1
-    
-    def delete(self, node):
-        self._delete(node)
-        self.count -= 1
-    
-    def search(self, node, key):
-        while node != None and node.key != key:
-            if key < node.key:
-                node = node.left
-            else:
-                node = node.right
-        return node
-    
-    def is_empty(self):
-        return True if self.root is None else False
-    
-    def minimum(self, node):
-        while node.left != None:
-            node = node.left
-        return node
-
-    def maximum(self, node):
-        while node.right != None:
-            node = node.right
-        return node
-
-    def traversal(self, order="inorder"):
-        if order == "preorder":
-            yield from self.preorder_tree_walk(self.root)
-        elif order == "postorder":
-            yield from self.postorder_tree_walk(self.root)
-        else:
-            yield from self.inorder_tree_walk(self.root)
     
     @classmethod
     def inorder_tree_walk(cls, node):
@@ -203,17 +275,17 @@ class BinarySearchTree:
             yield from cls.preorder_tree_walk(node.left)
             yield from cls.preorder_tree_walk(node.right)
             yield node
-    
+
 
 if __name__ == "__main__":
     
     data = [6,12,5,19,7,20,99,11,3,9,38,15,5]
     
-    root_node = Node(13)
+    root_node = BinarySearchTreeNode(13)
     binary_search_tree = BinarySearchTree()
     binary_search_tree.insert(root_node)
     for i in data:
-        binary_search_tree.insert(Node(i))
+        binary_search_tree.insert(BinarySearchTreeNode(i))
     inorder = list(binary_search_tree.traversal())
     print("中序遍历结果: ", inorder) 
     print("Minmum: ", binary_search_tree.minimum(binary_search_tree.root).key)

@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-"""
-from binary_search_tree import Node as BaseNode
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
+from binary_search_tree import BinarySearchTreeNode as BaseNode
 from binary_search_tree import BinarySearchTree as BaseBinarySearchTree
 
 
-class Node(BaseNode):
+class AVLTreeNode(BaseNode):
+    """平衡二叉树节点
+    
+    相比二叉搜索树节点，增加了height属性
+    
+    Attributes:
+        height: 记录当前节点在树中所在的高度
+    """
     
     def __init__(self, key):
-        super(Node, self).__init__(key)
+        super(AVLTreeNode, self).__init__(key)
         self.height = 1
     
     def __repr__(self):
         return "{}(h={})".format(self.key, self.height)
 
 class AVLTree(BaseBinarySearchTree):
+    """平衡二叉树
+    
+    平衡二叉树一种高度平衡的二叉搜索树。对于树中每一个节点，它的左右子树的高度差至多为1.
+    
+    """
     
     def _insert(self, new_node):
         super()._insert(new_node)
@@ -87,16 +98,16 @@ class AVLTree(BaseBinarySearchTree):
 if __name__ == "__main__":
     avl_tree = AVLTree()
     for i in range(10):
-        avl_tree.insert(Node(i))
+        avl_tree.insert(AVLTreeNode(i))
     print("中序遍历结果: ", list(avl_tree.traversal())) 
     print("先序遍历结果: ", list(avl_tree.traversal("preorder"))) 
-    # print("Minmum: ", avl_tree.minimum(avl_tree.root).key)
-    # print("Maximum: ", avl_tree.maximum(avl_tree.root).key)
+    print("Minmum: ", avl_tree.minimum(avl_tree.root).key)
+    print("Maximum: ", avl_tree.maximum(avl_tree.root).key)
     
-    # key = 13
-    # searched_node = avl_tree.search(avl_tree.root, key)
-    # print("Search node(key={}): ".format(key), None if searched_node is None else searched_node.key)
+    key = 5
+    searched_node = avl_tree.search(avl_tree.root, key)
+    print("Search node(key={}): ".format(key), None if searched_node is None else searched_node.key)
     
-    # print("删除node(key={})前的结果先序遍历结果: ".format(key), list(avl_tree.traversal("preorder")))
-    # avl_tree.delete(searched_node)
-    # print("删除node(key={})的结果先序遍历结果: ".format(key), list(avl_tree.traversal("preorder")))
+    print("删除node(key={})前的结果先序遍历结果: ".format(key), list(avl_tree.traversal("preorder")))
+    avl_tree.delete(searched_node)
+    print("删除node(key={})的结果先序遍历结果: ".format(key), list(avl_tree.traversal("preorder")))

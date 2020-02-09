@@ -1,4 +1,4 @@
-data\_structures.hash\_tables package
+哈希表
 =====================================
 
 .. automodule:: data_structures.hash_tables
@@ -6,35 +6,25 @@ data\_structures.hash\_tables package
    :undoc-members:
    :show-inheritance:
 
-Submodules
+哈希表
 ----------
-
-
 .. automodule:: data_structures.hash_tables.hash_table
    :members:
    :undoc-members:
    :show-inheritance:
 
 
+基于开放寻址法的哈希表
+-------------------------
 .. automodule:: data_structures.hash_tables.hash_table_by_open_addressing
    :members:
    :undoc-members:
    :show-inheritance:
 
 
-.. automodule:: data_structures.hash_tables.hash_table_with_linked_list
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-.. automodule:: data_structures.hash_tables.numeric_hashes
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-.. automodule:: data_structures.hash_tables.string_hashes
+基于双向链表的哈希表
+--------------------------
+.. automodule:: data_structures.hash_tables.hash_table_on_linked_list
    :members:
    :undoc-members:
    :show-inheritance:

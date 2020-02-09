@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-利益最大化：钢条切割
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 import math
 
 
 def direct_recursion_cut_rod(price, n):
-    """
+    """钢条切割问题-递归方案
+    
     >>> price = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
     >>> direct_recursion_cut_rod(price, len(price)-1)
     30

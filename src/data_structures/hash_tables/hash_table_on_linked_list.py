@@ -1,21 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-哈希表：基于链接表
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 import math
 
-from hash_table import BaseHashTable
+from hash_table import BaseHashTable, HashTableKeyError
 
 
-class HashTable(BaseHashTable):
+class HashTableOnLinkedList(BaseHashTable):
+    """基于双向链表的hash表
+    
+    使用额外的双向链表存储hash表的元素
+    
+    """
      
     def _insert(self, key, value):
         hash_value = self.hash(key)
-        linked_list = LinkedList() if self._slots[hash_value] is None else self._slots[hash_value]
+        linked_list = DoublyLinkedList() if self._slots[hash_value] is None else self._slots[hash_value]
         self._slots[hash_value] = linked_list
-        linked_list.insert(Link(key, value))
+        linked_list.insert(DoublyLinkedListLink(key, value))
         
     def _delete(self, key):
         result = self._search(key)
@@ -39,64 +42,17 @@ class HashTable(BaseHashTable):
                     yield (item.key, item.value) 
                     
 
-class Link:
-    
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-        self.next = None
-        self.prev = None
-    
-    def __repr__(self):
-        return " {} ".format(self.key)
-
-
-class LinkedList:
-    
-    def __init__(self):
-        self.head = None
-        self.tail = None 
-    
-    def insert(self, link):
-        if self.tail != None:
-            self.tail.next = link
-            link.prev = self.tail
-        else:
-            self.head = link
-        self.tail = link
-        
-    def delete(self, link):
-        if link.prev != None:
-            link.prev.next = link.next
-        else:
-            self.head = link.next
-        
-        if link.next != None:
-            link.next.prev = link.prev
-        else:
-            self.tail = link.prev
-    
-    def search(self, key):
-        link = self.head
-        while link != None and link.key != key:
-            link = link.next
-        return link   
-    
-    def traversal(self, reverse=False):
-        link = self.head if reverse is False else self.tail
-        while True:
-            yield link
-            if reverse is False and link.next != None:
-                link = link.next
-            elif reverse is True and link.prev != None:
-                link = link.prev
-            else:
-                break   
-
-
 if __name__ == "__main__":
+    import os
+    import sys
+    sys.path.insert(0, os.path.abspath('../linked_list/'))
+    sys.path.insert(0, os.path.abspath('../../hashes/'))
+    from doubly_linked_list import DoublyLinkedList, DoublyLinkedListLink
+    from numberic_hashes.multiplicative_hash import multiplicative_hash
+    from string_hashes.elf import elf_hash
+    
     table_size = 2**16
-    hash_table = HashTable(table_size)
+    hash_table = HashTableOnLinkedList(table_size, multiplicative_hash, elf_hash)
     data_size = 2**13
     data = [("k%d"%i, "v%d"%i) for i in range(data_size)]
     

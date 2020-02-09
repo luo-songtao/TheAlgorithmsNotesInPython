@@ -1,27 +1,27 @@
-"""
-@Author  : luo-songtao
-"""
-
-class QueueEmptyError(BaseException):
-    pass
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
 
-class QueueFullError(BaseException):
-    pass
-
-
-class Queue:
+class QueueOnList:
+    """基于列表的队列
+    """
 
     def __init__(self, limit=10):
         self.limit = limit
         self.queue = []
         
     def put(self, x):
+        """添加元素
+        """
         if self.is_full():
             raise QueueFullError
         self.queue.append(x)
     
     def get(self):
+        """获取元素
+        """
         if self.is_empty():
             raise QueueEmptyError
         return self.queue.pop(0)
@@ -35,10 +35,18 @@ class Queue:
     @property
     def size(self):
         return len(self.queue)
-    
-    
+
+
+class QueueEmptyError(BaseException):
+    pass
+
+
+class QueueFullError(BaseException):
+    pass
+
+
 if __name__ == "__main__":
-    queue = Queue()
+    queue = QueueOnList()
 
     queue.put(1)
     queue.put(2)

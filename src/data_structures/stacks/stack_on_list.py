@@ -1,15 +1,12 @@
-"""
-@Author  : luo-songtao
-"""
-
-class StackOverflowError(BaseException):
-    pass
-
-class StackUnderflowError(BaseException):
-    pass
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
 
-class Stack:
+class StackOnList:
+    """基于列表的栈
+    """
 
     def __init__(self, limit=10):
         self.limit = limit
@@ -17,6 +14,8 @@ class Stack:
         self.top = -1
 
     def push(self, x):
+        """元素入栈
+        """
         if self.size >= self.limit:
             raise StackOverflowError
         else:
@@ -24,6 +23,8 @@ class Stack:
             self.top += 1
 
     def pop(self):
+        """元素出栈
+        """
         if self.top == -1:
             raise StackUnderflowError
         else:
@@ -41,8 +42,16 @@ class Stack:
         return len(self.stack)
 
 
+class StackOverflowError(BaseException):
+    pass
+
+
+class StackUnderflowError(BaseException):
+    pass
+
+
 if __name__ == '__main__':
-    stack = Stack(10)
+    stack = StackOnList(10)
     assert stack.is_empty() is True, "stack is not empty"
     stack.push(1)
     stack.push(2)

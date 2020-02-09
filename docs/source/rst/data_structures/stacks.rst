@@ -1,14 +1,15 @@
 栈
-==
+=====
 
 .. automodule:: data_structures.stacks
    :members:
    :undoc-members:
    :show-inheritance:
 
-普通栈
-------
-.. automodule:: data_structures.stacks.stack
+
+基于列表的栈
+---------------
+.. automodule:: data_structures.stacks.stack_on_list
    :members:
    :undoc-members:
    :show-inheritance:

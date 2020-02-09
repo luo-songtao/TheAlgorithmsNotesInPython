@@ -4,4 +4,9 @@
 .. toctree::
    :maxdepth: 4
 
-   data_structures
+   binary_search_trees
+   hash_tables
+   stacks
+   queues
+   linked_list
+   heaps

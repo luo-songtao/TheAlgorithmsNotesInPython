@@ -1,8 +1,7 @@
-"""
-@Author  : luo-songtao
-基于Strassen算法的方阵乘
-"""
-
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
 def get_dim(matrix):
     return len(matrix), len(matrix[0])

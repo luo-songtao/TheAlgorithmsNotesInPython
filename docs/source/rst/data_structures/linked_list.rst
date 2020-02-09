@@ -1,4 +1,4 @@
-data\_structures.linked\_list package
+链表
 =====================================
 
 .. automodule:: data_structures.linked_list
@@ -6,10 +6,9 @@ data\_structures.linked\_list package
    :undoc-members:
    :show-inheritance:
 
-Submodules
+
+双向链表
 ----------
-
-
 .. automodule:: data_structures.linked_list.doubly_linked_list
    :members:
    :undoc-members:

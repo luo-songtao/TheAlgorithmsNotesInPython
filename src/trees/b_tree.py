@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-B树: 基于数组模拟B树的实现
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
-class Node:
+class BTreeNode:
     
     def __init__(self):
         self.leaf = True
@@ -41,10 +39,10 @@ class Node:
 class BTree:
     
     def __init__(self):
-        self.root: Node = None
+        self.root: BTreeNode = None
         self.minmum_degree = None
     
-    def allocate_node(self) -> Node:
+    def allocate_node(self) -> BTreeNode:
         """
         在O(1)的时间内为新节点分配一个磁盘页
         """
@@ -65,7 +63,7 @@ class BTree:
     def search(self, key):
         return self._search(self.root, key)
     
-    def _search(self, node: Node, key):
+    def _search(self, node: BTreeNode, key):
         """
         线性查找
         """
@@ -92,7 +90,7 @@ class BTree:
         self.disk_write(node)
         self.root = node
     
-    def split_child(self, node: Node, i):
+    def split_child(self, node: BTreeNode, i):
         """
         这里设定：子节点、关键词都是从0开始数，如第1个子节点实际上为第2个
         node节点第i个子节点达到2*self.minmum_degree-1个关键词，将要对其进行分裂，其第i个关键词提到node中
@@ -137,7 +135,7 @@ class BTree:
         else:
             self._insert(node, key)
     
-    def _insert(self, node: Node, key):
+    def _insert(self, node: BTreeNode, key):
         i = node.keys_count
         if node.leaf:
             while i >= 0 and key < node.get_key(i):
@@ -160,7 +158,7 @@ class BTree:
     def delete(self, key):
         self._delete(self.root, key)
         
-    def _delete(self, node: Node, key):
+    def _delete(self, node: BTreeNode, key):
         pass
         
     

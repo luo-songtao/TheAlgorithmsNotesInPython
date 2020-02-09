@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-活动选择问题
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
 activities = [
     (1,4), (3,5), (0,6), (5,7), (3,9), (5,9), (6,10), (8,11), (8,12), (2,14), (12,16)
 ]
 
 def activity_selector(activities, activity_number):
+    """活动选择问题
+    """
     activity = activities[activity_number]
     activity_number += 1
     while activity_number < len(activities)-1:

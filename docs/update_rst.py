@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 import os 
 
 modules = ["data_structures", "divide_and_conquer", "dynamic_programming", "greedy_algorithm", "trees", "sort"]

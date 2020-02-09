@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com-
 """
 Author: luo-songtao
 最优二叉搜索树： 每个节点的信息被搜索的概率不一，被搜索概率越高的节点信息应当离根节点越近，这样搜索的代价会更低

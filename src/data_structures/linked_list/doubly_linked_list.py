@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-'''
-Author: luo-songtao
-双向链表
-'''
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
 
 
-class Link:
+class DoublyLinkedListLink:
     """链接表元素"""
     
-    def __init__(self, key):
+    def __init__(self, key, value=None):
         self.key = key
+        self.value = value
         self.next = None
         self.prev = None
     
@@ -18,15 +17,16 @@ class Link:
         return " {} ".format(self.key)
 
     
-class LinkedList:
+class DoublyLinkedList:
+    """双向链表
+    """
     
     def __init__(self):
         self.head = None
         self.tail = None 
     
-    def insert(self, link):
-        """
-        向链表尾部插入新元素：O(1)
+    def insert(self, link: DoublyLinkedListLink):
+        """向链表尾部插入新元素：O(1)
         """
         if self.tail != None:
             self.tail.next = link
@@ -35,9 +35,8 @@ class LinkedList:
             self.head = link
         self.tail = link
         
-    def delete(self, link):
-        """
-        删除链表中的link元素: O(1)
+    def delete(self, link: DoublyLinkedListLink):
+        """删除链表中的link元素: O(1)
         """
         if link.prev != None:
             link.prev.next = link.next
@@ -50,8 +49,7 @@ class LinkedList:
             self.tail = link.prev
     
     def search(self, key):
-        """
-        根据元素的关键字搜索链表元素：O(n)
+        """根据元素的关键字搜索链表元素：O(n)
         """
         link = self.head
         while link != None and link.key != key:
@@ -59,8 +57,7 @@ class LinkedList:
         return link
     
     def traversal(self, reverse=False):
-        """
-        遍历链表
+        """遍历链表
         """
         link = self.head if reverse is False else self.tail
         while True:
@@ -74,12 +71,12 @@ class LinkedList:
 
 
 if __name__ == "__main__":
-    linked_list = LinkedList()
+    linked_list = DoublyLinkedList()
     
     keys = [5,23,1,26,21,78,12]
     
     for i in keys:
-        linked_list.insert(Link(i))
+        linked_list.insert(DoublyLinkedListLink(i))
     
     head = linked_list.head
     tail = linked_list.tail

@@ -14,6 +14,18 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../../src/'))
 
+path = '../../src/'
+def add_sys_path(path):
+    for i in os.listdir(path):
+        if i.startswith("__"):
+            continue
+        target = os.path.join(path, i)
+        if os.path.isdir(target):
+            print(target)
+            sys.path.insert(0, os.path.abspath(target))
+            add_sys_path(target)
+add_sys_path(path)
+
 # -- Project information -----------------------------------------------------
 
 project = 'TheAlgorithmsNotesInPython'
@@ -36,7 +48,7 @@ extensions = [
 
 autodoc_default_options = {
     'member-order': 'bysource',
-    'special-members': '__init__',
+    'special-members': "__init__",
     'undoc-members': True,
     "show-inheritance": True
 }

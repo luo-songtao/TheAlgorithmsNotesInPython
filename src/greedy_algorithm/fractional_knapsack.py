@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
-"""
-Author: luo-songtao
-分数背包问题
-"""
+# Author: Luo-Songtao
+# Email: ryomawithlst@gmail/outlook.com
+
 
 def fractional_knapsack(items, weight):
-    """
+    """分数背包问题
     贪心选择：按单位价值高低依次拿取直到取完所有物品或者填满背包
     """
     unit_values = [(i, round(items[i][0]/items[i][1], 4)) for i in range(len(items))]

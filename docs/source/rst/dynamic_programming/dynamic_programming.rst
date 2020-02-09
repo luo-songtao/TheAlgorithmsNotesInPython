@@ -1,4 +1,4 @@
-dynamic\_programming package
+动态规划 
 ============================
 
 .. automodule:: dynamic_programming
@@ -6,28 +6,33 @@ dynamic\_programming package
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
 
-
+钢条切割问题
+-------------
 .. automodule:: dynamic_programming.cut_rod
    :members:
    :undoc-members:
    :show-inheritance:
 
 
+0-1背包问题
+------------
 .. automodule:: dynamic_programming.dynamic_0_1_knapsack
    :members:
    :undoc-members:
    :show-inheritance:
 
 
+最长公共子序列问题
+-------------------
 .. automodule:: dynamic_programming.longest_common_subsequence
    :members:
    :undoc-members:
    :show-inheritance:
 
 
+矩阵链乘问题
+---------------
 .. automodule:: dynamic_programming.matrix_chain_multiplication_problem
    :members:
    :undoc-members:
