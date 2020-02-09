@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>greedy_algorithm.hoffman_code</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>greedy_algorithm.hoffman_code</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>greedy_algorithm.hoffman_code 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">PriorityQueue</span>
+
+
+<div class="viewcode-block" id="HuffmanCodeNode"><a class="viewcode-back" href="../../rst/greedy_algorithm/greedy_algorithm.html#greedy_algorithm.hoffman_code.HuffmanCodeNode">[文档]</a><span class="k">class</span> <span class="nc">HuffmanCodeNode</span><span class="p">:</span>
+    
+<div class="viewcode-block" id="HuffmanCodeNode.__init__"><a class="viewcode-back" href="../../rst/greedy_algorithm/greedy_algorithm.html#greedy_algorithm.hoffman_code.HuffmanCodeNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">freq</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># if node is a leaf node</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">char</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="huffman_code"><a class="viewcode-back" href="../../rst/greedy_algorithm/greedy_algorithm.html#greedy_algorithm.hoffman_code.huffman_code">[文档]</a><span class="k">def</span> <span class="nf">huffman_code</span><span class="p">(</span><span class="n">characters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;霍夫曼编码</span>
+<span class="sd">    </span>
+<span class="sd">    贪心选择：按字符出现频率最低次序的进行选择，来构建霍夫曼编码树</span>
+<span class="sd">    </span>
+<span class="sd">    时间复杂度: :math:`O(nlgn)`</span>
+<span class="sd">    </span>
+<span class="sd">    &gt;&gt;&gt; characters = [(&quot;f&quot;, 5), (&quot;e&quot;, 9), (&quot;c&quot;, 12), (&quot;b&quot;, 13), (&quot;d&quot;, 16), (&quot;a&quot;, 45)]</span>
+<span class="sd">    &gt;&gt;&gt; root_node = huffman_code(characters)</span>
+<span class="sd">    &gt;&gt;&gt; root_node</span>
+<span class="sd">    None:100</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>    <span class="c1"># 优先级队列，lowest first</span>
+    <span class="k">for</span> <span class="n">char</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">characters</span><span class="p">:</span>
+        <span class="c1"># 将每个字符初始化为一个叶节点，并按照字符频率压入优先级队列</span>
+        <span class="n">char_node</span> <span class="o">=</span> <span class="n">HuffmanCodeNode</span><span class="p">(</span><span class="n">freq</span><span class="p">)</span>
+        <span class="n">char_node</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="n">char</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">freq</span><span class="p">,</span> <span class="n">char_node</span><span class="p">))</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">characters</span><span class="p">)):</span>
+        <span class="c1"># 取出当前频率最低的两个节点</span>
+        <span class="n">left_node</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">right_node</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># 构建新节点：以两个子节点的频率和作为该节点的频率值</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">HuffmanCodeNode</span><span class="p">(</span><span class="n">left_node</span><span class="o">.</span><span class="n">freq</span><span class="o">+</span><span class="n">right_node</span><span class="o">.</span><span class="n">freq</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left_node</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right_node</span>
+        <span class="c1"># 再压入优先级队列中</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">node</span><span class="o">.</span><span class="n">freq</span><span class="p">,</span> <span class="n">node</span><span class="p">))</span>
+    <span class="c1"># 由于前面进行了n-1此循环，因此最后还剩下一个元素，它就是树的根节点</span>
+    <span class="k">return</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span></div>
+    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

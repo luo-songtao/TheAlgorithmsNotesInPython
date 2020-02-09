@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>data_structures.binary_search_trees.avl_tree</title>
+    
+      <link rel="stylesheet" href="../../../_static/pygments.css">
+      <link rel="stylesheet" href="../../../_static/theme.css">
+      <link rel="stylesheet" href="../../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../../_static/theme-vendors.js"></script>
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../../genindex.html" />
+  <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">模块代码</a> &raquo;</li>
+    
+    <li>data_structures.binary_search_trees.avl_tree</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>data_structures.binary_search_trees.avl_tree 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">binary_search_tree</span> <span class="kn">import</span> <span class="n">BinarySearchTreeNode</span> <span class="k">as</span> <span class="n">BaseNode</span>
+<span class="kn">from</span> <span class="nn">binary_search_tree</span> <span class="kn">import</span> <span class="n">BinarySearchTree</span> <span class="k">as</span> <span class="n">BaseBinarySearchTree</span>
+
+
+<div class="viewcode-block" id="AVLTreeNode"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.avl_tree.AVLTreeNode">[文档]</a><span class="k">class</span> <span class="nc">AVLTreeNode</span><span class="p">(</span><span class="n">BaseNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;平衡二叉树节点</span>
+<span class="sd">    </span>
+<span class="sd">    相比二叉搜索树节点，增加了height属性</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        height: 记录当前节点在树中所在的高度</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="AVLTreeNode.__init__"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.avl_tree.AVLTreeNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AVLTreeNode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span></div>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(h=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AVLTree"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.avl_tree.AVLTree">[文档]</a><span class="k">class</span> <span class="nc">AVLTree</span><span class="p">(</span><span class="n">BaseBinarySearchTree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;平衡二叉树</span>
+<span class="sd">    </span>
+<span class="sd">    平衡二叉树一种高度平衡的二叉搜索树。对于树中每一个节点，它的左右子树的高度差至多为1.</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_node</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insert_balance_fixup</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_insert_balance_fixup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">and</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">height</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">height</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">height</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">height</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">height</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+
+    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> 
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>    
+            <span class="n">replacement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> 
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">if</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="n">node</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">replacement_node</span><span class="p">,</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>    
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">replacement_node</span>
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">height</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">replacement_node</span><span class="p">)</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">replacement_node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete_balance_fixup</span><span class="p">(</span><span class="n">the_node</span><span class="p">)</span></div>
+    
+    <span class="c1"># def _delete_balance_fixup(self, the_node):</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     :params node: </span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     while node != self.root:</span>
+    <span class="c1">#         if node == None:</span>
+                
+    <span class="c1">#         if node == node.parent.right:</span>
+                
+                    
+            
+        
+    
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">avl_tree</span> <span class="o">=</span> <span class="n">AVLTree</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">avl_tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">AVLTreeNode</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;中序遍历结果: &quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">()))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;先序遍历结果: &quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minmum: &quot;</span><span class="p">,</span> <span class="n">avl_tree</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum: &quot;</span><span class="p">,</span> <span class="n">avl_tree</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="n">key</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">searched_node</span> <span class="o">=</span> <span class="n">avl_tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search node(key=</span><span class="si">{}</span><span class="s2">): &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">searched_node</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">searched_node</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除node(key=</span><span class="si">{}</span><span class="s2">)前的结果先序遍历结果: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span>
+    <span class="n">avl_tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">searched_node</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除node(key=</span><span class="si">{}</span><span class="s2">)的结果先序遍历结果: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">avl_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

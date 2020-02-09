@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>data_structures.binary_search_trees.binary_search_tree</title>
+    
+      <link rel="stylesheet" href="../../../_static/pygments.css">
+      <link rel="stylesheet" href="../../../_static/theme.css">
+      <link rel="stylesheet" href="../../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../../_static/theme-vendors.js"></script>
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../../genindex.html" />
+  <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">模块代码</a> &raquo;</li>
+    
+    <li>data_structures.binary_search_trees.binary_search_tree</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>data_structures.binary_search_trees.binary_search_tree 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+
+<div class="viewcode-block" id="BinarySearchTreeNode"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode">[文档]</a><span class="k">class</span> <span class="nc">BinarySearchTreeNode</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;树节点对象</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        parent: 父节点，默认为None</span>
+<span class="sd">        left: 左子节点，默认为None</span>
+<span class="sd">        right: 右子节点，默认为None</span>
+<span class="sd">        key: 节点上存储的关键值</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="BinarySearchTreeNode.__init__"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            key (int): 节点存储的关键字值</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span></div>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BinarySearchTree"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree">[文档]</a><span class="k">class</span> <span class="nc">BinarySearchTree</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;二叉搜索树</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        root: 父节点，默认为None</span>
+<span class="sd">        count: 节点数，默认为0</span>
+<span class="sd">        depth: 树高度，默认为0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="BinarySearchTree.__init__"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span></div>
+    
+    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_node</span><span class="p">:</span> <span class="n">BinarySearchTreeNode</span><span class="p">):</span>
+        <span class="n">the_node</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>    <span class="c1"># 从根节点向下找</span>
+        
+        <span class="k">while</span> <span class="n">temp</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>    <span class="c1"># 一直找到叶子节点</span>
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">temp</span>
+            <span class="k">if</span> <span class="n">new_node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">temp</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span><span class="o">.</span><span class="n">right</span>
+        <span class="c1"># 然后把新节点作为新的叶子节点，原先的叶子节点变成了它的父节点</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">the_node</span>
+        <span class="k">if</span> <span class="n">the_node</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">new_node</span>
+        <span class="k">elif</span> <span class="n">new_node</span><span class="o">.</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">the_node</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="n">the_node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">new_node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">the_node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_node</span>
+    
+    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>    <span class="c1"># 只有一个孩子时，那么就直接让他来上位，这样所有后代都会满意，所以只用考虑父亲的感受</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> 
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>   <span class="c1"># 同理</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="c1"># 前两个已经包括了根本没有孩子的情况，node.right=None,同时node.left=None</span>
+        <span class="k">else</span><span class="p">:</span>    
+            <span class="c1"># 当左右孩子都存在时，为了照顾左右的所有后代</span>
+            <span class="c1"># 则需要从左边找个最大的或从右边找个最小的后代，来重新管理这帮孩子</span>
+            <span class="n">replacement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>    <span class="c1"># 这里从右边找最小的来</span>
+            
+            <span class="c1"># 如果找的后代和node不是直接的父子关系，那么需要让这个后代先把原先的关系安顿好了</span>
+            <span class="k">if</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="n">node</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">replacement_node</span><span class="p">,</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>    
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">replacement_node</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">replacement_node</span><span class="p">)</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">replacement_node</span>
+
+        
+<div class="viewcode-block" id="BinarySearchTree.insert"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.insert">[文档]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;将新节点插入二叉搜索树中，将作为新的叶子节点</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            new_node (BinarySearchTreeNode): 新节点对象</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.delete"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.delete">[文档]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;删除当前树中的node节点，并调整树的相关节点以保持二叉搜索树的性质</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            node (BinarySearchTreeNode): 将要删除的节点</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.search"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.search">[文档]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">BinarySearchTreeNode</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;从指定节点开始搜索关键值为key的节点并返回</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            node (BinarySearchTreeNode): 要寻找的树或子树的根节点</span>
+<span class="sd">            key (int): 要寻找的节点的关键值</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span> <span class="o">!=</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="n">node</span><span class="o">.</span><span class="n">key</span><span class="p">:</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.is_empty"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.is_empty">[文档]</a>    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;判断树是否为空</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">False</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.minimum"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.minimum">[文档]</a>    <span class="k">def</span> <span class="nf">minimum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;从指定节点开始获取其子树中关键值最小的节点</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            node (BinarySearchTreeNode): 要查找的树或子树的根节点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="BinarySearchTree.maximum"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.maximum">[文档]</a>    <span class="k">def</span> <span class="nf">maximum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;从指定节点开始获取其子树中关键值最大的节点</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            node (BinarySearchTreeNode): 要查找的树或子树的根节点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+        <span class="k">return</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="BinarySearchTree.traversal"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.traversal">[文档]</a>    <span class="k">def</span> <span class="nf">traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;inorder&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;遍历</span>
+<span class="sd">        </span>
+<span class="sd">        按指定的方式遍历树。先序(&quot;preorder&quot;)、中序(&quot;postorder&quot;)、后序(&quot;inorder&quot;)。</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            order (str):  遍历方式。默认&quot;inorder&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            生成器</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="s2">&quot;preorder&quot;</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">preorder_tree_walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">order</span> <span class="o">==</span> <span class="s2">&quot;postorder&quot;</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">postorder_tree_walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">inorder_tree_walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.transplant"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.transplant">[文档]</a>    <span class="k">def</span> <span class="nf">transplant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">transplanted_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;节点移植</span>
+<span class="sd">        </span>
+<span class="sd">        将transplanted_node移植到node节点位置。主要处理父节点与其的关系</span>
+<span class="sd">            - 设置node的父节点是transplanted_node的新父节点</span>
+<span class="sd">            - 设置node的父节点的对应孩子是transplanted_node</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            node (BinarySearchTreeNode): 原节点</span>
+<span class="sd">            transplanted_node (BinarySearchTreeNode): 移植节点</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">transplanted_node</span>
+        <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">transplanted_node</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">transplanted_node</span>
+        <span class="k">if</span> <span class="n">transplanted_node</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">transplanted_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span></div>
+            
+<div class="viewcode-block" id="BinarySearchTree.left_rotate"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.left_rotate">[文档]</a>    <span class="k">def</span> <span class="nf">left_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_root</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;子树左旋</span>
+<span class="sd">        </span>
+<span class="sd">        left rotate(左旋)：(这里root指树的根节点或子树的根节点)</span>
+<span class="sd">        </span>
+<span class="sd">        左旋和右旋是一种可以保持二叉搜索树性质的搜索树局部操作</span>
+<span class="sd">        </span>
+<span class="sd">        左旋示意图:</span>
+<span class="sd">        .. math::</span>
+<span class="sd">                old_root</span>
+<span class="sd">               /        \</span>
+<span class="sd">              a           new_root</span>
+<span class="sd">                        /         \</span>
+<span class="sd">                       b            c</span>
+<span class="sd">            -----------------------</span>
+<span class="sd">                new_root</span>
+<span class="sd">               /        \</span>
+<span class="sd">            old_root     c</span>
+<span class="sd">            /       \</span>
+<span class="sd">           a         b </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_root</span> <span class="o">=</span> <span class="n">old_root</span><span class="o">.</span><span class="n">right</span>
+        <span class="c1"># 1. 新根节点交出左孩子</span>
+        <span class="n">old_root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_root</span><span class="o">.</span><span class="n">left</span>
+        <span class="k">if</span> <span class="n">new_root</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">old_root</span>
+        <span class="c1"># 2. 交代父节点与新根节点的关系</span>
+        <span class="n">new_root</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="k">elif</span> <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="n">old_root</span><span class="p">:</span>
+            <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="c1"># 3. 互相变更关系：子变父，父变子</span>
+        <span class="n">new_root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">old_root</span>
+        <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_root</span></div>
+
+<div class="viewcode-block" id="BinarySearchTree.right_rotate"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.right_rotate">[文档]</a>    <span class="k">def</span> <span class="nf">right_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_root</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;子树右旋</span>
+<span class="sd">        </span>
+<span class="sd">        right rotate(右旋)：(这里root指树的根节点或子树的根节点)</span>
+
+<span class="sd">        左旋和右旋是一种可以保持二叉搜索树性质的搜索树局部操作</span>
+<span class="sd">        </span>
+<span class="sd">        右旋示意图:</span>
+<span class="sd">        .. math::</span>
+<span class="sd">                    old_root</span>
+<span class="sd">                   /        \</span>
+<span class="sd">                new_root     c</span>
+<span class="sd">                /       \</span>
+<span class="sd">               a         b </span>
+<span class="sd">            -----------------------</span>
+<span class="sd">                new_root</span>
+<span class="sd">               /        \</span>
+<span class="sd">              a           old_root</span>
+<span class="sd">                        /         \</span>
+<span class="sd">                       b            c</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        <span class="n">new_root</span> <span class="o">=</span> <span class="n">old_root</span><span class="o">.</span><span class="n">left</span>
+        
+        <span class="n">old_root</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">new_root</span><span class="o">.</span><span class="n">right</span>
+        <span class="k">if</span> <span class="n">new_root</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_root</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">old_root</span>
+        <span class="n">new_root</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span>
+        <span class="k">if</span> <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="k">elif</span> <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="n">old_root</span><span class="p">:</span>
+            <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">new_root</span>
+        <span class="n">new_root</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">old_root</span>
+        <span class="n">old_root</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">new_root</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.inorder_tree_walk"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.inorder_tree_walk">[文档]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">inorder_tree_walk</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">inorder_tree_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">node</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">inorder_tree_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.preorder_tree_walk"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.preorder_tree_walk">[文档]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">preorder_tree_walk</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">node</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">preorder_tree_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">preorder_tree_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="BinarySearchTree.postorder_tree_walk"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.postorder_tree_walk">[文档]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">postorder_tree_walk</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">preorder_tree_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">preorder_tree_walk</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">node</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">99</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+    
+    <span class="n">root_node</span> <span class="o">=</span> <span class="n">BinarySearchTreeNode</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">binary_search_tree</span> <span class="o">=</span> <span class="n">BinarySearchTree</span><span class="p">()</span>
+    <span class="n">binary_search_tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">root_node</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">binary_search_tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">BinarySearchTreeNode</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">inorder</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">binary_search_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;中序遍历结果: &quot;</span><span class="p">,</span> <span class="n">inorder</span><span class="p">)</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minmum: &quot;</span><span class="p">,</span> <span class="n">binary_search_tree</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">binary_search_tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum: &quot;</span><span class="p">,</span> <span class="n">binary_search_tree</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">binary_search_tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="n">key</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">searched_node</span> <span class="o">=</span> <span class="n">binary_search_tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">binary_search_tree</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search node(key=</span><span class="si">{}</span><span class="s2">): &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">searched_node</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">searched_node</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除node(key=</span><span class="si">{}</span><span class="s2">)前的结果先序遍历结果: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">binary_search_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span>
+    <span class="n">binary_search_tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">searched_node</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除node(key=</span><span class="si">{}</span><span class="s2">)的结果先序遍历结果: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">binary_search_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

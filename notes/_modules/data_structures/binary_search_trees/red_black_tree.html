@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>data_structures.binary_search_trees.red_black_tree</title>
+    
+      <link rel="stylesheet" href="../../../_static/pygments.css">
+      <link rel="stylesheet" href="../../../_static/theme.css">
+      <link rel="stylesheet" href="../../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../../_static/theme-vendors.js"></script>
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../../genindex.html" />
+  <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">模块代码</a> &raquo;</li>
+    
+    <li>data_structures.binary_search_trees.red_black_tree</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>data_structures.binary_search_trees.red_black_tree 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">binary_search_tree</span> <span class="kn">import</span> <span class="n">BinarySearchTreeNode</span> <span class="k">as</span> <span class="n">BaseNode</span>
+<span class="kn">from</span> <span class="nn">binary_search_tree</span> <span class="kn">import</span> <span class="n">BinarySearchTree</span> <span class="k">as</span> <span class="n">BaseBinarySearchTree</span>
+
+
+<div class="viewcode-block" id="RedBlackTreeNode"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode">[文档]</a><span class="k">class</span> <span class="nc">RedBlackTreeNode</span><span class="p">(</span><span class="n">BaseNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;红黑树节点</span>
+<span class="sd">    </span>
+<span class="sd">    相比二叉搜索树节点，增加了color属性</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        color: 节点颜色</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="RedBlackTreeNode.__init__"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RedBlackTreeNode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="kc">None</span></div>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">|</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RedBlackTree"><a class="viewcode-back" href="../../../rst/data_structures/binary_search_trees.html#data_structures.binary_search_trees.red_black_tree.RedBlackTree">[文档]</a><span class="k">class</span> <span class="nc">RedBlackTree</span><span class="p">(</span><span class="n">BaseBinarySearchTree</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;红黑树</span>
+<span class="sd">    </span>
+<span class="sd">    红黑树是一颗满足以下性质的二叉搜索树：</span>
+<span class="sd">        - 每个节点或是红色的、或是黑色的</span>
+<span class="sd">        - 根节点是黑色的</span>
+<span class="sd">        - 叶节点都是黑色的</span>
+<span class="sd">        - 如果一个节点是红色的，则它的两个子节点都是黑色的</span>
+<span class="sd">        - 对每个节点，从该节点到其所有后代叶节点的简单路径上，均包含相同数目的黑色节点</span>
+
+<span class="sd">    红黑树确保没有一条路径会比其他路径长出2倍，因为它是近似于平衡的</span>
+<span class="sd">    </span>
+<span class="sd">    **一颗有n个内部节点的红黑树的高度至多为 :math:`2\lg (n+1)`**</span>
+<span class="sd">    </span>
+<span class="sd">    红黑树插入新节点：红黑树中插入新节点后，新节点颜色需要着为红色，同时为了保证红黑性质能继续保持，需要对树中相应的节点重新着色并旋转进行修复</span>
+<span class="sd">    </span>
+<span class="sd">    红黑树删除节点：红黑树删除节点后，同样为了保证红黑性质能继续保持，需要对树中相应的节点重新着色并旋转进行修复</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">RED</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_node</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insert_fixup</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_insert_fixup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="c1"># 如果node是根节点，或者node的父节点是黑色的，那么根本不需要处理</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="n">the_parent_sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                <span class="k">if</span> <span class="n">the_parent_sibling_node</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">the_parent_sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>    <span class="c1"># 第一次循环必定满足条件</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="n">the_parent_sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+                <span class="c1"># 至少第二次循环才会执行下面的代码，是为了在保证性质5条件下，调整结构以重新满足性质4(详见相关书籍)</span>
+                <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>    
+                    <span class="c1"># 左旋：以调整为</span>
+                    <span class="c1">#      red-node</span>
+                    <span class="c1">#     /</span>
+                    <span class="c1">#  red—node</span>
+                    <span class="c1"># 这样的情形，从而让后面代码复用</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="c1"># 为了保证性质5，这里把node的父节点提升为新的根节点，把原本根节点(node.p.p)改为红色，并降级</span>
+                <span class="c1"># 这样也就重新满足了性质4</span>
+                <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>    <span class="c1"># 与前面逻辑相同，方向相反</span>
+                <span class="n">the_parent_sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
+                <span class="k">if</span> <span class="n">the_parent_sibling_node</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">the_parent_sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="n">the_parent_sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+                <span class="k">elif</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                    <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">or</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
+                        <span class="k">break</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+    
+    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">the_node</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">original_color</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">color</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> 
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>   
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> 
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>            
+            <span class="n">replacement_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="n">the_node</span> <span class="o">=</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">if</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">parent</span> <span class="o">!=</span> <span class="n">node</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">replacement_node</span><span class="p">,</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>    
+                <span class="n">replacement_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">replacement_node</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">transplant</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">replacement_node</span><span class="p">)</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">replacement_node</span>
+            
+            <span class="n">original_color</span> <span class="o">=</span> <span class="n">replacement_node</span><span class="o">.</span><span class="n">color</span>
+            <span class="n">replacement_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">color</span>
+        <span class="k">if</span> <span class="n">original_color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span>    <span class="c1"># 如果原来是红色，那么是不会破坏红黑树的性质，所以不需要修复</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_delete_fixup</span><span class="p">(</span><span class="n">the_node</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_delete_fixup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        修复红黑树的性质</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 如果节点的颜色不是黑色，那么红黑树的性质没有被破坏：但需要把node颜色改为黑色，因为它顶替的节点原先颜色应该黑色(最后一行)</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span>
+            <span class="c1"># 使用枚举法，最后可以发现出规律：总结出来最终是有两种终极情况，而其他情况都可以通过左旋或右旋变换得出来</span>
+            <span class="c1"># 具体查看相关书籍</span>
+            <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="n">sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                <span class="k">if</span> <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>    <span class="c1"># 即此时node.p.color 只能是黑色的情况</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>    <span class="c1"># 此时原sibling_node已经是当前子树的根节点，颜色为黑色</span>
+                    <span class="n">sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>     <span class="c1"># 更新node的sibling_node</span>
+                
+                <span class="c1"># 终极情形1: 当同胞节点是黑色，父节点是红色时，如果同胞的左右孩子都是黑色时</span>
+                <span class="c1"># 解决方案：让父节点变为黑色，同胞节点变为红色</span>
+                <span class="k">if</span> <span class="n">sibing_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span> <span class="ow">and</span> <span class="n">sibing_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="k">break</span>    <span class="c1"># 已经解决，则可以退出循环</span>
+                    
+                <span class="k">elif</span> <span class="n">sibling_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span>    <span class="c1"># 如果同胞节点的右孩子为黑色，左孩子为红色时</span>
+                    <span class="c1"># 此时对同胞节点进行右旋，可以转换为第二种终极情形</span>
+                    <span class="c1"># 但同时需要先将同胞节点和它的左孩子呼唤颜色</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">sibling_node</span><span class="p">)</span>
+                    <span class="c1"># 此时再重新更新node 的同胞节点</span>
+                    <span class="n">sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">right</span>
+                
+                <span class="c1"># 如果终极情形1没出现，那么此时将出现终极情形2: 此时同胞节点为黑色，父节点为红色，同胞节点的右孩子为红色，左孩子为黑色</span>
+                <span class="c1"># 解决方案：让父节点变为黑色，同胞节点变为红色;并把同胞节点的右孩子变为黑色；对父节点左旋</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                <span class="n">sibling_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>    <span class="c1"># 逻辑相同，方向相反</span>
+                <span class="n">sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
+                <span class="k">if</span> <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                    <span class="n">sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
+                
+                <span class="k">if</span> <span class="n">sibling_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span> <span class="ow">and</span> <span class="n">sibling_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="k">break</span>
+                
+                <span class="k">elif</span> <span class="n">sibling_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span><span class="p">:</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                    <span class="n">sibling_node</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">left_rotate</span><span class="p">(</span><span class="n">sibling_node</span><span class="p">)</span>
+                    <span class="n">sibling_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">left</span>
+                
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                <span class="n">sibling_node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RED</span>
+                <span class="n">sibling_node</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right_rotate</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+                <span class="k">break</span> 
+        <span class="n">node</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">BLACK</span>    <span class="c1"># 确保node颜色是黑色</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">99</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">38</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+    
+    <span class="n">red_black_tree</span> <span class="o">=</span> <span class="n">RedBlackTree</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">red_black_tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">RedBlackTreeNode</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">inorder</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">red_black_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;中序遍历结果: &quot;</span><span class="p">,</span> <span class="n">inorder</span><span class="p">)</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minmum: &quot;</span><span class="p">,</span> <span class="n">red_black_tree</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">red_black_tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum: &quot;</span><span class="p">,</span> <span class="n">red_black_tree</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">red_black_tree</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="n">key</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">searched_node</span> <span class="o">=</span> <span class="n">red_black_tree</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">red_black_tree</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search node(key=</span><span class="si">{}</span><span class="s2">): &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">searched_node</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">searched_node</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除node(key=</span><span class="si">{}</span><span class="s2">)前的结果先序遍历结果: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">red_black_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span>
+    <span class="n">red_black_tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">searched_node</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;删除node(key=</span><span class="si">{}</span><span class="s2">)的结果先序遍历结果: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">red_black_tree</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="s2">&quot;preorder&quot;</span><span class="p">)))</span>
+        
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

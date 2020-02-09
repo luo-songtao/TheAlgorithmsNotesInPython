@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>数值hash算法</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="字符串hash算法" href="string_hashes.html" />
+  <link rel="prev" title="哈希算法" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">哈希算法</a> &raquo;</li>
+    
+    <li>数值hash算法</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 哈希算法</a>
+  </li>
+  <li class="next">
+    <a href="string_hashes.html"
+       title="下一章">字符串hash算法 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-hashes.numberic_hashes">
+<span id="hash"></span><h1>数值hash算法<a class="headerlink" href="#module-hashes.numberic_hashes" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-hashes.numberic_hashes.multiplicative_hash">
+<span id="id1"></span><h2>乘法散列<a class="headerlink" href="#module-hashes.numberic_hashes.multiplicative_hash" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="hashes.numberic_hashes.multiplicative_hash.multiplicative_hash">
+<code class="sig-prename descclassname">hashes.numberic_hashes.multiplicative_hash.</code><code class="sig-name descname">multiplicative_hash</code><span class="sig-paren">(</span><em class="sig-param">key: int</em>, <em class="sig-param">m=4294967296</em>, <em class="sig-param">A=0.6180339887498949</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hashes/numberic_hashes/multiplicative_hash.html#multiplicative_hash"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#hashes.numberic_hashes.multiplicative_hash.multiplicative_hash" title="永久链接至目标">¶</a></dt>
+<dd><p>乘法散列hash算法
+·· math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">m</span><span class="o">*</span><span class="p">(</span><span class="n">kA</span> <span class="n">mod</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – 某个数值型数字</p></li>
+<li><p><strong>m</strong> – 通常取2的幂次</p></li>
+<li><p><strong>A</strong> – 0&lt;A&lt;1, 比较理想值为GOLDEN_RATIO-1</p></li>
+</ul>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">multiplicative_hash</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">27289</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">multiplicative_hash</span><span class="p">(</span><span class="mi">123456</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">14</span><span class="p">)</span>
+<span class="go">67</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 哈希算法</a>
+  </li>
+  <li class="next">
+    <a href="string_hashes.html"
+       title="下一章">字符串hash算法 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

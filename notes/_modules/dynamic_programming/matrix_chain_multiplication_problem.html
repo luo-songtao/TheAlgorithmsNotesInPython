@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>dynamic_programming.matrix_chain_multiplication_problem</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>dynamic_programming.matrix_chain_multiplication_problem</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>dynamic_programming.matrix_chain_multiplication_problem 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Author: luo-songtao</span>
+<span class="sd">矩阵链乘</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="direct_recursion"><a class="viewcode-back" href="../../rst/dynamic_programming/dynamic_programming.html#dynamic_programming.matrix_chain_multiplication_problem.direct_recursion">[文档]</a><span class="k">def</span> <span class="nf">direct_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    直接递归形式</span>
+<span class="sd">    &gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]</span>
+<span class="sd">    &gt;&gt;&gt; direct_recursion(matrix_chain_dims)</span>
+<span class="sd">    15125</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">the_cost</span> <span class="o">=</span> <span class="n">direct_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">[:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> \
+                       <span class="n">direct_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span> <span class="o">+</span> \
+                        <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">the_cost</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cost</span></div>
+
+
+<div class="viewcode-block" id="up_buttom_dynamic_programming"><a class="viewcode-back" href="../../rst/dynamic_programming/dynamic_programming.html#dynamic_programming.matrix_chain_multiplication_problem.up_buttom_dynamic_programming">[文档]</a><span class="k">def</span> <span class="nf">up_buttom_dynamic_programming</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    自顶向下的动态规划</span>
+<span class="sd">    &gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]</span>
+<span class="sd">    &gt;&gt;&gt; up_buttom_dynamic_programming(matrix_chain_dims)</span>
+<span class="sd">    15125</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">dp_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">costs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span>   <span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">-</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">costs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">cost_ik</span> <span class="o">=</span> <span class="n">dp_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">costs</span><span class="p">)</span>
+                    <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cost_ik</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cost_ik</span> <span class="o">=</span> <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">costs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">cost_kj</span> <span class="o">=</span> <span class="n">dp_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">costs</span><span class="p">)</span>
+                    <span class="n">costs</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cost_kj</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cost_kj</span> <span class="o">=</span> <span class="n">costs</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
+                    
+                <span class="n">the_cost</span> <span class="o">=</span> <span class="n">cost_ik</span> <span class="o">+</span> <span class="n">cost_kj</span> <span class="o">+</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">the_cost</span><span class="p">)</span>
+            <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cost</span>
+            <span class="k">return</span> <span class="n">cost</span>
+    
+    <span class="n">costs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">dp_recursion</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">costs</span><span class="p">)</span></div>
+    
+
+<div class="viewcode-block" id="buttom_up_dynamic_programming"><a class="viewcode-back" href="../../rst/dynamic_programming/dynamic_programming.html#dynamic_programming.matrix_chain_multiplication_problem.buttom_up_dynamic_programming">[文档]</a><span class="k">def</span> <span class="nf">buttom_up_dynamic_programming</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    自底向上</span>
+<span class="sd">    &gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]</span>
+<span class="sd">    &gt;&gt;&gt; buttom_up_dynamic_programming(matrix_chain_dims)</span>
+<span class="sd">    15125</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">costs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">x</span>  <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)):</span>
+        <span class="n">costs</span><span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">gap</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)):</span>    <span class="c1"># 分批计算出间隔为1，2，3...n-1的</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span><span class="o">-</span><span class="n">gap</span><span class="p">):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">gap</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+                <span class="n">the_cost</span> <span class="o">=</span> <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">)]</span> <span class="o">+</span> <span class="n">costs</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="n">the_cost</span><span class="p">)</span>
+            <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">cost</span>
+    <span class="k">return</span> <span class="n">costs</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="buttom_up_dynamic_programming2"><a class="viewcode-back" href="../../rst/dynamic_programming/dynamic_programming.html#dynamic_programming.matrix_chain_multiplication_problem.buttom_up_dynamic_programming2">[文档]</a><span class="k">def</span> <span class="nf">buttom_up_dynamic_programming2</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    自底向上</span>
+<span class="sd">    &gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]</span>
+<span class="sd">    &gt;&gt;&gt; c, s = buttom_up_dynamic_programming2(matrix_chain_dims)</span>
+<span class="sd">    &gt;&gt;&gt; c[(0,5)]</span>
+<span class="sd">    15125</span>
+<span class="sd">    &gt;&gt;&gt; s[(0,5)]    # means (0,2)、(3,5)</span>
+<span class="sd">    2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">costs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">solution</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">x</span>  <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)):</span>
+        <span class="n">costs</span><span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">gap</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)):</span>    <span class="c1"># 分批计算出间隔为1，2，3...n-1的</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span><span class="o">-</span><span class="n">gap</span><span class="p">):</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">gap</span>
+            <span class="n">the_cost</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+            <span class="n">the_k</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+                <span class="n">cost</span> <span class="o">=</span> <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">)]</span> <span class="o">+</span> <span class="n">costs</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">+</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_chain_dims</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">cost</span> <span class="o">&lt;</span> <span class="n">the_cost</span><span class="p">:</span>
+                    <span class="n">the_cost</span> <span class="o">=</span> <span class="n">cost</span>
+                    <span class="n">the_k</span> <span class="o">=</span> <span class="n">k</span>
+            <span class="n">costs</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">the_cost</span>
+            <span class="n">solution</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span> <span class="o">=</span> <span class="n">the_k</span>
+    <span class="k">return</span> <span class="n">costs</span><span class="p">,</span> <span class="n">solution</span></div>
+
+<div class="viewcode-block" id="print_parens"><a class="viewcode-back" href="../../rst/dynamic_programming/dynamic_programming.html#dynamic_programming.matrix_chain_multiplication_problem.print_parens">[文档]</a><span class="k">def</span> <span class="nf">print_parens</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A</span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">print_</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)])</span>
+        <span class="n">print_</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+
+        
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+    <span class="n">matrix_chain_dims</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">),</span> <span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">)]</span>
+    <span class="n">c</span><span class="p">,</span><span class="n">s</span> <span class="o">=</span> <span class="n">buttom_up_dynamic_programming2</span><span class="p">(</span><span class="n">matrix_chain_dims</span><span class="p">)</span>
+    <span class="n">print_parens</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>哈希表</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="栈" href="stacks.html" />
+  <link rel="prev" title="二叉搜索树" href="binary_search_trees.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">数据结构</a> &raquo;</li>
+    
+    <li>哈希表</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="binary_search_trees.html"
+       title="上一章">← 二叉搜索树</a>
+  </li>
+  <li class="next">
+    <a href="stacks.html"
+       title="下一章">栈 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-data_structures.hash_tables">
+<span id="id1"></span><h1>哈希表<a class="headerlink" href="#module-data_structures.hash_tables" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>哈希表<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<span class="target" id="module-data_structures.hash_tables.hash_table"></span><dl class="class">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.hash_tables.hash_table.</code><code class="sig-name descname">BaseHashTable</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">numberic_hash</em>, <em class="sig-param">string_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>基本哈希表</p>
+<dl class="attribute">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.size">
+<code class="sig-name descname">size</code><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.size" title="永久链接至目标">¶</a></dt>
+<dd><p>哈希表大小上限</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.numberic_hash">
+<code class="sig-name descname">numberic_hash</code><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.numberic_hash" title="永久链接至目标">¶</a></dt>
+<dd><p>数值hash函数</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.string_hash">
+<code class="sig-name descname">string_hash</code><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.string_hash" title="永久链接至目标">¶</a></dt>
+<dd><p>字符串hash函数</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.count">
+<code class="sig-name descname">count</code><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.count" title="永久链接至目标">¶</a></dt>
+<dd><p>哈希表中已存放数据条目数</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">numberic_hash</em>, <em class="sig-param">string_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.__init__" title="永久链接至目标">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> – 哈希表大小上限</p></li>
+<li><p><strong>numberic_hash</strong> – 数值hash函数</p></li>
+<li><p><strong>string_hash</strong> – 字符串hash函数</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.hash">
+<code class="sig-name descname">hash</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.hash"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.hash" title="永久链接至目标">¶</a></dt>
+<dd><p>根据指定key计算hash值</p>
+<p>如果key是字符串将使用字符串函数；如果是数值，将使用数值hash函数</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.insert" title="永久链接至目标">¶</a></dt>
+<dd><p>插入数据</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – 字符串或数值类型的关键值</p></li>
+<li><p><strong>value</strong> – 存放的数据，默认是None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.bulk_insert">
+<code class="sig-name descname">bulk_insert</code><span class="sig-paren">(</span><em class="sig-param">items</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.bulk_insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.bulk_insert" title="永久链接至目标">¶</a></dt>
+<dd><p>批量插入数据</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>items</strong> – 由二元元组(key, value)组成的可迭代对象</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.delete" title="永久链接至目标">¶</a></dt>
+<dd><p>从hash表中删除指定key值的元素</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.search" title="永久链接至目标">¶</a></dt>
+<dd><p>查询指定key值的元素并返回其value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.rehash">
+<code class="sig-name descname">rehash</code><span class="sig-paren">(</span><em class="sig-param">factor=2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#BaseHashTable.rehash"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.rehash" title="永久链接至目标">¶</a></dt>
+<dd><p>重新分配hash表存储空间大小，默认将大小扩大1倍</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>factor</strong> – rehash因子，默认为2</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table.BaseHashTable.load_factor">
+<em class="property">property </em><code class="sig-name descname">load_factor</code><a class="headerlink" href="#data_structures.hash_tables.hash_table.BaseHashTable.load_factor" title="永久链接至目标">¶</a></dt>
+<dd><p>hash表装载因子</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="data_structures.hash_tables.hash_table.HashTableKeyError">
+<em class="property">exception </em><code class="sig-prename descclassname">data_structures.hash_tables.hash_table.</code><code class="sig-name descname">HashTableKeyError</code><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table.html#HashTableKeyError"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table.HashTableKeyError" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-data_structures.hash_tables.hash_table_by_open_addressing">
+<span id="id3"></span><h2>基于开放寻址法的哈希表<a class="headerlink" href="#module-data_structures.hash_tables.hash_table_by_open_addressing" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.hash_tables.hash_table_by_open_addressing.HashTableByOpenAdressing">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.hash_tables.hash_table_by_open_addressing.</code><code class="sig-name descname">HashTableByOpenAdressing</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">numberic_hash</em>, <em class="sig-param">string_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table_by_open_addressing.html#HashTableByOpenAdressing"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table_by_open_addressing.HashTableByOpenAdressing" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">hash_table.BaseHashTable</span></code></p>
+<p>基于开放寻址方法的哈希表</p>
+<p>开放寻址方法的哈希表没有使用额外的容器存储元素，而是直接将元素存储在散列表的槽中。同时这里使用的是线性探查方法进行查找槽位。</p>
+<dl class="method">
+<dt id="data_structures.hash_tables.hash_table_by_open_addressing.HashTableByOpenAdressing.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table_by_open_addressing.html#HashTableByOpenAdressing.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table_by_open_addressing.HashTableByOpenAdressing.search" title="永久链接至目标">¶</a></dt>
+<dd><p>查询指定key值的元素并返回其value</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-data_structures.hash_tables.hash_table_on_linked_list">
+<span id="id4"></span><h2>基于双向链表的哈希表<a class="headerlink" href="#module-data_structures.hash_tables.hash_table_on_linked_list" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.hash_tables.hash_table_on_linked_list.HashTableOnLinkedList">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.hash_tables.hash_table_on_linked_list.</code><code class="sig-name descname">HashTableOnLinkedList</code><span class="sig-paren">(</span><em class="sig-param">size</em>, <em class="sig-param">numberic_hash</em>, <em class="sig-param">string_hash</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/hash_tables/hash_table_on_linked_list.html#HashTableOnLinkedList"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.hash_tables.hash_table_on_linked_list.HashTableOnLinkedList" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">hash_table.BaseHashTable</span></code></p>
+<p>基于双向链表的hash表</p>
+<p>使用额外的双向链表存储hash表的元素</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="binary_search_trees.html"
+       title="上一章">← 二叉搜索树</a>
+  </li>
+  <li class="next">
+    <a href="stacks.html"
+       title="下一章">栈 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>线性时间非比较排序</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="数据结构" href="../data_structures/modules.html" />
+  <link rel="prev" title="交换排序" href="exchange_sort.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">排序算法</a> &raquo;</li>
+    
+    <li>线性时间非比较排序</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="exchange_sort.html"
+       title="上一章">← 交换排序</a>
+  </li>
+  <li class="next">
+    <a href="../data_structures/modules.html"
+       title="下一章">数据结构 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-sort">
+<span id="id1"></span><h1>线性时间非比较排序<a class="headerlink" href="#module-sort" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-sort.count_sort">
+<span id="id2"></span><h2>计数排序<a class="headerlink" href="#module-sort.count_sort" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="sort.count_sort.count_sort">
+<code class="sig-prename descclassname">sort.count_sort.</code><code class="sig-name descname">count_sort</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sort/count_sort.html#count_sort"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#sort.count_sort.count_sort" title="永久链接至目标">¶</a></dt>
+<dd><p>计数排序</p>
+<p>计数排序是一个非基于比较的排序算法。其核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。 作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。</p>
+<dl class="simple">
+<dt>计数排序算法运行步骤：</dt><dd><ul class="simple">
+<li><p>找出待排序的数组中最大和最小的元素；</p></li>
+<li><p>统计数组中每个值为i的元素出现的次数，存入数组C的第i项；</p></li>
+<li><p>对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）；</p></li>
+<li><p>反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1。</p></li>
+</ul>
+</dd>
+<dt>算法复杂度：</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>时间复杂度:</dt><dd><ul>
+<li><p>最坏：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+<li><p>平均：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+<li><p>最好：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>空间复杂度：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+<li><p>稳定性：稳定</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – 待排序数组</p></li>
+<li><p><strong>k</strong> (<em>int</em>) – 数组中元素的上界(整数)</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>新创建的已排序数组</p>
+</dd>
+<dt class="field-odd">返回类型</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">the_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">47</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">count_sort</span><span class="p">(</span><span class="n">the_array</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">the_array</span><span class="p">))</span>
+<span class="go">[3, 7, 7, 8, 18, 21, 22, 27, 27, 36, 36, 41, 43, 45, 47, 79, 84]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sort.radix_sort">
+<span id="id3"></span><h2>基数排序<a class="headerlink" href="#module-sort.radix_sort" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="sort.radix_sort.radix_sort">
+<code class="sig-prename descclassname">sort.radix_sort.</code><code class="sig-name descname">radix_sort</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">base=10</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sort/radix_sort.html#radix_sort"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#sort.radix_sort.radix_sort" title="永久链接至目标">¶</a></dt>
+<dd><p>基数排序</p>
+<p>基数排序是按照低位先排序，然后收集；再按照高位排序，然后再收集；依次类推，直到最高位。</p>
+<dl class="simple">
+<dt>基数排序实现步骤：</dt><dd><ul class="simple">
+<li><p>先取得数组中的最大数，并取得位数</p></li>
+<li><p>array为原始数组，从最低位开始取每个位组成radix二元数组，其中每个子数组存放当前位上数相同的数字，按顺序加入</p></li>
+<li><p>按顺序合并当前radix二元数组中的所有数组成新的array，重复前一步进入下一位的处理</p></li>
+<li><p>完成所有位的处理后，array数组即是有序的</p></li>
+</ul>
+</dd>
+<dt>算法复杂度：</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>时间复杂度:</dt><dd><ul>
+<li><p>最坏：<span class="math notranslate nohighlight">\(O(n*k)\)</span></p></li>
+<li><p>平均：<span class="math notranslate nohighlight">\(O(n*k)\)</span></p></li>
+<li><p>最好：<span class="math notranslate nohighlight">\(O(n*k)\)</span></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>空间复杂度：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+<li><p>稳定性：稳定</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – 待排序数组</p></li>
+<li><p><strong>base</strong> (<em>int</em>) – 待排序数组元素数字的基数。默认为10进制</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">the_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">47</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">radix_sort</span><span class="p">(</span><span class="n">the_array</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">the_array</span>
+<span class="go">[3, 7, 7, 8, 18, 21, 22, 27, 27, 36, 36, 41, 43, 45, 47, 79, 84]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-sort.bucket_sort">
+<span id="id4"></span><h2>桶排序<a class="headerlink" href="#module-sort.bucket_sort" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="sort.bucket_sort.bucket_sort">
+<code class="sig-prename descclassname">sort.bucket_sort.</code><code class="sig-name descname">bucket_sort</code><span class="sig-paren">(</span><em class="sig-param">array</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sort/bucket_sort.html#bucket_sort"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#sort.bucket_sort.bucket_sort" title="永久链接至目标">¶</a></dt>
+<dd><p>桶排序</p>
+<p>桶排序是计数排序的升级版。它假设数据是均匀分布的，并利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。</p>
+<p>桶排序 (Bucket sort)的工作的原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（可能使用别的排序算法或是以递归方式继续使用桶排序进行排）。</p>
+<dl class="simple">
+<dt>计数排序算法运行步骤：</dt><dd><ul class="simple">
+<li><p>设置一个定量的数组当作空桶</p></li>
+<li><p>遍历输入数据，并且把数据一个一个放到对应的桶里去</p></li>
+<li><p>对每个不是空的桶进行排序(如使用插入排序)</p></li>
+<li><p>从不是空的桶里把排好序的数据拼接起来</p></li>
+</ul>
+</dd>
+<dt>算法复杂度：</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>时间复杂度:</dt><dd><ul>
+<li><p>最坏：<span class="math notranslate nohighlight">\(O(n^2)\)</span></p></li>
+<li><p>平均：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+<li><p>最好：<span class="math notranslate nohighlight">\(O(n)\)</span></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>空间复杂度：<span class="math notranslate nohighlight">\(O(n+k)\)</span></p></li>
+<li><p>稳定性：稳定</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>array</strong> (<em>list</em>) – 待排序数组</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">the_array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">79</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">47</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bucket_sort</span><span class="p">(</span><span class="n">the_array</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">the_array</span>
+<span class="go">[3, 7, 7, 8, 18, 21, 22, 27, 27, 36, 36, 41, 43, 45, 47, 79, 84]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="exchange_sort.html"
+       title="上一章">← 交换排序</a>
+  </li>
+  <li class="next">
+    <a href="../data_structures/modules.html"
+       title="下一章">数据结构 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

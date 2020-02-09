@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>高级树算法</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="分治法" href="../divide_and_conquer/modules.html" />
+  <link rel="prev" title="树算法" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">树算法</a> &raquo;</li>
+    
+    <li>高级树算法</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 树算法</a>
+  </li>
+  <li class="next">
+    <a href="../divide_and_conquer/modules.html"
+       title="下一章">分治法 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-trees">
+<span id="id1"></span><h1>高级树算法<a class="headerlink" href="#module-trees" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-trees.b_tree">
+<span id="b"></span><h2>B树<a class="headerlink" href="#module-trees.b_tree" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="trees.b_tree.BTreeNode">
+<em class="property">class </em><code class="sig-prename descclassname">trees.b_tree.</code><code class="sig-name descname">BTreeNode</code><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.get_key">
+<code class="sig-name descname">get_key</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.get_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.get_key" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.get_child_node">
+<code class="sig-name descname">get_child_node</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.get_child_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.get_child_node" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.pop_key">
+<code class="sig-name descname">pop_key</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.pop_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.pop_key" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.pop_child_node">
+<code class="sig-name descname">pop_child_node</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.pop_child_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.pop_child_node" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.insert_key">
+<code class="sig-name descname">insert_key</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">i=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.insert_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.insert_key" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTreeNode.insert_child_node">
+<code class="sig-name descname">insert_child_node</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">i=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.insert_child_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.insert_child_node" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="trees.b_tree.BTree">
+<em class="property">class </em><code class="sig-prename descclassname">trees.b_tree.</code><code class="sig-name descname">BTree</code><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="trees.b_tree.BTree.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.allocate_node">
+<code class="sig-name descname">allocate_node</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; trees.b_tree.BTreeNode<a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.allocate_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.allocate_node" title="永久链接至目标">¶</a></dt>
+<dd><p>在O(1)的时间内为新节点分配一个磁盘页</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.disk_read">
+<code class="sig-name descname">disk_read</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.disk_read"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.disk_read" title="永久链接至目标">¶</a></dt>
+<dd><p>数据读取</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.disk_write">
+<code class="sig-name descname">disk_write</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.disk_write"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.disk_write" title="永久链接至目标">¶</a></dt>
+<dd><p>数据写入</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.search" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.create" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.split_child">
+<code class="sig-name descname">split_child</code><span class="sig-paren">(</span><em class="sig-param">node: trees.b_tree.BTreeNode</em>, <em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.split_child"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.split_child" title="永久链接至目标">¶</a></dt>
+<dd><p>这里设定：子节点、关键词都是从0开始数，如第1个子节点实际上为第2个
+node节点第i个子节点达到2*self.minmum_degree-1个关键词，将要对其进行分裂，其第i个关键词提到node中
+第i个子节点的第self.minmum_degree, … 第2*self.minmum_degree-1个关键词放入新节点中</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.insert" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="trees.b_tree.BTree.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.delete" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-trees.van_emde_boas_tree">
+<span id="van-emde-boas-tree"></span><h2>van_emde_boas_tree<a class="headerlink" href="#module-trees.van_emde_boas_tree" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="trees.van_emde_boas_tree.VanEmdeBoasTree">
+<em class="property">class </em><code class="sig-prename descclassname">trees.van_emde_boas_tree.</code><code class="sig-name descname">VanEmdeBoasTree</code><a class="reference internal" href="../../_modules/trees/van_emde_boas_tree.html#VanEmdeBoasTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.van_emde_boas_tree.VanEmdeBoasTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 树算法</a>
+  </li>
+  <li class="next">
+    <a href="../divide_and_conquer/modules.html"
+       title="下一章">分治法 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

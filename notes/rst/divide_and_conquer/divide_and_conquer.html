@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>分治法</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="贪心算法" href="../greedy_algorithm/modules.html" />
+  <link rel="prev" title="分治法" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">分治法</a> &raquo;</li>
+    
+    <li>分治法</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 分治法</a>
+  </li>
+  <li class="next">
+    <a href="../greedy_algorithm/modules.html"
+       title="下一章">贪心算法 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-divide_and_conquer">
+<span id="id1"></span><h1>分治法<a class="headerlink" href="#module-divide_and_conquer" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-divide_and_conquer.maximum_subarray">
+<span id="id2"></span><h2>最大子序列问题<a class="headerlink" href="#module-divide_and_conquer.maximum_subarray" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="divide_and_conquer.maximum_subarray.find_max_crossing_subarray">
+<code class="sig-prename descclassname">divide_and_conquer.maximum_subarray.</code><code class="sig-name descname">find_max_crossing_subarray</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">start</em>, <em class="sig-param">mid</em>, <em class="sig-param">stop</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/maximum_subarray.html#find_max_crossing_subarray"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.maximum_subarray.find_max_crossing_subarray" title="永久链接至目标">¶</a></dt>
+<dd><p>寻找最大跨中间点的子数组的边界点
+(注意：这里找出的最大子数组，前提是在包含中间节点情况下，再找出与它组成最大子数组的情形，因此这里找出的数组长度至少为2)
+:param array: 待寻找的数组
+:param start: 起始下标
+:param mid: 中间下标
+:param stop: 结束下标
+:return: 左、右边界点，以及最大和</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="divide_and_conquer.maximum_subarray.find_maximum_subarray">
+<code class="sig-prename descclassname">divide_and_conquer.maximum_subarray.</code><code class="sig-name descname">find_maximum_subarray</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">start</em>, <em class="sig-param">stop</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/maximum_subarray.html#find_maximum_subarray"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.maximum_subarray.find_maximum_subarray" title="永久链接至目标">¶</a></dt>
+<dd><p>寻找array中的最大的数组
+:param array: 待寻找的数组
+:param start: 起始下标
+:param stop: 结束下标
+:return: 最大子数组的起始下标和结束下标，以及该最大子数组的和</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-divide_and_conquer.square_matrix_multiply_strassen">
+<span id="id3"></span><h2>矩阵乘算法<a class="headerlink" href="#module-divide_and_conquer.square_matrix_multiply_strassen" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="divide_and_conquer.square_matrix_multiply_strassen.get_dim">
+<code class="sig-prename descclassname">divide_and_conquer.square_matrix_multiply_strassen.</code><code class="sig-name descname">get_dim</code><span class="sig-paren">(</span><em class="sig-param">matrix</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/square_matrix_multiply_strassen.html#get_dim"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.square_matrix_multiply_strassen.get_dim" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="divide_and_conquer.square_matrix_multiply_strassen.divide_matrix">
+<code class="sig-prename descclassname">divide_and_conquer.square_matrix_multiply_strassen.</code><code class="sig-name descname">divide_matrix</code><span class="sig-paren">(</span><em class="sig-param">M</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/square_matrix_multiply_strassen.html#divide_matrix"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.square_matrix_multiply_strassen.divide_matrix" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="divide_and_conquer.square_matrix_multiply_strassen.add_matrix">
+<code class="sig-prename descclassname">divide_and_conquer.square_matrix_multiply_strassen.</code><code class="sig-name descname">add_matrix</code><span class="sig-paren">(</span><em class="sig-param">M1</em>, <em class="sig-param">M2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/square_matrix_multiply_strassen.html#add_matrix"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.square_matrix_multiply_strassen.add_matrix" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="divide_and_conquer.square_matrix_multiply_strassen.sub_matrix">
+<code class="sig-prename descclassname">divide_and_conquer.square_matrix_multiply_strassen.</code><code class="sig-name descname">sub_matrix</code><span class="sig-paren">(</span><em class="sig-param">M1</em>, <em class="sig-param">M2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/square_matrix_multiply_strassen.html#sub_matrix"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.square_matrix_multiply_strassen.sub_matrix" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="divide_and_conquer.square_matrix_multiply_strassen.multi_2q_2q">
+<code class="sig-prename descclassname">divide_and_conquer.square_matrix_multiply_strassen.</code><code class="sig-name descname">multi_2q_2q</code><span class="sig-paren">(</span><em class="sig-param">m1</em>, <em class="sig-param">m2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/square_matrix_multiply_strassen.html#multi_2q_2q"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.square_matrix_multiply_strassen.multi_2q_2q" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="divide_and_conquer.square_matrix_multiply_strassen.matrix_multiply_strassen">
+<code class="sig-prename descclassname">divide_and_conquer.square_matrix_multiply_strassen.</code><code class="sig-name descname">matrix_multiply_strassen</code><span class="sig-paren">(</span><em class="sig-param">A</em>, <em class="sig-param">B</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/divide_and_conquer/square_matrix_multiply_strassen.html#matrix_multiply_strassen"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#divide_and_conquer.square_matrix_multiply_strassen.matrix_multiply_strassen" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 分治法</a>
+  </li>
+  <li class="next">
+    <a href="../greedy_algorithm/modules.html"
+       title="下一章">贪心算法 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

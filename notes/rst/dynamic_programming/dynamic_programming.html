@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>动态规划</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="prev" title="动态规划" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">动态规划</a> &raquo;</li>
+    
+    <li>动态规划</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 动态规划</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-dynamic_programming">
+<span id="id1"></span><h1>动态规划<a class="headerlink" href="#module-dynamic_programming" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-dynamic_programming.cut_rod">
+<span id="id2"></span><h2>钢条切割问题<a class="headerlink" href="#module-dynamic_programming.cut_rod" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="dynamic_programming.cut_rod.direct_recursion_cut_rod">
+<code class="sig-prename descclassname">dynamic_programming.cut_rod.</code><code class="sig-name descname">direct_recursion_cut_rod</code><span class="sig-paren">(</span><em class="sig-param">price</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/cut_rod.html#direct_recursion_cut_rod"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.cut_rod.direct_recursion_cut_rod" title="永久链接至目标">¶</a></dt>
+<dd><p>钢条切割问题-递归方案</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">price</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">direct_recursion_cut_rod</span><span class="p">(</span><span class="n">price</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">price</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">30</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.cut_rod.memoized_cut_rod_aux">
+<code class="sig-prename descclassname">dynamic_programming.cut_rod.</code><code class="sig-name descname">memoized_cut_rod_aux</code><span class="sig-paren">(</span><em class="sig-param">price</em>, <em class="sig-param">n</em>, <em class="sig-param">memo</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/cut_rod.html#memoized_cut_rod_aux"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.cut_rod.memoized_cut_rod_aux" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.cut_rod.memoized_cut_rod">
+<code class="sig-prename descclassname">dynamic_programming.cut_rod.</code><code class="sig-name descname">memoized_cut_rod</code><span class="sig-paren">(</span><em class="sig-param">price</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/cut_rod.html#memoized_cut_rod"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.cut_rod.memoized_cut_rod" title="永久链接至目标">¶</a></dt>
+<dd><p>带备忘的自顶向下动态规划法
+&gt;&gt;&gt; price = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
+&gt;&gt;&gt; memoized_cut_rod(price, len(price)-1)
+30</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.cut_rod.buttom_up_cut_rod">
+<code class="sig-prename descclassname">dynamic_programming.cut_rod.</code><code class="sig-name descname">buttom_up_cut_rod</code><span class="sig-paren">(</span><em class="sig-param">price</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/cut_rod.html#buttom_up_cut_rod"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.cut_rod.buttom_up_cut_rod" title="永久链接至目标">¶</a></dt>
+<dd><p>自底向上动态规划法
+&gt;&gt;&gt; price = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
+&gt;&gt;&gt; buttom_up_cut_rod(price, len(price)-1)
+30</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.cut_rod.extended_buttom_up_cut_rod">
+<code class="sig-prename descclassname">dynamic_programming.cut_rod.</code><code class="sig-name descname">extended_buttom_up_cut_rod</code><span class="sig-paren">(</span><em class="sig-param">price</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/cut_rod.html#extended_buttom_up_cut_rod"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.cut_rod.extended_buttom_up_cut_rod" title="永久链接至目标">¶</a></dt>
+<dd><p>记录解决方案
+&gt;&gt;&gt; price = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]    # p[i]: 长为i米的价格
+&gt;&gt;&gt; memo, solution = extended_buttom_up_cut_rod(price, len(price)-1)
+&gt;&gt;&gt; memo
+[0, 1, 5, 8, 10, 13, 17, 18, 22, 25, 30]
+&gt;&gt;&gt; solution
+[0, 1, 2, 3, 2, 2, 6, 1, 2, 3, 10]</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dynamic_programming.dynamic_0_1_knapsack">
+<span id="id3"></span><h2>0-1背包问题<a class="headerlink" href="#module-dynamic_programming.dynamic_0_1_knapsack" title="永久链接至标题">¶</a></h2>
+<p>Author: luo-songtao
+0-1背包问题</p>
+<dl class="function">
+<dt id="dynamic_programming.dynamic_0_1_knapsack.dynamic_0_1_knapsack">
+<code class="sig-prename descclassname">dynamic_programming.dynamic_0_1_knapsack.</code><code class="sig-name descname">dynamic_0_1_knapsack</code><span class="sig-paren">(</span><em class="sig-param">items</em>, <em class="sig-param">weight</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/dynamic_0_1_knapsack.html#dynamic_0_1_knapsack"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.dynamic_0_1_knapsack.dynamic_0_1_knapsack" title="永久链接至目标">¶</a></dt>
+<dd><p>(i,w): i-物品个数；w-背包重量
+values[i][w]存储i个物品对于背包大小w的最大价值</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-dynamic_programming.longest_common_subsequence">
+<span id="id4"></span><h2>最长公共子序列问题<a class="headerlink" href="#module-dynamic_programming.longest_common_subsequence" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="dynamic_programming.longest_common_subsequence.lcs_length">
+<code class="sig-prename descclassname">dynamic_programming.longest_common_subsequence.</code><code class="sig-name descname">lcs_length</code><span class="sig-paren">(</span><em class="sig-param">s1</em>, <em class="sig-param">s2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/longest_common_subsequence.html#lcs_length"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.longest_common_subsequence.lcs_length" title="永久链接至目标">¶</a></dt>
+<dd><p>最长公共子序列问题</p>
+<dl class="simple">
+<dt>实现步骤：</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>逐个遍历S1,S2所有元素：</dt><dd><ol class="arabic simple">
+<li><p>若发现相同元素s_i=s_j，那么子序列S1[:i]和S2[:j]的lcs长度应该是子序列S1[:i-1]和S2[:j-1]的lcs长度值+1</p></li>
+<li><p>否则S1[:i]和S2[:j]的lcs长度必定等于S1[:i-1]和S2[:j]或者S1[:i]和S2[:j-1]的lcs长度</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>最长公共子序列问题具备</dt><dd><ul class="simple">
+<li><p>最优子结构：S1[:10]和S2[:15]的lcs最优解包含了子问题S1[:8]和S2[:15]的lcs最优解</p></li>
+<li><p>重叠子问题：S1[:10]和S2[:15]和S1[:12]和S2[:18]同时包括了如S1[:8]和S2[:8]的lcs的子问题</p></li>
+</ul>
+</dd>
+</dl>
+<p>不过这里的动态规划问题是在根据条件排除子问题</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.longest_common_subsequence.print_lcs">
+<code class="sig-prename descclassname">dynamic_programming.longest_common_subsequence.</code><code class="sig-name descname">print_lcs</code><span class="sig-paren">(</span><em class="sig-param">record_table</em>, <em class="sig-param">s1</em>, <em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/longest_common_subsequence.html#print_lcs"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.longest_common_subsequence.print_lcs" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-dynamic_programming.matrix_chain_multiplication_problem">
+<span id="id5"></span><h2>矩阵链乘问题<a class="headerlink" href="#module-dynamic_programming.matrix_chain_multiplication_problem" title="永久链接至标题">¶</a></h2>
+<p>Author: luo-songtao
+矩阵链乘</p>
+<dl class="function">
+<dt id="dynamic_programming.matrix_chain_multiplication_problem.direct_recursion">
+<code class="sig-prename descclassname">dynamic_programming.matrix_chain_multiplication_problem.</code><code class="sig-name descname">direct_recursion</code><span class="sig-paren">(</span><em class="sig-param">matrix_chain_dims</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/matrix_chain_multiplication_problem.html#direct_recursion"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.matrix_chain_multiplication_problem.direct_recursion" title="永久链接至目标">¶</a></dt>
+<dd><p>直接递归形式
+&gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]
+&gt;&gt;&gt; direct_recursion(matrix_chain_dims)
+15125</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.matrix_chain_multiplication_problem.up_buttom_dynamic_programming">
+<code class="sig-prename descclassname">dynamic_programming.matrix_chain_multiplication_problem.</code><code class="sig-name descname">up_buttom_dynamic_programming</code><span class="sig-paren">(</span><em class="sig-param">matrix_chain_dims</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/matrix_chain_multiplication_problem.html#up_buttom_dynamic_programming"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.matrix_chain_multiplication_problem.up_buttom_dynamic_programming" title="永久链接至目标">¶</a></dt>
+<dd><p>自顶向下的动态规划
+&gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]
+&gt;&gt;&gt; up_buttom_dynamic_programming(matrix_chain_dims)
+15125</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.matrix_chain_multiplication_problem.buttom_up_dynamic_programming">
+<code class="sig-prename descclassname">dynamic_programming.matrix_chain_multiplication_problem.</code><code class="sig-name descname">buttom_up_dynamic_programming</code><span class="sig-paren">(</span><em class="sig-param">matrix_chain_dims</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/matrix_chain_multiplication_problem.html#buttom_up_dynamic_programming"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.matrix_chain_multiplication_problem.buttom_up_dynamic_programming" title="永久链接至目标">¶</a></dt>
+<dd><p>自底向上
+&gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]
+&gt;&gt;&gt; buttom_up_dynamic_programming(matrix_chain_dims)
+15125</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.matrix_chain_multiplication_problem.buttom_up_dynamic_programming2">
+<code class="sig-prename descclassname">dynamic_programming.matrix_chain_multiplication_problem.</code><code class="sig-name descname">buttom_up_dynamic_programming2</code><span class="sig-paren">(</span><em class="sig-param">matrix_chain_dims</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/matrix_chain_multiplication_problem.html#buttom_up_dynamic_programming2"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.matrix_chain_multiplication_problem.buttom_up_dynamic_programming2" title="永久链接至目标">¶</a></dt>
+<dd><p>自底向上
+&gt;&gt;&gt; matrix_chain_dims = [(30,35), (35, 15), (15, 5), (5,10), (10, 20), (20, 25)]
+&gt;&gt;&gt; c, s = buttom_up_dynamic_programming2(matrix_chain_dims)
+&gt;&gt;&gt; c[(0,5)]
+15125
+&gt;&gt;&gt; s[(0,5)]    # means (0,2)、(3,5)
+2</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.matrix_chain_multiplication_problem.print_parens">
+<code class="sig-prename descclassname">dynamic_programming.matrix_chain_multiplication_problem.</code><code class="sig-name descname">print_parens</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/matrix_chain_multiplication_problem.html#print_parens"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.matrix_chain_multiplication_problem.print_parens" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-dynamic_programming.optimal_binary_search_tree"></span><p>Author: luo-songtao
+最优二叉搜索树： 每个节点的信息被搜索的概率不一，被搜索概率越高的节点信息应当离根节点越近，这样搜索的代价会更低
+（深度+1）* 节点概率 = 该节点的搜索代价</p>
+<dl class="function">
+<dt id="dynamic_programming.optimal_binary_search_tree.direct_recursion_optimal_bst">
+<code class="sig-prename descclassname">dynamic_programming.optimal_binary_search_tree.</code><code class="sig-name descname">direct_recursion_optimal_bst</code><span class="sig-paren">(</span><em class="sig-param">keys</em>, <em class="sig-param">fake_keys</em>, <em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/optimal_binary_search_tree.html#direct_recursion_optimal_bst"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.optimal_binary_search_tree.direct_recursion_optimal_bst" title="永久链接至目标">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">keys</span><span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k2&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k4&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k5&quot;</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_keys</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;d0&quot;</span><span class="p">,</span><span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d1&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d2&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d4&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d5&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">direct_recursion_optimal_bst</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">fake_keys</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">(2.75, &#39;k2&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="dynamic_programming.optimal_binary_search_tree.buttom_up_recursion_bst">
+<code class="sig-prename descclassname">dynamic_programming.optimal_binary_search_tree.</code><code class="sig-name descname">buttom_up_recursion_bst</code><span class="sig-paren">(</span><em class="sig-param">keys</em>, <em class="sig-param">fake_keys</em>, <em class="sig-param">i</em>, <em class="sig-param">j</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/dynamic_programming/optimal_binary_search_tree.html#buttom_up_recursion_bst"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#dynamic_programming.optimal_binary_search_tree.buttom_up_recursion_bst" title="永久链接至目标">¶</a></dt>
+<dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">keys</span><span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k1&quot;</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k2&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k4&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;k5&quot;</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fake_keys</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;d0&quot;</span><span class="p">,</span><span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d1&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d2&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d3&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d4&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d5&quot;</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">buttom_up_recursion_bst</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">fake_keys</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)],</span> <span class="n">r</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+<span class="go">(2.75, &#39;k2&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 动态规划</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>二叉搜索树</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="哈希表" href="hash_tables.html" />
+  <link rel="prev" title="数据结构" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">数据结构</a> &raquo;</li>
+    
+    <li>二叉搜索树</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 数据结构</a>
+  </li>
+  <li class="next">
+    <a href="hash_tables.html"
+       title="下一章">哈希表 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-data_structures.binary_search_trees">
+<span id="id1"></span><h1>二叉搜索树<a class="headerlink" href="#module-data_structures.binary_search_trees" title="永久链接至标题">¶</a></h1>
+<p>Author: luo-songtao</p>
+<div class="section" id="id2">
+<h2>二叉搜索树<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<span class="target" id="module-data_structures.binary_search_trees.binary_search_tree"></span><dl class="class">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.binary_search_trees.binary_search_tree.</code><code class="sig-name descname">BinarySearchTreeNode</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTreeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>树节点对象</p>
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.parent">
+<code class="sig-name descname">parent</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.parent" title="永久链接至目标">¶</a></dt>
+<dd><p>父节点，默认为None</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.left">
+<code class="sig-name descname">left</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.left" title="永久链接至目标">¶</a></dt>
+<dd><p>左子节点，默认为None</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.right">
+<code class="sig-name descname">right</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.right" title="永久链接至目标">¶</a></dt>
+<dd><p>右子节点，默认为None</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.key">
+<code class="sig-name descname">key</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.key" title="永久链接至目标">¶</a></dt>
+<dd><p>节点上存储的关键值</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTreeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>key</strong> (<em>int</em>) – 节点存储的关键字值</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.binary_search_trees.binary_search_tree.</code><code class="sig-name descname">BinarySearchTree</code><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>二叉搜索树</p>
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.root">
+<code class="sig-name descname">root</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.root" title="永久链接至目标">¶</a></dt>
+<dd><p>父节点，默认为None</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.count">
+<code class="sig-name descname">count</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.count" title="永久链接至目标">¶</a></dt>
+<dd><p>节点数，默认为0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.depth">
+<code class="sig-name descname">depth</code><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.depth" title="永久链接至目标">¶</a></dt>
+<dd><p>树高度，默认为0</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.insert" title="永久链接至目标">¶</a></dt>
+<dd><p>将新节点插入二叉搜索树中，将作为新的叶子节点</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>new_node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 新节点对象</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.delete" title="永久链接至目标">¶</a></dt>
+<dd><p>删除当前树中的node节点，并调整树的相关节点以保持二叉搜索树的性质</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 将要删除的节点</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">node: data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode</em>, <em class="sig-param">key: int</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.search" title="永久链接至目标">¶</a></dt>
+<dd><p>从指定节点开始搜索关键值为key的节点并返回</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 要寻找的树或子树的根节点</p></li>
+<li><p><strong>key</strong> (<em>int</em>) – 要寻找的节点的关键值</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.is_empty">
+<code class="sig-name descname">is_empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.is_empty"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.is_empty" title="永久链接至目标">¶</a></dt>
+<dd><p>判断树是否为空</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.minimum">
+<code class="sig-name descname">minimum</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.minimum"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.minimum" title="永久链接至目标">¶</a></dt>
+<dd><p>从指定节点开始获取其子树中关键值最小的节点</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 要查找的树或子树的根节点</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.maximum">
+<code class="sig-name descname">maximum</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.maximum"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.maximum" title="永久链接至目标">¶</a></dt>
+<dd><p>从指定节点开始获取其子树中关键值最大的节点</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 要查找的树或子树的根节点</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.traversal">
+<code class="sig-name descname">traversal</code><span class="sig-paren">(</span><em class="sig-param">order='inorder'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.traversal"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.traversal" title="永久链接至目标">¶</a></dt>
+<dd><p>遍历</p>
+<p>按指定的方式遍历树。先序(“preorder”)、中序(“postorder”)、后序(“inorder”)。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>order</strong> (<em>str</em>) – 遍历方式。默认”inorder”</p>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>生成器</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.transplant">
+<code class="sig-name descname">transplant</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">transplanted_node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.transplant"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.transplant" title="永久链接至目标">¶</a></dt>
+<dd><p>节点移植</p>
+<dl class="simple">
+<dt>将transplanted_node移植到node节点位置。主要处理父节点与其的关系</dt><dd><ul class="simple">
+<li><p>设置node的父节点是transplanted_node的新父节点</p></li>
+<li><p>设置node的父节点的对应孩子是transplanted_node</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 原节点</p></li>
+<li><p><strong>transplanted_node</strong> (<a class="reference internal" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode" title="data_structures.binary_search_trees.binary_search_tree.BinarySearchTreeNode"><em>BinarySearchTreeNode</em></a>) – 移植节点</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.left_rotate">
+<code class="sig-name descname">left_rotate</code><span class="sig-paren">(</span><em class="sig-param">old_root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.left_rotate"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.left_rotate" title="永久链接至目标">¶</a></dt>
+<dd><p>子树左旋</p>
+<p>left rotate(左旋)：(这里root指树的根节点或子树的根节点)</p>
+<p>左旋和右旋是一种可以保持二叉搜索树性质的搜索树局部操作</p>
+<p>左旋示意图:
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>     <span class="n">old_root</span>
+    <span class="o">/</span>        \
+   <span class="n">a</span>           <span class="n">new_root</span>
+             <span class="o">/</span>         \
+            <span class="n">b</span>            <span class="n">c</span>
+ <span class="o">-----------------------</span>
+     <span class="n">new_root</span>
+    <span class="o">/</span>        \
+ <span class="n">old_root</span>     <span class="n">c</span>
+ <span class="o">/</span>       \
+<span class="n">a</span>         <span class="n">b</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.right_rotate">
+<code class="sig-name descname">right_rotate</code><span class="sig-paren">(</span><em class="sig-param">old_root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.right_rotate"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.right_rotate" title="永久链接至目标">¶</a></dt>
+<dd><p>子树右旋</p>
+<p>right rotate(右旋)：(这里root指树的根节点或子树的根节点)</p>
+<p>左旋和右旋是一种可以保持二叉搜索树性质的搜索树局部操作</p>
+<p>右旋示意图:
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">old_root</span>
+       <span class="o">/</span>        \
+    <span class="n">new_root</span>     <span class="n">c</span>
+    <span class="o">/</span>       \
+   <span class="n">a</span>         <span class="n">b</span>
+<span class="o">-----------------------</span>
+    <span class="n">new_root</span>
+   <span class="o">/</span>        \
+  <span class="n">a</span>           <span class="n">old_root</span>
+            <span class="o">/</span>         \
+           <span class="n">b</span>            <span class="n">c</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.inorder_tree_walk">
+<em class="property">classmethod </em><code class="sig-name descname">inorder_tree_walk</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.inorder_tree_walk"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.inorder_tree_walk" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.preorder_tree_walk">
+<em class="property">classmethod </em><code class="sig-name descname">preorder_tree_walk</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.preorder_tree_walk"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.preorder_tree_walk" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.postorder_tree_walk">
+<em class="property">classmethod </em><code class="sig-name descname">postorder_tree_walk</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/binary_search_tree.html#BinarySearchTree.postorder_tree_walk"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.binary_search_tree.BinarySearchTree.postorder_tree_walk" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-data_structures.binary_search_trees.red_black_tree">
+<span id="id3"></span><h2>红黑树<a class="headerlink" href="#module-data_structures.binary_search_trees.red_black_tree" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.binary_search_trees.red_black_tree.</code><code class="sig-name descname">RedBlackTreeNode</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/red_black_tree.html#RedBlackTreeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">binary_search_tree.BinarySearchTreeNode</span></code></p>
+<p>红黑树节点</p>
+<p>相比二叉搜索树节点，增加了color属性</p>
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode.color">
+<code class="sig-name descname">color</code><a class="headerlink" href="#data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode.color" title="永久链接至目标">¶</a></dt>
+<dd><p>节点颜色</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/red_black_tree.html#RedBlackTreeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.red_black_tree.RedBlackTreeNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Args:
+key (int): 节点存储的关键字值</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data_structures.binary_search_trees.red_black_tree.RedBlackTree">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.binary_search_trees.red_black_tree.</code><code class="sig-name descname">RedBlackTree</code><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/red_black_tree.html#RedBlackTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.red_black_tree.RedBlackTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">binary_search_tree.BinarySearchTree</span></code></p>
+<p>红黑树</p>
+<dl class="simple">
+<dt>红黑树是一颗满足以下性质的二叉搜索树：</dt><dd><ul class="simple">
+<li><p>每个节点或是红色的、或是黑色的</p></li>
+<li><p>根节点是黑色的</p></li>
+<li><p>叶节点都是黑色的</p></li>
+<li><p>如果一个节点是红色的，则它的两个子节点都是黑色的</p></li>
+<li><p>对每个节点，从该节点到其所有后代叶节点的简单路径上，均包含相同数目的黑色节点</p></li>
+</ul>
+</dd>
+</dl>
+<p>红黑树确保没有一条路径会比其他路径长出2倍，因为它是近似于平衡的</p>
+<p><strong>一颗有n个内部节点的红黑树的高度至多为 :math:`2lg (n+1)`</strong></p>
+<p>红黑树插入新节点：红黑树中插入新节点后，新节点颜色需要着为红色，同时为了保证红黑性质能继续保持，需要对树中相应的节点重新着色并旋转进行修复</p>
+<p>红黑树删除节点：红黑树删除节点后，同样为了保证红黑性质能继续保持，需要对树中相应的节点重新着色并旋转进行修复</p>
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.red_black_tree.RedBlackTree.RED">
+<code class="sig-name descname">RED</code><em class="property"> = 'red'</em><a class="headerlink" href="#data_structures.binary_search_trees.red_black_tree.RedBlackTree.RED" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.red_black_tree.RedBlackTree.BLACK">
+<code class="sig-name descname">BLACK</code><em class="property"> = 'black'</em><a class="headerlink" href="#data_structures.binary_search_trees.red_black_tree.RedBlackTree.BLACK" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-data_structures.binary_search_trees.avl_tree">
+<span id="id4"></span><h2>平衡二叉树<a class="headerlink" href="#module-data_structures.binary_search_trees.avl_tree" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.binary_search_trees.avl_tree.AVLTreeNode">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.binary_search_trees.avl_tree.</code><code class="sig-name descname">AVLTreeNode</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/avl_tree.html#AVLTreeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.avl_tree.AVLTreeNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">binary_search_tree.BinarySearchTreeNode</span></code></p>
+<p>平衡二叉树节点</p>
+<p>相比二叉搜索树节点，增加了height属性</p>
+<dl class="attribute">
+<dt id="data_structures.binary_search_trees.avl_tree.AVLTreeNode.height">
+<code class="sig-name descname">height</code><a class="headerlink" href="#data_structures.binary_search_trees.avl_tree.AVLTreeNode.height" title="永久链接至目标">¶</a></dt>
+<dd><p>记录当前节点在树中所在的高度</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.binary_search_trees.avl_tree.AVLTreeNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/avl_tree.html#AVLTreeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.avl_tree.AVLTreeNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Args:
+key (int): 节点存储的关键字值</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data_structures.binary_search_trees.avl_tree.AVLTree">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.binary_search_trees.avl_tree.</code><code class="sig-name descname">AVLTree</code><a class="reference internal" href="../../_modules/data_structures/binary_search_trees/avl_tree.html#AVLTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.binary_search_trees.avl_tree.AVLTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">binary_search_tree.BinarySearchTree</span></code></p>
+<p>平衡二叉树</p>
+<p>平衡二叉树一种高度平衡的二叉搜索树。对于树中每一个节点，它的左右子树的高度差至多为1.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 数据结构</a>
+  </li>
+  <li class="next">
+    <a href="hash_tables.html"
+       title="下一章">哈希表 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

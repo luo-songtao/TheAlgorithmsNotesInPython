@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>data_structures.linked_list.doubly_linked_list</title>
+    
+      <link rel="stylesheet" href="../../../_static/pygments.css">
+      <link rel="stylesheet" href="../../../_static/theme.css">
+      <link rel="stylesheet" href="../../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../../_static/theme-vendors.js"></script>
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../../genindex.html" />
+  <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">模块代码</a> &raquo;</li>
+    
+    <li>data_structures.linked_list.doubly_linked_list</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>data_structures.linked_list.doubly_linked_list 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+
+
+<div class="viewcode-block" id="DoublyLinkedListLink"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink">[文档]</a><span class="k">class</span> <span class="nc">DoublyLinkedListLink</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;链接表元素&quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="DoublyLinkedListLink.__init__"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="kc">None</span></div>
+    
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot; </span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="DoublyLinkedList"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedList">[文档]</a><span class="k">class</span> <span class="nc">DoublyLinkedList</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;双向链表</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="DoublyLinkedList.__init__"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="kc">None</span> </div>
+    
+<div class="viewcode-block" id="DoublyLinkedList.insert"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.insert">[文档]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link</span><span class="p">:</span> <span class="n">DoublyLinkedListLink</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;向链表尾部插入新元素：O(1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">link</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">link</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">link</span></div>
+        
+<div class="viewcode-block" id="DoublyLinkedList.delete"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.delete">[文档]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link</span><span class="p">:</span> <span class="n">DoublyLinkedListLink</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;删除链表中的link元素: O(1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">prev</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">next</span>
+        
+        <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">link</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">prev</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">prev</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tail</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">prev</span></div>
+    
+<div class="viewcode-block" id="DoublyLinkedList.search"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.search">[文档]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;根据元素的关键字搜索链表元素：O(n)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span>
+        <span class="k">while</span> <span class="n">link</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">link</span><span class="o">.</span><span class="n">key</span> <span class="o">!=</span> <span class="n">key</span><span class="p">:</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">next</span>
+        <span class="k">return</span> <span class="n">link</span></div>
+    
+<div class="viewcode-block" id="DoublyLinkedList.traversal"><a class="viewcode-back" href="../../../rst/data_structures/linked_list.html#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.traversal">[文档]</a>    <span class="k">def</span> <span class="nf">traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;遍历链表</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">link</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">head</span> <span class="k">if</span> <span class="n">reverse</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">tail</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">link</span>
+            <span class="k">if</span> <span class="n">reverse</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">link</span><span class="o">.</span><span class="n">next</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">link</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">next</span>
+            <span class="k">elif</span> <span class="n">reverse</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">link</span><span class="o">.</span><span class="n">prev</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">link</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">prev</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">linked_list</span> <span class="o">=</span> <span class="n">DoublyLinkedList</span><span class="p">()</span>
+    
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">78</span><span class="p">,</span><span class="mi">12</span><span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="n">linked_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">DoublyLinkedListLink</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    
+    <span class="n">head</span> <span class="o">=</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">head</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">tail</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Head: &quot;</span><span class="p">,</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">head</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tail: &quot;</span><span class="p">,</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">tail</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Traversal Head2tail: &quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">linked_list</span><span class="o">.</span><span class="n">traversal</span><span class="p">()))</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">searched_link</span> <span class="o">=</span> <span class="n">linked_list</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Searched key=</span><span class="si">{}</span><span class="s2">: &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">searched_link</span><span class="p">)</span>
+    <span class="n">linked_list</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">searched_link</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deleted key=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Traversal Tail2head: &quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">linked_list</span><span class="o">.</span><span class="n">traversal</span><span class="p">(</span><span class="kc">True</span><span class="p">)))</span>
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

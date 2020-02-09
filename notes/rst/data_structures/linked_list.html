@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>链表</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="堆" href="heaps.html" />
+  <link rel="prev" title="队列" href="queues.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">数据结构</a> &raquo;</li>
+    
+    <li>链表</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="queues.html"
+       title="上一章">← 队列</a>
+  </li>
+  <li class="next">
+    <a href="heaps.html"
+       title="下一章">堆 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-data_structures.linked_list">
+<span id="id1"></span><h1>链表<a class="headerlink" href="#module-data_structures.linked_list" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-data_structures.linked_list.doubly_linked_list">
+<span id="id2"></span><h2>双向链表<a class="headerlink" href="#module-data_structures.linked_list.doubly_linked_list" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.linked_list.doubly_linked_list.</code><code class="sig-name descname">DoublyLinkedListLink</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedListLink"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>链接表元素</p>
+<dl class="method">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">value=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedListLink.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedList">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.linked_list.doubly_linked_list.</code><code class="sig-name descname">DoublyLinkedList</code><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedList"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedList" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>双向链表</p>
+<dl class="method">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedList.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedList.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedList.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">link: data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedList.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.insert" title="永久链接至目标">¶</a></dt>
+<dd><p>向链表尾部插入新元素：O(1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedList.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">link: data_structures.linked_list.doubly_linked_list.DoublyLinkedListLink</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedList.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.delete" title="永久链接至目标">¶</a></dt>
+<dd><p>删除链表中的link元素: O(1)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedList.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedList.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.search" title="永久链接至目标">¶</a></dt>
+<dd><p>根据元素的关键字搜索链表元素：O(n)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.linked_list.doubly_linked_list.DoublyLinkedList.traversal">
+<code class="sig-name descname">traversal</code><span class="sig-paren">(</span><em class="sig-param">reverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/linked_list/doubly_linked_list.html#DoublyLinkedList.traversal"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.linked_list.doubly_linked_list.DoublyLinkedList.traversal" title="永久链接至目标">¶</a></dt>
+<dd><p>遍历链表</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="queues.html"
+       title="上一章">← 队列</a>
+  </li>
+  <li class="next">
+    <a href="heaps.html"
+       title="下一章">堆 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

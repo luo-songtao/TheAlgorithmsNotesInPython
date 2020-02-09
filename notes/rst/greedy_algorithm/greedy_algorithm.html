@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>贪心算法</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="动态规划" href="../dynamic_programming/modules.html" />
+  <link rel="prev" title="贪心算法" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../trees/modules.html" class="reference internal ">树算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">贪心算法</a> &raquo;</li>
+    
+    <li>贪心算法</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 贪心算法</a>
+  </li>
+  <li class="next">
+    <a href="../dynamic_programming/modules.html"
+       title="下一章">动态规划 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-greedy_algorithm">
+<span id="id1"></span><h1>贪心算法<a class="headerlink" href="#module-greedy_algorithm" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-greedy_algorithm.activity_selector">
+<span id="id2"></span><h2>活动问题<a class="headerlink" href="#module-greedy_algorithm.activity_selector" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="greedy_algorithm.activity_selector.activity_selector">
+<code class="sig-prename descclassname">greedy_algorithm.activity_selector.</code><code class="sig-name descname">activity_selector</code><span class="sig-paren">(</span><em class="sig-param">activities</em>, <em class="sig-param">activity_number</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/greedy_algorithm/activity_selector.html#activity_selector"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#greedy_algorithm.activity_selector.activity_selector" title="永久链接至目标">¶</a></dt>
+<dd><p>活动选择问题</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-greedy_algorithm.fractional_knapsack">
+<span id="id3"></span><h2>分数背包问题<a class="headerlink" href="#module-greedy_algorithm.fractional_knapsack" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="greedy_algorithm.fractional_knapsack.fractional_knapsack">
+<code class="sig-prename descclassname">greedy_algorithm.fractional_knapsack.</code><code class="sig-name descname">fractional_knapsack</code><span class="sig-paren">(</span><em class="sig-param">items</em>, <em class="sig-param">weight</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/greedy_algorithm/fractional_knapsack.html#fractional_knapsack"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#greedy_algorithm.fractional_knapsack.fractional_knapsack" title="永久链接至目标">¶</a></dt>
+<dd><p>分数背包问题
+贪心选择：按单位价值高低依次拿取直到取完所有物品或者填满背包</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-greedy_algorithm.hoffman_code">
+<span id="id4"></span><h2>霍夫曼编码<a class="headerlink" href="#module-greedy_algorithm.hoffman_code" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="greedy_algorithm.hoffman_code.HuffmanCodeNode">
+<em class="property">class </em><code class="sig-prename descclassname">greedy_algorithm.hoffman_code.</code><code class="sig-name descname">HuffmanCodeNode</code><span class="sig-paren">(</span><em class="sig-param">freq</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/greedy_algorithm/hoffman_code.html#HuffmanCodeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#greedy_algorithm.hoffman_code.HuffmanCodeNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="greedy_algorithm.hoffman_code.HuffmanCodeNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">freq</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/greedy_algorithm/hoffman_code.html#HuffmanCodeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#greedy_algorithm.hoffman_code.HuffmanCodeNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="greedy_algorithm.hoffman_code.huffman_code">
+<code class="sig-prename descclassname">greedy_algorithm.hoffman_code.</code><code class="sig-name descname">huffman_code</code><span class="sig-paren">(</span><em class="sig-param">characters</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/greedy_algorithm/hoffman_code.html#huffman_code"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#greedy_algorithm.hoffman_code.huffman_code" title="永久链接至目标">¶</a></dt>
+<dd><p>霍夫曼编码</p>
+<p>贪心选择：按字符出现频率最低次序的进行选择，来构建霍夫曼编码树</p>
+<p>时间复杂度: <span class="math notranslate nohighlight">\(O(nlgn)\)</span></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">characters</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">45</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">root_node</span> <span class="o">=</span> <span class="n">huffman_code</span><span class="p">(</span><span class="n">characters</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">root_node</span>
+<span class="go">None:100</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 贪心算法</a>
+  </li>
+  <li class="next">
+    <a href="../dynamic_programming/modules.html"
+       title="下一章">动态规划 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>
