@@ -160,6 +160,37 @@
 <dt id="trees.b_tree.BTreeNode">
 <em class="property">class </em><code class="sig-prename descclassname">trees.b_tree.</code><code class="sig-name descname">BTreeNode</code><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>B树节点</p>
+<dl class="attribute">
+<dt id="trees.b_tree.BTreeNode.leaf">
+<code class="sig-name descname">leaf</code><a class="headerlink" href="#trees.b_tree.BTreeNode.leaf" title="永久链接至目标">¶</a></dt>
+<dd><p>布尔类型值。为True则表示当前节点是叶节点</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trees.b_tree.BTreeNode.keys_count">
+<code class="sig-name descname">keys_count</code><a class="headerlink" href="#trees.b_tree.BTreeNode.keys_count" title="永久链接至目标">¶</a></dt>
+<dd><p>记录当前节点上存储的关键字个数</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trees.b_tree.BTreeNode.depth">
+<code class="sig-name descname">depth</code><a class="headerlink" href="#trees.b_tree.BTreeNode.depth" title="永久链接至目标">¶</a></dt>
+<dd><p>记录当前节点的高度</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trees.b_tree.BTreeNode.keys">
+<code class="sig-name descname">keys</code><a class="headerlink" href="#trees.b_tree.BTreeNode.keys" title="永久链接至目标">¶</a></dt>
+<dd><p>存储当前节点存放的关键字</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="trees.b_tree.BTreeNode.child_nodes">
+<code class="sig-name descname">child_nodes</code><a class="headerlink" href="#trees.b_tree.BTreeNode.child_nodes" title="永久链接至目标">¶</a></dt>
+<dd><p>存储当前节点的子节点(指针)</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="trees.b_tree.BTreeNode.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTreeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTreeNode.__init__" title="永久链接至目标">¶</a></dt>
@@ -202,6 +233,37 @@
 <dt id="trees.b_tree.BTree">
 <em class="property">class </em><code class="sig-prename descclassname">trees.b_tree.</code><code class="sig-name descname">BTree</code><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>B树</p>
+<p>B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树。但B树在降低磁盘I/O操作树方面更好一些。</p>
+<p>B树与红黑树的不同之处在于B树的节点可以有很多子节点，可以从数个到数千个。</p>
+<p>B树以一种自然方式推广了二叉搜索树：如果B树的一个节点拥有n个关键字，那么该节点就会有n+1个子节点</p>
+<dl>
+<dt><strong>B树的性质</strong>：</dt><dd><ol class="arabic simple">
+<li><dl class="simple">
+<dt>每个节点有以下属性：</dt><dd><ul class="simple">
+<li><p>keys_count，存储当前节点中关键字个数</p></li>
+<li><p>keys_count个关键字，并以非降序存放</p></li>
+<li><p>leaf，一个布尔值，当前节点是叶节点则为True，否则为False</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>每个内部节点还包含keys_count+1个指向其孩子的指针，但注意叶子节点没有子节点，所以它们不需维护这样的指针</p></li>
+<li><p>节点上的关键字对存储在各个子树中的关键字的范围加以分割</p></li>
+<li><p>每个叶节点具有相同的深度。即树的高度h</p></li>
+<li><dl class="simple">
+<dt>每个节点所包含的关键字个数有上界和下届。用一个被称为B树的**最小度数(minmum degree)**的固定整数来表示这些界</dt><dd><ul class="simple">
+<li><p>除了根节点以外的每个节点必须至少有minmum_degree-1个关键字。因此除了根节点以外的每个内部节点至少有minmum_degree个子节点。如果树非空，则根节点至少又一个子节点。</p></li>
+<li><p>每个节点至多可拥有2minmum_degree-1个关键字。因此，一个内部节点至多有2minmum_degree个子节点。</p></li>
+<li><p>满节点：拥有2minmum_degree-1个关键字</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p>最小度数为2的B树是最简单的。同时t的值越大，B树的高度也就越小。</p>
+</dd>
+</dl>
 <dl class="method">
 <dt id="trees.b_tree.BTree.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.__init__" title="永久链接至目标">¶</a></dt>
@@ -211,48 +273,85 @@
 <dl class="method">
 <dt id="trees.b_tree.BTree.allocate_node">
 <code class="sig-name descname">allocate_node</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; trees.b_tree.BTreeNode<a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.allocate_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.allocate_node" title="永久链接至目标">¶</a></dt>
-<dd><p>在O(1)的时间内为新节点分配一个磁盘页</p>
+<dd><p>模拟在O(1)的时间内为新节点分配一个磁盘页</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.disk_read">
 <code class="sig-name descname">disk_read</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.disk_read"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.disk_read" title="永久链接至目标">¶</a></dt>
-<dd><p>数据读取</p>
+<dd><p>模拟数据读取磁盘I/O操作</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.disk_write">
 <code class="sig-name descname">disk_write</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.disk_write"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.disk_write" title="永久链接至目标">¶</a></dt>
-<dd><p>数据写入</p>
+<dd><p>模拟数据写入磁盘I/O操作</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.search">
 <code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.search" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>搜索具有指定key值的节点对象</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>含有值为key的节点对象以及该key在该节点的索引位置。如果没有查寻到则返回None</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>(node, i)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.create">
 <code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.create" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>创建一颗空的B树</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.split_child">
 <code class="sig-name descname">split_child</code><span class="sig-paren">(</span><em class="sig-param">node: trees.b_tree.BTreeNode</em>, <em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.split_child"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.split_child" title="永久链接至目标">¶</a></dt>
-<dd><p>这里设定：子节点、关键词都是从0开始数，如第1个子节点实际上为第2个
-node节点第i个子节点达到2*self.minmum_degree-1个关键词，将要对其进行分裂，其第i个关键词提到node中
-第i个子节点的第self.minmum_degree, … 第2*self.minmum_degree-1个关键词放入新节点中</p>
+<dd><p>节点分裂</p>
+<dl class="simple">
+<dt>分裂步骤:</dt><dd><ul class="simple">
+<li><p>当node节点第i个子节点达到2*minmum_degree-1个关键词时，将要对其进行分裂，将第i个子节点的第i个关键词提到node中</p></li>
+<li><p>建立一个新节点，将第i个子节点的第(minmum_degree), …,第(2*minmum_degree-1)的(minmum_degree-1)个关键词放入新节点中</p></li>
+<li><p>并把新节点作为node的第i+1个子节点</p></li>
+</ul>
+</dd>
+</dl>
+<p>注意: 如果node节点的第i个子节点关键字个数低于最小度数-1，这里将会抛出异常</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#trees.b_tree.BTreeNode" title="trees.b_tree.BTreeNode"><em>BTreeNode</em></a>) – 将要分裂的节点的父节点</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – 表明node节点的第i个子节点将要进行分裂。i=0,1,2,…</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.insert">
 <code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.insert" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>插入关键字</p>
+<p>插入新关键字，最终是向叶子节点中进行插入，但是为了保证插入后每一个节点的关键字个数不超过2*minmum_degree-1个，那么需要从根节点开始，递归的向下进行判断。</p>
+<dl class="simple">
+<dt>插入步骤:</dt><dd><ul class="simple">
+<li><p>首先从根节点开始，先判断根节点是否已经达到2*minmum_degree-1个关键字,如果达到了，则需要先对根节点进行分裂</p></li>
+<li><p>否则将从根节点开始往下递归判断，在每一层当遇到当前节点已经满足2*minmum_degree-1个关键字的，都要先对该节点进行分裂</p></li>
+<li><p>最后直到叶节点后，不再递归，并将关键字插入到对应的叶节点上</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="trees.b_tree.BTree.delete">
 <code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/trees/b_tree.html#BTree.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#trees.b_tree.BTree.delete" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<dd><p>删除指定的key</p>
+<p>删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个</p>
+</dd></dl>
 
 </dd></dl>
 
