@@ -164,8 +164,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">keys_count</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 节点关键字个数</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># lenth = self.n</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># length = self.n + 1</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># lenth = keys_count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># length = keys_count + 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="BTreeNode.get_key"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.get_key">[文档]</a>    <span class="k">def</span> <span class="nf">get_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
@@ -189,7 +190,8 @@
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span></div></div>
 
 <div class="viewcode-block" id="BTree"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree">[文档]</a><span class="k">class</span> <span class="nc">BTree</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;B树</span>
@@ -295,6 +297,7 @@
         <span class="n">i_right_child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allocate_node</span><span class="p">()</span>
         <span class="n">i_right_child</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="n">i_left_child</span><span class="o">.</span><span class="n">leaf</span>
         <span class="n">i_right_child</span><span class="o">.</span><span class="n">keys_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minmum_degree</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">i_right_child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span>
         
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i_right_child</span><span class="o">.</span><span class="n">keys_count</span><span class="p">):</span>    <span class="c1"># 把后半部分的key移到新的节点</span>
             <span class="n">i_right_child</span><span class="o">.</span><span class="n">insert_key</span><span class="p">(</span><span class="n">i_left_child</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minmum_degree</span><span class="p">))</span>
@@ -360,15 +363,92 @@
 <div class="viewcode-block" id="BTree.delete"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.delete">[文档]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;删除指定的key</span>
 <span class="sd">        </span>
-<span class="sd">        删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个</span>
+<span class="sd">        删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个。</span>
+<span class="sd">        </span>
+<span class="sd">        删除时一方面不仅要沿树下降一次，同时为了保持B树的性质，有可能需要回溯到父节点进行调整。可以采取两种方案进行回溯：</span>
+<span class="sd">            - 在每一个node上添加parent指针，然后再通过再parent节点上进行查找来确定在parent上node的指针位置</span>
+<span class="sd">            - 每次需要回溯时，重新沿树下降一次，降到父节点</span>
+<span class="sd">        </span>
+<span class="sd">        删除需要的情况(删除要处理的情况比插入时要复杂)，假设要删除的key就在树中：</span>
+<span class="sd">            - 确定key所在的节点是内部节点还是叶节点</span>
+<span class="sd">                - 情况1：如果是叶节点，且叶节点的关键字数多于最小度数-1，那么直接在叶结点删除key</span>
+<span class="sd">                - 情况2：如果是叶节点，且叶节点的关键字数等于最小度数-1，由于删除后不满足B树性质，因此需要做出调整：</span>
+<span class="sd">                    - a. 首先找到该叶节点的兄弟前驱或兄弟后继节点，如果他们中任意一个的关键字数多于最小度数-1个，那么从该兄弟中剔除一个出来，上升到父节点，并且从父节点中的下降一个到当前的叶节点，然后就回到了情况1</span>
+<span class="sd">                    - b. 如果该叶节点的兄弟前驱或兄弟后继节点的关键字数都是最小度数-1，那么此时就会发生节点合并。并且此时需要看父节点的关键字数</span>
+<span class="sd">                        - a. 如果父节点的关键字数多于最小度数-1个，那么从父节点中下降一个k，然后将k与当前叶节点以及它的其中一个相邻兄弟节点合并，这样又回到情况1(此时新的合并节点关键字个数是2*最小度数-1)</span>
+<span class="sd">                        - b. 如果父节点的关键字数等于最小度数-1，那么由于父节点此时不能下降一个k出来，因此就需要对父节点进行一次合并，然后才能回到情况2.a.a</span>
+<span class="sd">                - 情况3：如果是内部节点，且关键字数多于最小度数-1，那么需要看当前key的子&quot;前驱&quot;和子&quot;后继&quot;</span>
+<span class="sd">                    - a. 如果它们俩中其中一个的关键字数多于最小度数-1个，那么直接从中提取一个上来，替换key所在的位置即可</span>
+<span class="sd">                    - b. 如果它们俩的关键字数都是最小度数-1个，那么就需要先合并它们俩；然后直接从它们的父节点中删除key，并修改相应的指针</span>
+<span class="sd">                - 情况4：如果是内部节点，且关键字数等于最小度数-1，同样需要看当前key的子&quot;前驱&quot;和子&quot;后继&quot;</span>
+<span class="sd">                    - a. 同情况3.a</span>
+<span class="sd">                    - b. 如果它们俩的关键字数都是最小度数-1个，那么此时就只能对这个内部节点进行合并，然后再回到情况3.b来处理</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
         
-    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">BTreeNode</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="n">node</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Delete Error: Not Found the key &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span></div>
+    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">BTreeNode</span><span class="p">,</span> <span class="n">pre_node</span><span class="p">,</span> <span class="n">succeed_node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            key:</span>
+<span class="sd">            node: </span>
+<span class="sd">            pre_node: node的前驱节点，且与node具有相同父节点</span>
+<span class="sd">            succeed_node: node的后继节点，且与node具有相同父节点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 功能未全部完成</span>
+        <span class="k">def</span> <span class="nf">find_index_lt_key</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">keys_count</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">&gt;</span> <span class="n">node</span><span class="o">.</span><span class="n">get_key</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">return</span> <span class="n">i</span>
+        
+        <span class="n">i</span> <span class="o">=</span> <span class="n">find_index_lt_key</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">leaf</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_key</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Delete Error: the key &#39;</span><span class="si">{}</span><span class="s2">&#39; not found in trees&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">keys_count</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minmum_degree</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">pre_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">pre_node</span><span class="o">.</span><span class="n">keys_count</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minmum_degree</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">pre_k</span> <span class="o">=</span> <span class="n">pre_node</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">p_i</span> <span class="o">=</span> <span class="n">find_index_lt_key</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">pre_k</span><span class="p">)</span>
+                    <span class="n">p_k</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="n">p_i</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">insert_key</span><span class="p">(</span><span class="n">pre_k</span><span class="p">,</span> <span class="n">p_i</span><span class="p">)</span>
+                    
+                    <span class="n">node</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">insert_key</span><span class="p">(</span><span class="n">p_k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">succeed_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">succeed_node</span><span class="o">.</span><span class="n">keys_count</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minmum_degree</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">succeed_k</span> <span class="o">=</span> <span class="n">succeed_node</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">s_i</span> <span class="o">=</span> <span class="n">find_index_lt_key</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">succeed_k</span><span class="p">)</span>
+                    <span class="n">s_k</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="n">s_i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">insert_key</span><span class="p">(</span><span class="n">s_k</span><span class="p">,</span> <span class="n">s_i</span><span class="p">)</span>
+                    
+                    <span class="n">node</span><span class="o">.</span><span class="n">pop_key</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">insert_key</span><span class="p">(</span><span class="n">s_k</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+        <span class="n">the_child</span><span class="p">,</span> <span class="n">pre_child</span><span class="p">,</span> <span class="n">succeed_child</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">keys_count</span><span class="p">:</span>
+            <span class="n">the_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">pre_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">succeed_child</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">the_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">pre_child</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">succeed_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">the_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">pre_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">succeed_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span></div>
+    
+            
         
     
 </pre></div>
