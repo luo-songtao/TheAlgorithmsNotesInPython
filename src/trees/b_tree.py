@@ -19,8 +19,9 @@ class BTreeNode:
         self.leaf = True
         self.keys_count = 0    # 节点关键字个数
         self.depth = 0
-        self.keys = []    # lenth = self.n
-        self.child_nodes = []    # length = self.n + 1
+        self.keys = []    # lenth = keys_count
+        self.child_nodes = []    # length = keys_count + 1
+        self.parent = None
 
     def get_key(self, i):
         return self.keys[i]
@@ -45,6 +46,7 @@ class BTreeNode:
             self.child_nodes.append(node)
         else:
             self.child_nodes.insert(i, node)
+        node.parent = self
 
 class BTree:
     """B树
@@ -150,6 +152,7 @@ class BTree:
         i_right_child = self.allocate_node()
         i_right_child.leaf = i_left_child.leaf
         i_right_child.keys_count = self.minmum_degree - 1
+        i_right_child.parent = node
         
         for _ in range(i_right_child.keys_count):    # 把后半部分的key移到新的节点
             i_right_child.insert_key(i_left_child.pop_key(self.minmum_degree))
@@ -215,14 +218,91 @@ class BTree:
     def delete(self, key):
         """删除指定的key
         
-        删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个
+        删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个。
+        
+        删除时一方面不仅要沿树下降一次，同时为了保持B树的性质，有可能需要回溯到父节点进行调整。可以采取两种方案进行回溯：
+            - 在每一个node上添加parent指针，然后再通过再parent节点上进行查找来确定在parent上node的指针位置
+            - 每次需要回溯时，重新沿树下降一次，降到父节点
+        
+        删除需要的情况(删除要处理的情况比插入时要复杂)，假设要删除的key就在树中：
+            - 确定key所在的节点是内部节点还是叶节点
+                - 情况1：如果是叶节点，且叶节点的关键字数多于最小度数-1，那么直接在叶结点删除key
+                - 情况2：如果是叶节点，且叶节点的关键字数等于最小度数-1，由于删除后不满足B树性质，因此需要做出调整：
+                    - a. 首先找到该叶节点的兄弟前驱或兄弟后继节点，如果他们中任意一个的关键字数多于最小度数-1个，那么从该兄弟中剔除一个出来，上升到父节点，并且从父节点中的下降一个到当前的叶节点，然后就回到了情况1
+                    - b. 如果该叶节点的兄弟前驱或兄弟后继节点的关键字数都是最小度数-1，那么此时就会发生节点合并。并且此时需要看父节点的关键字数
+                        - a. 如果父节点的关键字数多于最小度数-1个，那么从父节点中下降一个k，然后将k与当前叶节点以及它的其中一个相邻兄弟节点合并，这样又回到情况1(此时新的合并节点关键字个数是2*最小度数-1)
+                        - b. 如果父节点的关键字数等于最小度数-1，那么由于父节点此时不能下降一个k出来，因此就需要对父节点进行一次合并，然后才能回到情况2.a.a
+                - 情况3：如果是内部节点，且关键字数多于最小度数-1，那么需要看当前key的子"前驱"和子"后继"
+                    - a. 如果它们俩中其中一个的关键字数多于最小度数-1个，那么直接从中提取一个上来，替换key所在的位置即可
+                    - b. 如果它们俩的关键字数都是最小度数-1个，那么就需要先合并它们俩；然后直接从它们的父节点中删除key，并修改相应的指针
+                - 情况4：如果是内部节点，且关键字数等于最小度数-1，同样需要看当前key的子"前驱"和子"后继"
+                    - a. 同情况3.a
+                    - b. 如果它们俩的关键字数都是最小度数-1个，那么此时就只能对这个内部节点进行合并，然后再回到情况3.b来处理
         
         """
-        self._delete(self.root, key)
+        self._delete(key, self.root, None, None)
         
-    def _delete(self, node: BTreeNode, key):
-        node, i = self._search(node, key)
-        if node is None:
-            raise Exception("Delete Error: Not Found the key '{}'".format(key))
+    def _delete(self, key, node: BTreeNode, pre_node, succeed_node):
+        """
+        
+        Args:
+            key:
+            node: 
+            pre_node: node的前驱节点，且与node具有相同父节点
+            succeed_node: node的后继节点，且与node具有相同父节点
+        """
+        # 功能未全部完成
+        def find_index_lt_key(node, key):
+            for i in range(node.keys_count):
+                if key > node.get_key(i):
+                    i += 1
+                else:
+                    break
+            return i
+        
+        i = find_index_lt_key(node, key)
+            
+        if node.leaf is True:
+            if key != node.get_key(i):
+                raise Exception("Delete Error: the key '{}' not found in trees".format(key))
+            if node.keys_count > self.minmum_degree - 1:
+                node.pop_key(i)
+            else:
+                if pre_node is not None and pre_node.keys_count > self.minmum_degree - 1:
+                    pre_k = pre_node.pop_key(-1)
+                    p_i = find_index_lt_key(node.parent, pre_k)
+                    p_k = node.parent.pop_key(p_i)
+                    node.parent.insert_key(pre_k, p_i)
+                    
+                    node.pop_key(i)
+                    node.insert_key(p_k, 0)
+                elif succeed_node is not None and succeed_node.keys_count > self.minmum_degree - 1:
+                    succeed_k = succeed_node.pop_key(0)
+                    s_i = find_index_lt_key(node.parent, succeed_k)
+                    s_k = node.parent.pop_key(s_i - 1)
+                    node.parent.insert_key(s_k, s_i)
+                    
+                    node.pop_key(i)
+                    node.insert_key(s_k)
+                else:
+                    pass
+        else:
+            pass
+        
+        the_child, pre_child, succeed_child = None, None, None
+        if i == node.keys_count:
+            the_child = node.get_child_node(i+1)
+            pre_child = node.get_child_node(i)
+            succeed_child = None
+        elif i == 0:
+            the_child = node.get_child_node(i)
+            pre_child = None
+            succeed_child = node.get_child_node(i+1)
+        else:
+            the_child = node.get_child_node(i)
+            pre_child = node.get_child_node(i-1)
+            succeed_child = node.get_child_node(i+1)
+    
+            
         
     
