@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>high_level_data_structures.van_emde_boas_tree</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>high_level_data_structures.van_emde_boas_tree</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>high_level_data_structures.van_emde_boas_tree 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="VanEmdeBoasNode"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode">[文档]</a><span class="k">class</span> <span class="nc">VanEmdeBoasNode</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;van Emde Boas节点(vEB)</span>
+<span class="sd">    </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        u (int): 全域大小, 大小为 :math:`2^k`,k=0,1,2,...</span>
+<span class="sd">        min (int): vEB中的最小元素</span>
+<span class="sd">        max (int): vEB中的最大元素</span>
+<span class="sd">        summary (VanEmdeBoasNode): 记录cluster信息的vEB指针</span>
+<span class="sd">        cluster (list[VanEmdeBoasNode]): vEB树的簇数组，数组每个对象指向一个子vEB对象</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="VanEmdeBoasNode.__init__"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">u</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_summary</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_cluster</span><span class="p">()</span></div>
+    
+    <span class="k">def</span> <span class="nf">_create_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;自动递归创建summary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">VanEmdeBoasNode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">up_square_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="k">def</span> <span class="nf">_create_cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;自动创建cluster数组</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    
+<div class="viewcode-block" id="VanEmdeBoasNode.up_square_root"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.up_square_root">[文档]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">up_square_root</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算下平方根 :math:`\sqrt[\downarrow]{u}`</span>
+<span class="sd">        </span>
+<span class="sd">        :math:`\sqrt[\downarrow]{16} = 4`</span>
+<span class="sd">        :math:`\sqrt[\downarrow]{8} = 2`</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; VanEmdeBoasTree.up_square_root(16)</span>
+<span class="sd">        4.0</span>
+<span class="sd">        &gt;&gt;&gt; VanEmdeBoasTree.up_square_root(8)</span>
+<span class="sd">        2.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">fmod</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">k</span>
+        <span class="k">return</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="VanEmdeBoasNode.down_square_root"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.down_square_root">[文档]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">down_square_root</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算下平方根 :math:`\sqrt[\downarrow]{u}`</span>
+<span class="sd">        </span>
+<span class="sd">        :math:`\sqrt[\downarrow]{16} = 4`</span>
+<span class="sd">        :math:`\sqrt[\downarrow]{8} = 2`</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; VanEmdeBoasTree.down_square_root(16)</span>
+<span class="sd">        4.0</span>
+<span class="sd">        &gt;&gt;&gt; VanEmdeBoasTree.down_square_root(8)</span>
+<span class="sd">        2.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">fmod</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">k</span>
+        <span class="k">return</span> <span class="n">k</span><span class="o">-</span><span class="mi">1</span></div>
+    
+<div class="viewcode-block" id="VanEmdeBoasNode.high"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.high">[文档]</a>    <span class="k">def</span> <span class="nf">high</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算vEB(u)的高位：实际上表示x在vEB(u)树中的簇号</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: high(x) = \lfloor x/\sqrt[\downarrow]{u} \\rfloor</span>
+<span class="sd">        </span>
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; VanEmdeBoasTree.high(7, 16)    # 7在vEB(16)的中的簇号是1</span>
+<span class="sd">            1</span>
+<span class="sd">            &gt;&gt;&gt; VanEmdeBoasTree.high(7, 8)    # 7在vEB(8)的中的簇号是3</span>
+<span class="sd">            3</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="bp">cls</span><span class="o">.</span><span class="n">down_square_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="VanEmdeBoasNode.low"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.low">[文档]</a>    <span class="k">def</span> <span class="nf">low</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算vEB(u)的低位：实际上表示x在vEB(u)树中对应簇中的索引位置</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: low(x) = x \mod \sqrt[\downarrow]{u}</span>
+<span class="sd">        </span>
+<span class="sd">        Example:</span>
+<span class="sd">            &gt;&gt;&gt; VanEmdeBoasTree.low(7, 16)    # 7在vEB(16)的中1号簇中，其索引是3</span>
+<span class="sd">            3</span>
+<span class="sd">            &gt;&gt;&gt; VanEmdeBoasTree.low(7, 8)    # 7在vEB(8)的中的3号簇中，其索引是1</span>
+<span class="sd">            1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">fmod</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">down_square_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)))</span></div>
+    
+<div class="viewcode-block" id="VanEmdeBoasNode.index"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.index">[文档]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算元素在vEB中的索引</span>
+<span class="sd">        </span>
+<span class="sd">        .. math:: index(x,y) = x * \sqrt[\downarrow]{u} + y</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            x : 表示簇号</span>
+<span class="sd">            y : 表示在簇中的索引</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">down_square_root</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">u</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span></div></div>
+
+
+<div class="viewcode-block" id="VanEmdeBoasTree"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree">[文档]</a><span class="k">class</span> <span class="nc">VanEmdeBoasTree</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;van Emde Boas 树</span>
+<span class="sd">    </span>
+<span class="sd">    van Emde Boas 树支持优先队列操作以及一些其他操作，每个操作最坏情况运行时间位 :math:`O(\\lg \\lg n)`。</span>
+<span class="sd">    </span>
+<span class="sd">    但这种数据结构限制关键字必须为0~n-1的整数且无重复</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="VanEmdeBoasTree.__init__"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">u</span> <span class="o">=</span> <span class="n">u</span></div>
+        
+<div class="viewcode-block" id="VanEmdeBoasTree.minimum"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.minimum">[文档]</a>    <span class="k">def</span> <span class="nf">minimum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;v中的最小元素</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span></div>
+    
+<div class="viewcode-block" id="VanEmdeBoasTree.maximum"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.maximum">[文档]</a>    <span class="k">def</span> <span class="nf">maximum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;v中的最大元素</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span></div>
+
+<div class="viewcode-block" id="VanEmdeBoasTree.member"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.member">[文档]</a>    <span class="k">def</span> <span class="nf">member</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;判断x是否是属于v的元素</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="ow">or</span> <span class="n">x</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">u</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">member</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="VanEmdeBoasTree.successor"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.successor">[文档]</a>    <span class="k">def</span> <span class="nf">successor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;在v中寻找大于x的最小元素</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">u</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">max_low</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+            <span class="k">if</span> <span class="n">max_low</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">max_low</span><span class="p">:</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">successor</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">offset</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">succ_cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">successor</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">summary</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">succ_cluster</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">succ_cluster</span><span class="p">])</span>
+                    <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">succ_cluster</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+                
+        <span class="k">def</span> <span class="nf">predecessor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;在v中寻找小于x的最大元素</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">u</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">min_low</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+                <span class="k">if</span> <span class="n">min_low</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">min_low</span><span class="p">:</span>
+                    <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predecessor</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">offset</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pre_cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predecessor</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">summary</span><span class="p">,</span> <span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">pre_cluster</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
+                            <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">return</span> <span class="kc">None</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">pre_cluster</span><span class="p">)])</span>
+                        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pre_cluster</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span>
+        
+        <span class="k">def</span> <span class="nf">empty_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;空树插入</span>
+<span class="sd">            </span>
+<span class="sd">            如果v是空树，那么第一次插入，min和max都是相同的值。</span>
+<span class="sd">            (同时也意味着如果min为None，则当前的v树必定为空)</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">x</span>
+        
+        <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;插入新元素</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">empty_insert</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>    <span class="c1"># 替换min，同时交换x后，在下一步进行处理</span>
+                    <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">x</span>
+                <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">u</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>    <span class="c1"># 如果不是基础结构，那么需要考虑向summary插入</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>    <span class="c1"># 只有当对应cluster没有元素时才需要在插入时同时对summary也插入</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">summary</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">x</span>
+                
+        <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">VanEmdeBoasNode</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;删除元素</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>    <span class="c1"># 只有一个元素的情况</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">u</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
+                    <span class="n">first_cluster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>    <span class="c1"># 找到</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="n">index</span><span class="p">(</span><span class="n">first_cluster</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">first_cluster</span><span class="p">]))</span>    <span class="c1"># 计算</span>
+                    <span class="n">v</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">x</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)],</span> <span class="n">v</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">summary</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                        <span class="n">summary_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">summary</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">summary_max</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">min</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">index</span><span class="p">(</span><span class="n">summary_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">summary_max</span><span class="p">]))</span>
+                <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">v</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">index</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">cluster</span><span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="n">x</span><span class="p">)]))</span></div></div>
+        
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

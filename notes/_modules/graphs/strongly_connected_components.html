@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.strongly_connected_components</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.strongly_connected_components</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.strongly_connected_components 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">deep_first_search</span> <span class="kn">import</span> <span class="n">dfs_recusion</span>
+
+
+<div class="viewcode-block" id="strongly_connected_components"><a class="viewcode-back" href="../../rst/graphs/dfs.html#graphs.strongly_connected_components.strongly_connected_components">[文档]</a><span class="k">def</span> <span class="nf">strongly_connected_components</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;计算强连通分量</span>
+<span class="sd">    </span>
+<span class="sd">    实现步骤：</span>
+<span class="sd">        1. 对有向图graph进行一次深度优先搜索，获取到一个顶点探索完成序列finished</span>
+<span class="sd">        2. 对有向图graph进行转置(反转边的方向)，得到转置图。</span>
+<span class="sd">        3. 对转置图进行一次深度优先搜索，但是其预设的搜索顺序按照finished的逆序进行，并记录下该次搜索中的每一颗深度优先树的顶点，则最终得到的每一颗深度优先树的顶点集合就是graph一个强连通分量</span>
+<span class="sd">    </span>
+<span class="sd">    该算法能得以成功是因为，有向图与其转置图的强连通分量是相同的，但转置后强连通分量之间的方向被反过来了，因此借助这样的事实，利用上面的两次dfs，然后搜集第2次dfs得到的每一颗深度优先树的顶点就能得出所有的强连通分量</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        graph: 有向图</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># 1. 对graph进行依次深度优先搜索，拿到</span>
+    <span class="n">discoverd</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 顶点的探索顺序</span>
+    <span class="n">finished</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 顶点探索完成的顺序：逆序的。第一个是最后才探索完成的</span>
+    <span class="k">for</span> <span class="n">start_vertex</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">dfs_recusion</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start_vertex</span><span class="p">,</span> <span class="n">discoverd</span><span class="p">,</span> <span class="n">finished</span><span class="p">)</span>
+    <span class="c1"># 2. 计算转置图</span>
+    <span class="n">graph_t</span> <span class="o">=</span> <span class="n">tranpose_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="c1"># 3. 对graph_t进行深度优先探索，但是预设探索顺序将按照对原图的dfs的顶点探索完成序列的逆序</span>
+    <span class="n">discoverd</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">gt_finished</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">forests</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 深度优先森林</span>
+    <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">finished</span><span class="p">):</span>   <span class="c1"># 使用逆序结果</span>
+        <span class="n">dfs_recusion</span><span class="p">(</span><span class="n">graph_t</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">discoverd</span><span class="p">,</span> <span class="n">gt_finished</span><span class="p">)</span>
+        <span class="c1"># 当其实探索节点被探索完成，则意味着得到了一颗深度优先树</span>
+        <span class="k">if</span> <span class="n">gt_finished</span> <span class="ow">and</span> <span class="n">vertex</span> <span class="o">==</span> <span class="n">gt_finished</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">forests</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gt_finished</span><span class="p">[:])</span>
+            <span class="n">gt_finished</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">forests</span></div>
+
+
+<div class="viewcode-block" id="tranpose_graph"><a class="viewcode-back" href="../../rst/graphs/dfs.html#graphs.strongly_connected_components.tranpose_graph">[文档]</a><span class="k">def</span> <span class="nf">tranpose_graph</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;对图进行转置</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_t</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">graph_t</span><span class="p">:</span>
+                <span class="n">graph_t</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">graph_t</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">graph_t</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">the_graph1</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;g&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;g&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;h&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    
+    <span class="n">the_graph2</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;u&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the graph1&#39;s scc:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">strongly_connected_components</span><span class="p">(</span><span class="n">the_graph1</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the graph2&#39;s scc:&quot;</span><span class="p">)</span> 
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">strongly_connected_components</span><span class="p">(</span><span class="n">the_graph2</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

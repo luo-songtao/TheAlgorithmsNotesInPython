@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>深度优先搜索</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="最小生成树" href="mst.html" />
+  <link rel="prev" title="广度优先搜索" href="bfs.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">图算法</a> &raquo;</li>
+    
+    <li>深度优先搜索</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="bfs.html"
+       title="上一章">← 广度优先搜索</a>
+  </li>
+  <li class="next">
+    <a href="mst.html"
+       title="下一章">最小生成树 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="id1">
+<h1>深度优先搜索<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-graphs.deep_first_search">
+<span id="id2"></span><h2>深度优先搜索算法<a class="headerlink" href="#module-graphs.deep_first_search" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="graphs.deep_first_search.dfs">
+<code class="sig-prename descclassname">graphs.deep_first_search.</code><code class="sig-name descname">dfs</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/deep_first_search.html#dfs"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.deep_first_search.dfs" title="永久链接至目标">¶</a></dt>
+<dd><p>深度优先搜索</p>
+<p>实现中不仅记录了顶点的发现顺序；还记录了顶点的探索完成顺序</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>顶点的深度优先搜索顺序
+finished (list): 顶点探索完成顺序</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>discoverd (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="graphs.deep_first_search.dfs_recusion">
+<code class="sig-prename descclassname">graphs.deep_first_search.</code><code class="sig-name descname">dfs_recusion</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">start_vertex</em>, <em class="sig-param">discoverd</em>, <em class="sig-param">finished</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/deep_first_search.html#dfs_recusion"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.deep_first_search.dfs_recusion" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-graphs.topological_sort">
+<span id="id3"></span><h2>拓扑排序<a class="headerlink" href="#module-graphs.topological_sort" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="graphs.topological_sort.topological_sort">
+<code class="sig-prename descclassname">graphs.topological_sort.</code><code class="sig-name descname">topological_sort</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/topological_sort.html#topological_sort"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.topological_sort.topological_sort" title="永久链接至目标">¶</a></dt>
+<dd><p>拓扑排序</p>
+<p>对图进行深度优先搜索后，顶点的探索完成顺序的逆序，就是对该graph的一种拓扑展开顺序</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-graphs.strongly_connected_components">
+<span id="id4"></span><h2>强连通分量<a class="headerlink" href="#module-graphs.strongly_connected_components" title="永久链接至标题">¶</a></h2>
+<dl class="function">
+<dt id="graphs.strongly_connected_components.strongly_connected_components">
+<code class="sig-prename descclassname">graphs.strongly_connected_components.</code><code class="sig-name descname">strongly_connected_components</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/strongly_connected_components.html#strongly_connected_components"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.strongly_connected_components.strongly_connected_components" title="永久链接至目标">¶</a></dt>
+<dd><p>计算强连通分量</p>
+<dl class="simple">
+<dt>实现步骤：</dt><dd><ol class="arabic simple">
+<li><p>对有向图graph进行一次深度优先搜索，获取到一个顶点探索完成序列finished</p></li>
+<li><p>对有向图graph进行转置(反转边的方向)，得到转置图。</p></li>
+<li><p>对转置图进行一次深度优先搜索，但是其预设的搜索顺序按照finished的逆序进行，并记录下该次搜索中的每一颗深度优先树的顶点，则最终得到的每一颗深度优先树的顶点集合就是graph一个强连通分量</p></li>
+</ol>
+</dd>
+</dl>
+<p>该算法能得以成功是因为，有向图与其转置图的强连通分量是相同的，但转置后强连通分量之间的方向被反过来了，因此借助这样的事实，利用上面的两次dfs，然后搜集第2次dfs得到的每一颗深度优先树的顶点就能得出所有的强连通分量</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>graph</strong> – 有向图</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="graphs.strongly_connected_components.tranpose_graph">
+<code class="sig-prename descclassname">graphs.strongly_connected_components.</code><code class="sig-name descname">tranpose_graph</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/strongly_connected_components.html#tranpose_graph"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.strongly_connected_components.tranpose_graph" title="永久链接至目标">¶</a></dt>
+<dd><p>对图进行转置</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="bfs.html"
+       title="上一章">← 广度优先搜索</a>
+  </li>
+  <li class="next">
+    <a href="mst.html"
+       title="下一章">最小生成树 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

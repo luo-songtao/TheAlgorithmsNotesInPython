@@ -7,16 +7,17 @@ Welcome to The Algorithms In Python's documentation!
 ====================================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
    rst/sort/modules
    rst/data_structures/modules
    rst/hashes/modules
-   rst/trees/modules
+   rst/high_level_data_structures/modules
    rst/divide_and_conquer/modules
    rst/greedy_algorithm/modules
    rst/dynamic_programming/modules
+   rst/graphs/modules
 
 
 Indices and tables

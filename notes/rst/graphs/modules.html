@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>树算法</title>
+      <title>图算法</title>
     
       <link rel="stylesheet" href="../../_static/pygments.css">
       <link rel="stylesheet" href="../../_static/theme.css">
@@ -25,8 +25,8 @@
     
   <link rel="index" title="索引" href="../../genindex.html" />
   <link rel="search" title="搜索" href="../../search.html" />
-  <link rel="next" title="高级树算法" href="trees.html" />
-  <link rel="prev" title="字符串hash算法" href="../hashes/string_hashes.html" /> 
+  <link rel="next" title="广度优先搜索" href="bfs.html" />
+  <link rel="prev" title="动态规划" href="../dynamic_programming/dynamic_programming.html" /> 
   </head>
 
   <body>
@@ -95,14 +95,8 @@
           </li>
 
         
-          <li class="toctree-l1 current"><a href="#" class="reference internal current">树算法</a>
+          <li class="toctree-l1 "><a href="../high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
 
-            
-              <ul>
-                
-                  <li class="toctree-l2"><a href="#id1" class="reference internal">树算法</a></li>
-                
-              </ul>
             
           </li>
 
@@ -125,6 +119,18 @@
           </li>
 
         
+          <li class="toctree-l1 current"><a href="#" class="reference internal current">图算法</a>
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#id1" class="reference internal">图算法</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
       </ul>
     </div>
   
@@ -137,18 +143,18 @@
   <ul class="breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
     
-    <li>树算法</li>
+    <li>图算法</li>
   </ul>
   
 
   <ul class="page-nav">
   <li class="prev">
-    <a href="../hashes/string_hashes.html"
-       title="上一章">← 字符串hash算法</a>
+    <a href="../dynamic_programming/dynamic_programming.html"
+       title="上一章">← 动态规划</a>
   </li>
   <li class="next">
-    <a href="trees.html"
-       title="下一章">高级树算法 →</a>
+    <a href="bfs.html"
+       title="下一章">广度优先搜索 →</a>
   </li>
 </ul>
   
@@ -157,12 +163,23 @@
           <div class="content" role="main">
             
   <div class="section" id="id1">
-<h1>树算法<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<h1>图算法<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="trees.html">高级树算法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="trees.html#module-trees.b_tree">B树</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trees.html#module-trees.van_emde_boas_tree">van_emde_boas_tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bfs.html">广度优先搜索</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bfs.html#module-graphs.breadth_first_search">广度优先搜索算法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dfs.html">深度优先搜索</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dfs.html#module-graphs.deep_first_search">深度优先搜索算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dfs.html#module-graphs.topological_sort">拓扑排序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dfs.html#module-graphs.strongly_connected_components">强连通分量</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mst.html">最小生成树</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mst.html#module-graphs.mst_basics">最小生成树基本实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mst.html#module-graphs.mst_prim">Prim算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mst.html#module-graphs.mst_kruskal">Kruskal算法</a></li>
 </ul>
 </li>
 </ul>
@@ -174,17 +191,17 @@
           <div class="page-nav">
             <div class="inner"><ul class="page-nav">
   <li class="prev">
-    <a href="../hashes/string_hashes.html"
-       title="上一章">← 字符串hash算法</a>
+    <a href="../dynamic_programming/dynamic_programming.html"
+       title="上一章">← 动态规划</a>
   </li>
   <li class="next">
-    <a href="trees.html"
-       title="下一章">高级树算法 →</a>
+    <a href="bfs.html"
+       title="下一章">广度优先搜索 →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; 版权所有 2020, luo-songtao.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

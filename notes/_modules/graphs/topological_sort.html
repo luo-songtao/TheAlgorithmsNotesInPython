@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>trees.van_emde_boas_tree</title>
+      <title>graphs.topological_sort</title>
     
       <link rel="stylesheet" href="../../_static/pygments.css">
       <link rel="stylesheet" href="../../_static/theme.css">
@@ -93,7 +93,7 @@
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../rst/trees/modules.html" class="reference internal ">树算法</a>
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
 
             
           </li>
@@ -117,6 +117,12 @@
           </li>
 
         
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
       </ul>
     </div>
   
@@ -131,7 +137,7 @@
     
       <li><a href="../index.html">模块代码</a> &raquo;</li>
     
-    <li>trees.van_emde_boas_tree</li>
+    <li>graphs.topological_sort</li>
   </ul>
   
 
@@ -142,23 +148,38 @@
 <hr>
           <div class="content" role="main">
             
-  <h1>trees.van_emde_boas_tree 源代码</h1><div class="highlight"><pre>
+  <h1>graphs.topological_sort 源代码</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># -*- coding:utf-8 -*-</span>
 <span class="c1"># Author: Luo-Songtao</span>
 <span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">deep_first_search</span> <span class="kn">import</span> <span class="n">dfs</span>
 
-
-<div class="viewcode-block" id="VanEmdeBoasTree"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.van_emde_boas_tree.VanEmdeBoasTree">[文档]</a><span class="k">class</span> <span class="nc">VanEmdeBoasTree</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;van Emde Boas 树</span>
+<div class="viewcode-block" id="topological_sort"><a class="viewcode-back" href="../../rst/graphs/dfs.html#graphs.topological_sort.topological_sort">[文档]</a><span class="k">def</span> <span class="nf">topological_sort</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;拓扑排序</span>
 <span class="sd">    </span>
-<span class="sd">    van Emde Boas 树支持优先队列操作以及一些其他操作，每个操作最坏情况运行时间位 :math:`O(\\lg \\lg n)`。</span>
-<span class="sd">    </span>
-<span class="sd">    但这种数据结构限制关键字必须为0~n-1的整数且无重复</span>
-<span class="sd">    </span>
+<span class="sd">    对图进行深度优先搜索后，顶点的探索完成顺序的逆序，就是对该graph的一种拓扑展开顺序</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
-    <span class="k">pass</span></div>
+    <span class="n">d</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;裤子&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;腰带&quot;</span><span class="p">,</span> <span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;衬衣&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;领带&quot;</span><span class="p">,</span> <span class="s2">&quot;腰带&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;内裤&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;裤子&quot;</span><span class="p">,</span> <span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;领带&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;夹克&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;腰带&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;夹克&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;袜子&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;夹克&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;手表&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;鞋子&quot;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;穿戴顺序：&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">topological_sort</span><span class="p">(</span><span class="n">the_graph</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
 </pre></div>
 
           </div>
@@ -167,7 +188,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; 版权所有 2020, luo-songtao.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

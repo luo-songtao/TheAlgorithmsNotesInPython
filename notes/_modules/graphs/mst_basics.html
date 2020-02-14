@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.mst_basics</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.mst_basics</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.mst_basics 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<span class="n">connected_undirected_graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)],</span>
+    <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+    <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)],</span>
+    <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">)],</span>
+    <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)],</span>
+    <span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="s2">&quot;g&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="s2">&quot;i&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="MinmumSpanningTree"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_basics.MinmumSpanningTree">[文档]</a><span class="k">class</span> <span class="nc">MinmumSpanningTree</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;最小生成树</span>
+<span class="sd">    </span>
+<span class="sd">    根据连通无向图，得到最小生成树</span>
+<span class="sd">    </span>
+<span class="sd">    采用贪心法，创建时，每次选取权重最小的边，除了第一次选取外，其余情况下，这条最小权重的边都必须满足的其中一个顶点已经在树中，而另一个顶点却不在树中，那么然后将这条边加入到树中。最终生成的树将是一输入的连通无向图的一颗最小生成树</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; mst = MinmumSpanningTree(connected_undirected_graph)</span>
+<span class="sd">        &gt;&gt;&gt; mst.minmum_weight    # 最小生成树的权重值</span>
+<span class="sd">        37</span>
+<span class="sd">        &gt;&gt;&gt; mst.edges    # 最小生成树的边</span>
+<span class="sd">        [(&#39;g&#39;, &#39;h&#39;), (&#39;f&#39;, &#39;g&#39;), (&#39;c&#39;, &#39;f&#39;), (&#39;c&#39;, &#39;i&#39;), (&#39;c&#39;, &#39;d&#39;), (&#39;a&#39;, &#39;h&#39;), (&#39;a&#39;, &#39;b&#39;), (&#39;d&#39;, &#39;e&#39;)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="MinmumSpanningTree.__init__"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_basics.MinmumSpanningTree.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            graph: 连通无向图</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minmum_weight</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span></div>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vectexs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">v</span>
+    
+<div class="viewcode-block" id="MinmumSpanningTree.minmum_weight_edge"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_basics.MinmumSpanningTree.minmum_weight_edge">[文档]</a>    <span class="k">def</span> <span class="nf">minmum_weight_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude_vectexs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;每次选取与已生成的最小生成树连接的权重最小的边加入到树中</span>
+<span class="sd">        </span>
+<span class="sd">        这里的实现方式类似prim算法，但没有优化</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">min_w_edge</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">min_w</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vectexs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">neighbor</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">exclude_vectexs</span> <span class="ow">and</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">exclude_vectexs</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">exclude_vectexs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">v</span> <span class="ow">in</span> <span class="n">exclude_vectexs</span> <span class="ow">and</span> <span class="n">neighbor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude_vectexs</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude_vectexs</span> <span class="ow">and</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">exclude_vectexs</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">weight</span> <span class="o">&lt;</span> <span class="n">min_w</span><span class="p">:</span>
+                        <span class="n">min_w</span> <span class="o">=</span> <span class="n">weight</span>
+                        <span class="n">min_w_edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">min_w_edge</span><span class="p">,</span> <span class="n">min_w</span></div>
+    
+<div class="viewcode-block" id="MinmumSpanningTree.create"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_basics.MinmumSpanningTree.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">total_weight</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">:</span>
+            <span class="n">edge</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minmum_weight_edge</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+            <span class="n">A</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+            <span class="n">total_weight</span> <span class="o">+=</span> <span class="n">weight</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minmum_weight</span> <span class="o">=</span> <span class="n">total_weight</span></div></div>
+        
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

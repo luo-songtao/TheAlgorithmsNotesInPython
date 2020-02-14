@@ -14,11 +14,3 @@
    :undoc-members:
    :show-inheritance:
 
-
-斐波那契堆
--------------
-.. automodule:: data_structures.heaps.fibonacci_heap
-   :members:
-   :undoc-members:
-   :show-inheritance:
-

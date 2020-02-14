@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>B树</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="分治法" href="../divide_and_conquer/modules.html" />
+  <link rel="prev" title="高级数据结构" href="modules.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">高级数据结构</a> &raquo;</li>
+    
+    <li>B树</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 高级数据结构</a>
+  </li>
+  <li class="next">
+    <a href="../divide_and_conquer/modules.html"
+       title="下一章">分治法 →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="module-high_level_data_structures.b_tree">
+<span id="b"></span><h1>B树<a class="headerlink" href="#module-high_level_data_structures.b_tree" title="永久链接至标题">¶</a></h1>
+<dl class="class">
+<dt id="high_level_data_structures.b_tree.BTreeNode">
+<em class="property">class </em><code class="sig-prename descclassname">high_level_data_structures.b_tree.</code><code class="sig-name descname">BTreeNode</code><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>B树节点</p>
+<dl class="attribute">
+<dt id="high_level_data_structures.b_tree.BTreeNode.leaf">
+<code class="sig-name descname">leaf</code><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.leaf" title="永久链接至目标">¶</a></dt>
+<dd><p>布尔类型值。为True则表示当前节点是叶节点</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.b_tree.BTreeNode.keys_count">
+<code class="sig-name descname">keys_count</code><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.keys_count" title="永久链接至目标">¶</a></dt>
+<dd><p>记录当前节点上存储的关键字个数</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.b_tree.BTreeNode.depth">
+<code class="sig-name descname">depth</code><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.depth" title="永久链接至目标">¶</a></dt>
+<dd><p>记录当前节点的高度</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.b_tree.BTreeNode.keys">
+<code class="sig-name descname">keys</code><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.keys" title="永久链接至目标">¶</a></dt>
+<dd><p>存储当前节点存放的关键字</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.b_tree.BTreeNode.child_nodes">
+<code class="sig-name descname">child_nodes</code><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.child_nodes" title="永久链接至目标">¶</a></dt>
+<dd><p>存储当前节点的子节点(指针)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.get_key">
+<code class="sig-name descname">get_key</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.get_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.get_key" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.get_child_node">
+<code class="sig-name descname">get_child_node</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.get_child_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.get_child_node" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.pop_key">
+<code class="sig-name descname">pop_key</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.pop_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.pop_key" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.pop_child_node">
+<code class="sig-name descname">pop_child_node</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.pop_child_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.pop_child_node" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.insert_key">
+<code class="sig-name descname">insert_key</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">i=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.insert_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.insert_key" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTreeNode.insert_child_node">
+<code class="sig-name descname">insert_child_node</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">i=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTreeNode.insert_child_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTreeNode.insert_child_node" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="high_level_data_structures.b_tree.BTree">
+<em class="property">class </em><code class="sig-prename descclassname">high_level_data_structures.b_tree.</code><code class="sig-name descname">BTree</code><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>B树</p>
+<p>B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树。但B树在降低磁盘I/O操作树方面更好一些。</p>
+<p>B树与红黑树的不同之处在于B树的节点可以有很多子节点，可以从数个到数千个。</p>
+<p>B树以一种自然方式推广了二叉搜索树：如果B树的一个节点拥有n个关键字，那么该节点就会有n+1个子节点</p>
+<dl>
+<dt><strong>B树的性质</strong>：</dt><dd><ol class="arabic simple">
+<li><dl class="simple">
+<dt>每个节点有以下属性：</dt><dd><ul class="simple">
+<li><p>keys_count，存储当前节点中关键字个数</p></li>
+<li><p>keys_count个关键字，并以非降序存放</p></li>
+<li><p>leaf，一个布尔值，当前节点是叶节点则为True，否则为False</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>每个内部节点还包含keys_count+1个指向其孩子的指针，但注意叶子节点没有子节点，所以它们不需维护这样的指针</p></li>
+<li><p>节点上的关键字对存储在各个子树中的关键字的范围加以分割</p></li>
+<li><p>每个叶节点具有相同的深度。即树的高度h</p></li>
+<li><dl class="simple">
+<dt>每个节点所包含的关键字个数有上界和下届。用一个被称为B树的**最小度数(minmum degree)**的固定整数来表示这些界</dt><dd><ul class="simple">
+<li><p>除了根节点以外的每个节点必须至少有minmum_degree-1个关键字。因此除了根节点以外的每个内部节点至少有minmum_degree个子节点。如果树非空，则根节点至少又一个子节点。</p></li>
+<li><p>每个节点至多可拥有2minmum_degree-1个关键字。因此，一个内部节点至多有2minmum_degree个子节点。</p></li>
+<li><p>满节点：拥有2minmum_degree-1个关键字</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p>最小度数为2的B树是最简单的。同时t的值越大，B树的高度也就越小。</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.allocate_node">
+<code class="sig-name descname">allocate_node</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; high_level_data_structures.b_tree.BTreeNode<a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.allocate_node"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.allocate_node" title="永久链接至目标">¶</a></dt>
+<dd><p>模拟在O(1)的时间内为新节点分配一个磁盘页</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.disk_read">
+<code class="sig-name descname">disk_read</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.disk_read"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.disk_read" title="永久链接至目标">¶</a></dt>
+<dd><p>模拟数据读取磁盘I/O操作</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.disk_write">
+<code class="sig-name descname">disk_write</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.disk_write"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.disk_write" title="永久链接至目标">¶</a></dt>
+<dd><p>模拟数据写入磁盘I/O操作</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.search"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.search" title="永久链接至目标">¶</a></dt>
+<dd><p>搜索具有指定key值的节点对象</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回</dt>
+<dd class="field-odd"><p>含有值为key的节点对象以及该key在该节点的索引位置。如果没有查寻到则返回None</p>
+</dd>
+<dt class="field-even">返回类型</dt>
+<dd class="field-even"><p>(node, i)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.create" title="永久链接至目标">¶</a></dt>
+<dd><p>创建一颗空的B树</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.split_child">
+<code class="sig-name descname">split_child</code><span class="sig-paren">(</span><em class="sig-param">node: high_level_data_structures.b_tree.BTreeNode</em>, <em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.split_child"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.split_child" title="永久链接至目标">¶</a></dt>
+<dd><p>节点分裂</p>
+<dl class="simple">
+<dt>分裂步骤:</dt><dd><ul class="simple">
+<li><p>当node节点第i个子节点达到2*minmum_degree-1个关键词时，将要对其进行分裂，将第i个子节点的第i个关键词提到node中</p></li>
+<li><p>建立一个新节点，将第i个子节点的第(minmum_degree), …,第(2*minmum_degree-1)的(minmum_degree-1)个关键词放入新节点中</p></li>
+<li><p>并把新节点作为node的第i+1个子节点</p></li>
+</ul>
+</dd>
+</dl>
+<p>注意: 如果node节点的第i个子节点关键字个数低于最小度数-1，这里将会抛出异常</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<a class="reference internal" href="#high_level_data_structures.b_tree.BTreeNode" title="high_level_data_structures.b_tree.BTreeNode"><em>BTreeNode</em></a>) – 将要分裂的节点的父节点</p></li>
+<li><p><strong>i</strong> (<em>int</em>) – 表明node节点的第i个子节点将要进行分裂。i=0,1,2,…</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.insert" title="永久链接至目标">¶</a></dt>
+<dd><p>插入关键字</p>
+<p>插入新关键字，最终是向叶子节点中进行插入，但是为了保证插入后每一个节点的关键字个数不超过2*minmum_degree-1个，那么需要从根节点开始，递归的向下进行判断。</p>
+<dl class="simple">
+<dt>插入步骤:</dt><dd><ul class="simple">
+<li><p>首先从根节点开始，先判断根节点是否已经达到2*minmum_degree-1个关键字,如果达到了，则需要先对根节点进行分裂</p></li>
+<li><p>否则将从根节点开始往下递归判断，在每一层当遇到当前节点已经满足2*minmum_degree-1个关键字的，都要先对该节点进行分裂</p></li>
+<li><p>最后直到叶节点后，不再递归，并将关键字插入到对应的叶节点上</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.b_tree.BTree.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/b_tree.html#BTree.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.b_tree.BTree.delete" title="永久链接至目标">¶</a></dt>
+<dd><p>删除指定的key</p>
+<p>删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个。</p>
+<dl>
+<dt>删除时一方面不仅要沿树下降一次，同时为了保持B树的性质，有可能需要回溯到父节点进行调整。可以采取两种方案进行回溯：</dt><dd><ul class="simple">
+<li><p>在每一个node上添加parent指针，然后再通过再parent节点上进行查找来确定在parent上node的指针位置</p></li>
+<li><p>每次需要回溯时，重新沿树下降一次，降到父节点</p></li>
+</ul>
+</dd>
+<dt>删除需要的情况(删除要处理的情况比插入时要复杂)，假设要删除的key就在树中：</dt><dd><ul>
+<li><dl>
+<dt>确定key所在的节点是内部节点还是叶节点</dt><dd><ul>
+<li><p>情况1：如果是叶节点，且叶节点的关键字数多于最小度数-1，那么直接在叶结点删除key</p></li>
+<li><dl>
+<dt>情况2：如果是叶节点，且叶节点的关键字数等于最小度数-1，由于删除后不满足B树性质，因此需要做出调整：</dt><dd><ul>
+<li><ol class="loweralpha simple">
+<li><p>首先找到该叶节点的兄弟前驱或兄弟后继节点，如果他们中任意一个的关键字数多于最小度数-1个，那么从该兄弟中剔除一个出来，上升到父节点，并且从父节点中的下降一个到当前的叶节点，然后就回到了情况1</p></li>
+</ol>
+</li>
+<li><ol class="loweralpha simple" start="2">
+<li><p>如果该叶节点的兄弟前驱或兄弟后继节点的关键字数都是最小度数-1，那么此时就会发生节点合并。并且此时需要看父节点的关键字数</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><ol class="loweralpha simple">
+<li><p>如果父节点的关键字数多于最小度数-1个，那么从父节点中下降一个k，然后将k与当前叶节点以及它的其中一个相邻兄弟节点合并，这样又回到情况1(此时新的合并节点关键字个数是2*最小度数-1)</p></li>
+</ol>
+</li>
+<li><ol class="loweralpha simple" start="2">
+<li><p>如果父节点的关键字数等于最小度数-1，那么由于父节点此时不能下降一个k出来，因此就需要对父节点进行一次合并，然后才能回到情况2.a.a</p></li>
+</ol>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>情况3：如果是内部节点，且关键字数多于最小度数-1，那么需要看当前key的子”前驱”和子”后继”</dt><dd><ul class="simple">
+<li><ol class="loweralpha simple">
+<li><p>如果它们俩中其中一个的关键字数多于最小度数-1个，那么直接从中提取一个上来，替换key所在的位置即可</p></li>
+</ol>
+</li>
+<li><ol class="loweralpha simple" start="2">
+<li><p>如果它们俩的关键字数都是最小度数-1个，那么就需要先合并它们俩；然后直接从它们的父节点中删除key，并修改相应的指针</p></li>
+</ol>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>情况4：如果是内部节点，且关键字数等于最小度数-1，同样需要看当前key的子”前驱”和子”后继”</dt><dd><ul class="simple">
+<li><ol class="loweralpha simple">
+<li><p>同情况3.a</p></li>
+</ol>
+</li>
+<li><ol class="loweralpha simple" start="2">
+<li><p>如果它们俩的关键字数都是最小度数-1个，那么此时就只能对这个内部节点进行合并，然后再回到情况3.b来处理</p></li>
+</ol>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-high_level_data_structures.van_emde_boas_tree">
+<span id="van-emde-boas-tree"></span><h1>van_emde_boas_tree<a class="headerlink" href="#module-high_level_data_structures.van_emde_boas_tree" title="永久链接至标题">¶</a></h1>
+<dl class="class">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode">
+<em class="property">class </em><code class="sig-prename descclassname">high_level_data_structures.van_emde_boas_tree.</code><code class="sig-name descname">VanEmdeBoasNode</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>van Emde Boas节点(vEB)</p>
+<dl class="attribute">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.u">
+<code class="sig-name descname">u</code><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.u" title="永久链接至目标">¶</a></dt>
+<dd><p>全域大小, 大小为 <span class="math notranslate nohighlight">\(2^k\)</span>,k=0,1,2,…</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.min">
+<code class="sig-name descname">min</code><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.min" title="永久链接至目标">¶</a></dt>
+<dd><p>vEB中的最小元素</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.max">
+<code class="sig-name descname">max</code><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.max" title="永久链接至目标">¶</a></dt>
+<dd><p>vEB中的最大元素</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.summary">
+<code class="sig-name descname">summary</code><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.summary" title="永久链接至目标">¶</a></dt>
+<dd><p>记录cluster信息的vEB指针</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode" title="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode">VanEmdeBoasNode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.cluster">
+<code class="sig-name descname">cluster</code><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.cluster" title="永久链接至目标">¶</a></dt>
+<dd><p>vEB树的簇数组，数组每个对象指向一个子vEB对象</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode" title="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode">VanEmdeBoasNode</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.up_square_root">
+<em class="property">static </em><code class="sig-name descname">up_square_root</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode.up_square_root"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.up_square_root" title="永久链接至目标">¶</a></dt>
+<dd><p>计算下平方根 <span class="math notranslate nohighlight">\(\sqrt[\downarrow]{u}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\sqrt[\downarrow]{16} = 4\)</span>
+<span class="math notranslate nohighlight">\(\sqrt[\downarrow]{8} = 2\)</span></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">up_square_root</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">4.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">up_square_root</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.down_square_root">
+<em class="property">static </em><code class="sig-name descname">down_square_root</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode.down_square_root"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.down_square_root" title="永久链接至目标">¶</a></dt>
+<dd><p>计算下平方根 <span class="math notranslate nohighlight">\(\sqrt[\downarrow]{u}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\sqrt[\downarrow]{16} = 4\)</span>
+<span class="math notranslate nohighlight">\(\sqrt[\downarrow]{8} = 2\)</span></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">down_square_root</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">4.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">down_square_root</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="go">2.0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.high">
+<code class="sig-name descname">high</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode.high"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.high" title="永久链接至目标">¶</a></dt>
+<dd><p>计算vEB(u)的高位：实际上表示x在vEB(u)树中的簇号</p>
+<div class="math notranslate nohighlight">
+\[high(x) = \lfloor x/\sqrt[\downarrow]{u} \rfloor\]</div>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>    <span class="c1"># 7在vEB(16)的中的簇号是1</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">high</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>    <span class="c1"># 7在vEB(8)的中的簇号是3</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.low">
+<code class="sig-name descname">low</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode.low"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.low" title="永久链接至目标">¶</a></dt>
+<dd><p>计算vEB(u)的低位：实际上表示x在vEB(u)树中对应簇中的索引位置</p>
+<div class="math notranslate nohighlight">
+\[low(x) = x \mod \sqrt[\downarrow]{u}\]</div>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>    <span class="c1"># 7在vEB(16)的中1号簇中，其索引是3</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">VanEmdeBoasTree</span><span class="o">.</span><span class="n">low</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>    <span class="c1"># 7在vEB(8)的中的3号簇中，其索引是1</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.index">
+<code class="sig-name descname">index</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasNode.index"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode.index" title="永久链接至目标">¶</a></dt>
+<dd><p>计算元素在vEB中的索引</p>
+<div class="math notranslate nohighlight">
+\[index(x,y) = x * \sqrt[\downarrow]{u} + y\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – 表示簇号</p></li>
+<li><p><strong>y</strong> – 表示在簇中的索引</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree">
+<em class="property">class </em><code class="sig-prename descclassname">high_level_data_structures.van_emde_boas_tree.</code><code class="sig-name descname">VanEmdeBoasTree</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>van Emde Boas 树</p>
+<p>van Emde Boas 树支持优先队列操作以及一些其他操作，每个操作最坏情况运行时间位 <span class="math notranslate nohighlight">\(O(\lg \lg n)\)</span>。</p>
+<p>但这种数据结构限制关键字必须为0~n-1的整数且无重复</p>
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasTree.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.__init__" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.minimum">
+<code class="sig-name descname">minimum</code><span class="sig-paren">(</span><em class="sig-param">v: high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasTree.minimum"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.minimum" title="永久链接至目标">¶</a></dt>
+<dd><p>v中的最小元素</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.maximum">
+<code class="sig-name descname">maximum</code><span class="sig-paren">(</span><em class="sig-param">v: high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasTree.maximum"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.maximum" title="永久链接至目标">¶</a></dt>
+<dd><p>v中的最大元素</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.member">
+<code class="sig-name descname">member</code><span class="sig-paren">(</span><em class="sig-param">v: high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasTree.member"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.member" title="永久链接至目标">¶</a></dt>
+<dd><p>判断x是否是属于v的元素</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.successor">
+<code class="sig-name descname">successor</code><span class="sig-paren">(</span><em class="sig-param">v: high_level_data_structures.van_emde_boas_tree.VanEmdeBoasNode</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/van_emde_boas_tree.html#VanEmdeBoasTree.successor"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.van_emde_boas_tree.VanEmdeBoasTree.successor" title="永久链接至目标">¶</a></dt>
+<dd><p>在v中寻找大于x的最小元素</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-high_level_data_structures.fibonacci_heap">
+<span id="id1"></span><h1>斐波那契堆<a class="headerlink" href="#module-high_level_data_structures.fibonacci_heap" title="永久链接至标题">¶</a></h1>
+<dl class="class">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeapNode">
+<em class="property">class </em><code class="sig-prename descclassname">high_level_data_structures.fibonacci_heap.</code><code class="sig-name descname">FibonacciHeapNode</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeapNode"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeapNode" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeapNode.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeapNode.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeapNode.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap">
+<em class="property">class </em><code class="sig-prename descclassname">high_level_data_structures.fibonacci_heap.</code><code class="sig-name descname">FibonacciHeap</code><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>斐波那契堆</p>
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.create" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.insert">
+<code class="sig-name descname">insert</code><span class="sig-paren">(</span><em class="sig-param">node: high_level_data_structures.fibonacci_heap.FibonacciHeapNode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.insert"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.insert" title="永久链接至目标">¶</a></dt>
+<dd><p>插入新节点</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.minmum">
+<code class="sig-name descname">minmum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.minmum"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.minmum" title="永久链接至目标">¶</a></dt>
+<dd><p>返回最小节点</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.extract_min">
+<code class="sig-name descname">extract_min</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.extract_min"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.extract_min" title="永久链接至目标">¶</a></dt>
+<dd><p>弹出最小节点</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.get_max_degree">
+<code class="sig-name descname">get_max_degree</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.get_max_degree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.get_max_degree" title="永久链接至目标">¶</a></dt>
+<dd><p>计算具备size个节点的堆中，单个节点的最大度数(度数上界)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.consolidate">
+<code class="sig-name descname">consolidate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.consolidate"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.consolidate" title="永久链接至目标">¶</a></dt>
+<dd><p>合并根链表</p>
+<p>如果发现根链表中两个节点的度相等，那么就进行合并直到根链表中的节点的度两两不相等</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.link">
+<code class="sig-name descname">link</code><span class="sig-paren">(</span><em class="sig-param">x: high_level_data_structures.fibonacci_heap.FibonacciHeapNode</em>, <em class="sig-param">y: high_level_data_structures.fibonacci_heap.FibonacciHeapNode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.link"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.link" title="永久链接至目标">¶</a></dt>
+<dd><p>链接两个斐波那契堆</p>
+<dl class="simple">
+<dt>实现步骤：</dt><dd><ol class="arabic simple">
+<li><p>remove node x from heap’s root list</p></li>
+<li><p>make node x as a child of y, incrementing y.degree</p></li>
+<li><p>x.mark = False</p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.decrease_key">
+<code class="sig-name descname">decrease_key</code><span class="sig-paren">(</span><em class="sig-param">node</em>, <em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.decrease_key"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.decrease_key" title="永久链接至目标">¶</a></dt>
+<dd><p>减小node节点的关键值</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.cut">
+<code class="sig-name descname">cut</code><span class="sig-paren">(</span><em class="sig-param">node: high_level_data_structures.fibonacci_heap.FibonacciHeapNode</em>, <em class="sig-param">parent: high_level_data_structures.fibonacci_heap.FibonacciHeapNode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.cut"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.cut" title="永久链接至目标">¶</a></dt>
+<dd><p>剪枝</p>
+<p>将node节点从当前子堆中剔除，并将node节点放入根链表作为一个根节点</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.cascading_cut">
+<code class="sig-name descname">cascading_cut</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.cascading_cut"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.cascading_cut" title="永久链接至目标">¶</a></dt>
+<dd><p>级联切断剪枝</p>
+<p>判断node节点是否已经是第二次失去子节点(如果mark==True)，如果是那么就要对它进行剪枝</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param">node: high_level_data_structures.fibonacci_heap.FibonacciHeapNode</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.delete"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.delete" title="永久链接至目标">¶</a></dt>
+<dd><p>从堆中删除一个节点</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="high_level_data_structures.fibonacci_heap.FibonacciHeap.union">
+<code class="sig-name descname">union</code><span class="sig-paren">(</span><em class="sig-param">heap</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#FibonacciHeap.union"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.FibonacciHeap.union" title="永久链接至目标">¶</a></dt>
+<dd><p>合并两个FibonacciHeap为新的FibonacciHeap</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="high_level_data_structures.fibonacci_heap.union">
+<code class="sig-prename descclassname">high_level_data_structures.fibonacci_heap.</code><code class="sig-name descname">union</code><span class="sig-paren">(</span><em class="sig-param">h1: high_level_data_structures.fibonacci_heap.FibonacciHeap</em>, <em class="sig-param">h2: high_level_data_structures.fibonacci_heap.FibonacciHeap</em><span class="sig-paren">)</span> &#x2192; high_level_data_structures.fibonacci_heap.FibonacciHeap<a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#union"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.union" title="永久链接至目标">¶</a></dt>
+<dd><p>合并斐波那契堆</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="high_level_data_structures.fibonacci_heap.HeapUnderflowError">
+<em class="property">exception </em><code class="sig-prename descclassname">high_level_data_structures.fibonacci_heap.</code><code class="sig-name descname">HeapUnderflowError</code><a class="reference internal" href="../../_modules/high_level_data_structures/fibonacci_heap.html#HeapUnderflowError"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#high_level_data_structures.fibonacci_heap.HeapUnderflowError" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseException</span></code></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="modules.html"
+       title="上一章">← 高级数据结构</a>
+  </li>
+  <li class="next">
+    <a href="../divide_and_conquer/modules.html"
+       title="下一章">分治法 →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

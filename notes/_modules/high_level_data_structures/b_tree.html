@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>trees.b_tree</title>
+      <title>high_level_data_structures.b_tree</title>
     
       <link rel="stylesheet" href="../../_static/pygments.css">
       <link rel="stylesheet" href="../../_static/theme.css">
@@ -93,7 +93,7 @@
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../rst/trees/modules.html" class="reference internal ">树算法</a>
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
 
             
           </li>
@@ -117,6 +117,12 @@
           </li>
 
         
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
       </ul>
     </div>
   
@@ -131,7 +137,7 @@
     
       <li><a href="../index.html">模块代码</a> &raquo;</li>
     
-    <li>trees.b_tree</li>
+    <li>high_level_data_structures.b_tree</li>
   </ul>
   
 
@@ -142,13 +148,13 @@
 <hr>
           <div class="content" role="main">
             
-  <h1>trees.b_tree 源代码</h1><div class="highlight"><pre>
+  <h1>high_level_data_structures.b_tree 源代码</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># -*- coding:utf-8 -*-</span>
 <span class="c1"># Author: Luo-Songtao</span>
 <span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
 
-<div class="viewcode-block" id="BTreeNode"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode">[文档]</a><span class="k">class</span> <span class="nc">BTreeNode</span><span class="p">:</span>
+<div class="viewcode-block" id="BTreeNode"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode">[文档]</a><span class="k">class</span> <span class="nc">BTreeNode</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;B树节点</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
@@ -160,7 +166,7 @@
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="BTreeNode.__init__"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.__init__"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">leaf</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">keys_count</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 节点关键字个数</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depth</span> <span class="o">=</span> <span class="mi">0</span>
@@ -168,32 +174,32 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># length = keys_count + 1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="BTreeNode.get_key"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.get_key">[文档]</a>    <span class="k">def</span> <span class="nf">get_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.get_key"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.get_key">[文档]</a>    <span class="k">def</span> <span class="nf">get_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
     
-<div class="viewcode-block" id="BTreeNode.get_child_node"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.get_child_node">[文档]</a>    <span class="k">def</span> <span class="nf">get_child_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.get_child_node"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.get_child_node">[文档]</a>    <span class="k">def</span> <span class="nf">get_child_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
     
-<div class="viewcode-block" id="BTreeNode.pop_key"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.pop_key">[文档]</a>    <span class="k">def</span> <span class="nf">pop_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.pop_key"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.pop_key">[文档]</a>    <span class="k">def</span> <span class="nf">pop_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="BTreeNode.pop_child_node"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.pop_child_node">[文档]</a>    <span class="k">def</span> <span class="nf">pop_child_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.pop_child_node"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.pop_child_node">[文档]</a>    <span class="k">def</span> <span class="nf">pop_child_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="BTreeNode.insert_key"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.insert_key">[文档]</a>    <span class="k">def</span> <span class="nf">insert_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.insert_key"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.insert_key">[文档]</a>    <span class="k">def</span> <span class="nf">insert_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BTreeNode.insert_child_node"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTreeNode.insert_child_node">[文档]</a>    <span class="k">def</span> <span class="nf">insert_child_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BTreeNode.insert_child_node"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTreeNode.insert_child_node">[文档]</a>    <span class="k">def</span> <span class="nf">insert_child_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
         <span class="n">node</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span></div></div>
 
-<div class="viewcode-block" id="BTree"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree">[文档]</a><span class="k">class</span> <span class="nc">BTree</span><span class="p">:</span>
+<div class="viewcode-block" id="BTree"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree">[文档]</a><span class="k">class</span> <span class="nc">BTree</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;B树</span>
 <span class="sd">    </span>
 <span class="sd">    B树是为磁盘或其他直接存取的辅助存储设备而设计的一种平衡搜索树。B树类似于红黑树。但B树在降低磁盘I/O操作树方面更好一些。</span>
@@ -218,26 +224,26 @@
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="BTree.__init__"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.__init__"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span> <span class="n">BTreeNode</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minmum_degree</span> <span class="o">=</span> <span class="kc">None</span></div>
     
-<div class="viewcode-block" id="BTree.allocate_node"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.allocate_node">[文档]</a>    <span class="k">def</span> <span class="nf">allocate_node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BTreeNode</span><span class="p">:</span>
+<div class="viewcode-block" id="BTree.allocate_node"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.allocate_node">[文档]</a>    <span class="k">def</span> <span class="nf">allocate_node</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BTreeNode</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;模拟在O(1)的时间内为新节点分配一个磁盘页</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">BTreeNode</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="BTree.disk_read"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.disk_read">[文档]</a>    <span class="k">def</span> <span class="nf">disk_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.disk_read"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.disk_read">[文档]</a>    <span class="k">def</span> <span class="nf">disk_read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;模拟数据读取磁盘I/O操作</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
     
-<div class="viewcode-block" id="BTree.disk_write"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.disk_write">[文档]</a>    <span class="k">def</span> <span class="nf">disk_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.disk_write"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.disk_write">[文档]</a>    <span class="k">def</span> <span class="nf">disk_write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;模拟数据写入磁盘I/O操作</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="BTree.search"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.search">[文档]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.search"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.search">[文档]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;搜索具有指定key值的节点对象</span>
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
@@ -266,7 +272,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">disk_read</span><span class="p">(</span><span class="n">child_node</span><span class="p">)</span>    
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search</span><span class="p">(</span><span class="n">child_node</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     
-<div class="viewcode-block" id="BTree.create"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.create"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;创建一颗空的B树</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">allocate_node</span><span class="p">()</span>
@@ -275,7 +281,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">disk_write</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">node</span></div>
     
-<div class="viewcode-block" id="BTree.split_child"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.split_child">[文档]</a>    <span class="k">def</span> <span class="nf">split_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">BTreeNode</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.split_child"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.split_child">[文档]</a>    <span class="k">def</span> <span class="nf">split_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">BTreeNode</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;节点分裂</span>
 <span class="sd">        </span>
 <span class="sd">        分裂步骤:</span>
@@ -316,7 +322,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">disk_write</span><span class="p">(</span><span class="n">i_left_child</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disk_write</span><span class="p">(</span><span class="n">i_right_child</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="BTree.insert"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.insert">[文档]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.insert"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.insert">[文档]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;插入关键字</span>
 <span class="sd">        </span>
 <span class="sd">        插入新关键字，最终是向叶子节点中进行插入，但是为了保证插入后每一个节点的关键字个数不超过2*minmum_degree-1个，那么需要从根节点开始，递归的向下进行判断。</span>
@@ -360,7 +366,7 @@
                     <span class="n">the_child</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_child_node</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">the_child</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
     
-<div class="viewcode-block" id="BTree.delete"><a class="viewcode-back" href="../../rst/trees/trees.html#trees.b_tree.BTree.delete">[文档]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<div class="viewcode-block" id="BTree.delete"><a class="viewcode-back" href="../../rst/high_level_data_structures/high_level_data_structures.html#high_level_data_structures.b_tree.BTree.delete">[文档]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;删除指定的key</span>
 <span class="sd">        </span>
 <span class="sd">        删除具有指定的key后，需要保证每一个非根节点的关键字个数不低于minmum_degree-1个。</span>
@@ -459,7 +465,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; 版权所有 2020, luo-songtao.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

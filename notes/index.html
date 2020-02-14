@@ -94,7 +94,7 @@
           </li>
 
         
-          <li class="toctree-l1 "><a href="rst/trees/modules.html" class="reference internal ">树算法</a>
+          <li class="toctree-l1 "><a href="rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
 
             
           </li>
@@ -113,6 +113,12 @@
 
         
           <li class="toctree-l1 "><a href="rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="rst/graphs/modules.html" class="reference internal ">图算法</a>
 
             
           </li>
@@ -151,41 +157,125 @@
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="rst/sort/modules.html">排序算法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/sort/insertion_sort.html">插入排序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/sort/merge_sort.html">归并排序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/sort/selection_sort.html">选择排序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/sort/exchange_sort.html">交换排序</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/sort/linear_time_without_comparing_sort.html">线性时间非比较排序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/sort/insertion_sort.html">插入排序</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/insertion_sort.html#module-sort.insertion_sort">直接插入排序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/insertion_sort.html#module-sort.shell_sort">希尔排序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/sort/merge_sort.html">归并排序</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/merge_sort.html#module-sort.merge_sort">二路归并排序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/sort/selection_sort.html">选择排序</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/selection_sort.html#module-sort.selection_sort">直接选择排序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/selection_sort.html#module-sort.heap_sort">堆排序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/sort/exchange_sort.html">交换排序</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/exchange_sort.html#module-sort.bubble_sort">冒泡排序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/exchange_sort.html#module-sort.quick_sort">快速排序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/sort/linear_time_without_comparing_sort.html">线性时间非比较排序</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/linear_time_without_comparing_sort.html#module-sort.count_sort">计数排序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/linear_time_without_comparing_sort.html#module-sort.radix_sort">基数排序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/sort/linear_time_without_comparing_sort.html#module-sort.bucket_sort">桶排序</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rst/data_structures/modules.html">数据结构</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/binary_search_trees.html">二叉搜索树</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/hash_tables.html">哈希表</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/stacks.html">栈</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/queues.html">队列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/linked_list.html">链表</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/heaps.html">堆</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/binary_search_trees.html">二叉搜索树</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/binary_search_trees.html#id2">二叉搜索树</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/binary_search_trees.html#module-data_structures.binary_search_trees.red_black_tree">红黑树</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/binary_search_trees.html#module-data_structures.binary_search_trees.avl_tree">平衡二叉树</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/hash_tables.html">哈希表</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/hash_tables.html#id2">哈希表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/hash_tables.html#module-data_structures.hash_tables.hash_table_by_open_addressing">基于开放寻址法的哈希表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/hash_tables.html#module-data_structures.hash_tables.hash_table_on_linked_list">基于双向链表的哈希表</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/stacks.html">栈</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/stacks.html#module-data_structures.stacks.stack_on_list">基于列表的栈</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/queues.html">队列</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/queues.html#module-data_structures.queues.queue_on_list">基于列表的队列</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/linked_list.html">链表</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/linked_list.html#module-data_structures.linked_list.doubly_linked_list">双向链表</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/data_structures/heaps.html">堆</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/data_structures/heaps.html#module-data_structures.heaps.binary_max_heap">最大二叉堆</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rst/hashes/modules.html">哈希算法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/hashes/numberic_hashes.html">数值hash算法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rst/hashes/string_hashes.html">字符串hash算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/hashes/numberic_hashes.html">数值hash算法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/hashes/numberic_hashes.html#module-hashes.numberic_hashes.multiplicative_hash">乘法散列</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="rst/trees/modules.html">树算法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/trees/trees.html">高级树算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/hashes/string_hashes.html">字符串hash算法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/hashes/string_hashes.html#module-hashes.string_hashes.elf">ELF Hash</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rst/high_level_data_structures/modules.html">高级数据结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rst/high_level_data_structures/high_level_data_structures.html">B树</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/high_level_data_structures/high_level_data_structures.html#module-high_level_data_structures.van_emde_boas_tree">van_emde_boas_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/high_level_data_structures/high_level_data_structures.html#module-high_level_data_structures.fibonacci_heap">斐波那契堆</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rst/divide_and_conquer/modules.html">分治法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/divide_and_conquer/divide_and_conquer.html">分治法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/divide_and_conquer/divide_and_conquer.html">分治法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/divide_and_conquer/divide_and_conquer.html#module-divide_and_conquer.maximum_subarray">最大子序列问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/divide_and_conquer/divide_and_conquer.html#module-divide_and_conquer.square_matrix_multiply_strassen">矩阵乘算法</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rst/greedy_algorithm/modules.html">贪心算法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/greedy_algorithm/greedy_algorithm.html">贪心算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/greedy_algorithm/greedy_algorithm.html">贪心算法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/greedy_algorithm/greedy_algorithm.html#module-greedy_algorithm.activity_selector">活动问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/greedy_algorithm/greedy_algorithm.html#module-greedy_algorithm.fractional_knapsack">分数背包问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/greedy_algorithm/greedy_algorithm.html#module-greedy_algorithm.hoffman_code">霍夫曼编码</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="rst/dynamic_programming/modules.html">动态规划</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="rst/dynamic_programming/dynamic_programming.html">动态规划</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rst/dynamic_programming/dynamic_programming.html">动态规划</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/dynamic_programming/dynamic_programming.html#module-dynamic_programming.cut_rod">钢条切割问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/dynamic_programming/dynamic_programming.html#module-dynamic_programming.dynamic_0_1_knapsack">0-1背包问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/dynamic_programming/dynamic_programming.html#module-dynamic_programming.longest_common_subsequence">最长公共子序列问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/dynamic_programming/dynamic_programming.html#module-dynamic_programming.matrix_chain_multiplication_problem">矩阵链乘问题</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rst/graphs/modules.html">图算法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rst/graphs/bfs.html">广度优先搜索</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/bfs.html#module-graphs.breadth_first_search">广度优先搜索算法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/graphs/dfs.html">深度优先搜索</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/dfs.html#module-graphs.deep_first_search">深度优先搜索算法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/dfs.html#module-graphs.topological_sort">拓扑排序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/dfs.html#module-graphs.strongly_connected_components">强连通分量</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rst/graphs/mst.html">最小生成树</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/mst.html#module-graphs.mst_basics">最小生成树基本实现</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/mst.html#module-graphs.mst_prim">Prim算法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rst/graphs/mst.html#module-graphs.mst_kruskal">Kruskal算法</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -211,7 +301,7 @@
 </ul><div class="footer" role="contentinfo">
       &#169; 版权所有 2020, luo-songtao.
     <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.0 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
 </div>
             </div>
           </div>

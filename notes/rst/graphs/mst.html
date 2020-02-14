@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>最小生成树</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="prev" title="深度优先搜索" href="dfs.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">图算法</a> &raquo;</li>
+    
+    <li>最小生成树</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="dfs.html"
+       title="上一章">← 深度优先搜索</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="id1">
+<h1>最小生成树<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-graphs.mst_basics">
+<span id="id2"></span><h2>最小生成树基本实现<a class="headerlink" href="#module-graphs.mst_basics" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="graphs.mst_basics.MinmumSpanningTree">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_basics.</code><code class="sig-name descname">MinmumSpanningTree</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_basics.html#MinmumSpanningTree"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_basics.MinmumSpanningTree" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>最小生成树</p>
+<p>根据连通无向图，得到最小生成树</p>
+<p>采用贪心法，创建时，每次选取权重最小的边，除了第一次选取外，其余情况下，这条最小权重的边都必须满足的其中一个顶点已经在树中，而另一个顶点却不在树中，那么然后将这条边加入到树中。最终生成的树将是一输入的连通无向图的一颗最小生成树</p>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mst</span> <span class="o">=</span> <span class="n">MinmumSpanningTree</span><span class="p">(</span><span class="n">connected_undirected_graph</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mst</span><span class="o">.</span><span class="n">minmum_weight</span>    <span class="c1"># 最小生成树的权重值</span>
+<span class="go">37</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mst</span><span class="o">.</span><span class="n">edges</span>    <span class="c1"># 最小生成树的边</span>
+<span class="go">[(&#39;g&#39;, &#39;h&#39;), (&#39;f&#39;, &#39;g&#39;), (&#39;c&#39;, &#39;f&#39;), (&#39;c&#39;, &#39;i&#39;), (&#39;c&#39;, &#39;d&#39;), (&#39;a&#39;, &#39;h&#39;), (&#39;a&#39;, &#39;b&#39;), (&#39;d&#39;, &#39;e&#39;)]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="graphs.mst_basics.MinmumSpanningTree.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_basics.html#MinmumSpanningTree.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_basics.MinmumSpanningTree.__init__" title="永久链接至目标">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>graph</strong> – 连通无向图</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.mst_basics.MinmumSpanningTree.vectexs">
+<em class="property">property </em><code class="sig-name descname">vectexs</code><a class="headerlink" href="#graphs.mst_basics.MinmumSpanningTree.vectexs" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="graphs.mst_basics.MinmumSpanningTree.minmum_weight_edge">
+<code class="sig-name descname">minmum_weight_edge</code><span class="sig-paren">(</span><em class="sig-param">exclude_vectexs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_basics.html#MinmumSpanningTree.minmum_weight_edge"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_basics.MinmumSpanningTree.minmum_weight_edge" title="永久链接至目标">¶</a></dt>
+<dd><p>每次选取与已生成的最小生成树连接的权重最小的边加入到树中</p>
+<p>这里的实现方式类似prim算法，但没有优化</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.mst_basics.MinmumSpanningTree.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_basics.html#MinmumSpanningTree.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_basics.MinmumSpanningTree.create" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-graphs.mst_prim">
+<span id="prim"></span><h2>Prim算法<a class="headerlink" href="#module-graphs.mst_prim" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="graphs.mst_prim.Prim">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_prim.</code><code class="sig-name descname">Prim</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#Prim"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.Prim" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>最小生成树Prim算法</p>
+<p>Prim算法的思想是每次添加的边总能构成一颗树(全部相连),且每次添加的边的权重总是与已生成的前驱子树相连的边中最小的(贪心策略)</p>
+<dl class="method">
+<dt id="graphs.mst_prim.Prim.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#Prim.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.Prim.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.mst_prim.Prim.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#Prim.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.Prim.create" title="永久链接至目标">¶</a></dt>
+<dd><p>构建最小生成树</p>
+<p>使用优先级队列添加新的与已生成的前驱子树相连的边。不断循环添加新的边加入的已生成的前驱子树中，直到覆盖完图中所有的顶点</p>
+<p>由于生成过程中会不断将边加入到队列中，因此该算法的时间复杂度在于优先级队列的实现方式。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-graphs.mst_kruskal">
+<span id="kruskal"></span><h2>Kruskal算法<a class="headerlink" href="#module-graphs.mst_kruskal" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="graphs.mst_kruskal.Kruskal">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_kruskal.</code><code class="sig-name descname">Kruskal</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#Kruskal"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.Kruskal" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>最小生成树的Kruskal算法</p>
+<p>Kruskal算法的思想是每次添加的边都是图中权重最小的边(贪心策略)，因此这样可能会在生成过程中出现多颗子树(不相连),我们称为森林。因此需要直到所有的子树连接为一颗树，且覆盖完图中所有的节点，则代表树生成结束</p>
+<dl class="method">
+<dt id="graphs.mst_kruskal.Kruskal.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#Kruskal.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.Kruskal.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.mst_kruskal.Kruskal.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#Kruskal.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.Kruskal.create" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="dfs.html"
+       title="上一章">← 深度优先搜索</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>
