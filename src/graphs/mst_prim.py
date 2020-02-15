@@ -5,7 +5,7 @@
 from queue import PriorityQueue
 
 
-class Prim:
+class PrimMST:
     """最小生成树Prim算法
     
     Prim算法的思想是每次添加的边总能构成一颗树(全部相连),且每次添加的边的权重总是与已生成的前驱子树相连的边中最小的(贪心策略)
@@ -64,7 +64,7 @@ if __name__ == '__main__':
         "i": [("c", 2), ("h", 7), ("g", 6)]
     }
     
-    prim = Prim(connected_undirected_graph, "c")
-    print(prim.minmum_weight)
-    print(prim.edges)
+    prim_mst = PrimMST(connected_undirected_graph, "c")
+    print(prim_mst.minmum_weight)
+    print(prim_mst.edges)
     

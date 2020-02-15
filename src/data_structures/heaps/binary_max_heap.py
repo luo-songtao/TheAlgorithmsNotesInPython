@@ -8,6 +8,19 @@ import math
 
 
 class BinaryMaxHeap:
+    """二叉最大堆
+    
+    Example:
+        >>> binary_max_heap = BinaryMaxHeap()
+        >>> array = [5, 2, 7, 1, 8, 10, 3]
+        >>> binary_max_heap.build_max_heap(array)
+        >>> binary_max_heap.extract_max(array)
+        10
+        >>> array2 = [(5, "i1"), (2, "i2"), (7, "i3"), (1, "i4"), (8, "i5"), (10, "i6"), (3, "i7")]
+        >>> binary_max_heap.build_max_heap(array2, without_data=False)
+        >>> binary_max_heap.extract_max(array2)
+        (10, 'i6')
+    """
 
     @staticmethod
     def get_parent_index(index: int):
@@ -27,7 +40,7 @@ class BinaryMaxHeap:
         """
         return 2*index + 1
 
-    def max_heapify(self, array: list, index: int, heap_size: int):
+    def max_heapify(self, array: list, index: int, heap_size: int, without_data=True):
         """最大堆堆化处理，维护最大堆的性质
         
         最大堆性质：父节点必须大于等于左右子节点
@@ -42,22 +55,28 @@ class BinaryMaxHeap:
             array (list): 存放堆数据的数组
             index (int): 指定的索引
             heap_size (int): 当前堆有效元素个数。(array[0:heap_size-1]中存放的才是堆上有效的元素)
+            without_data (bool): 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True
         """
         left = self.get_left_child_index(index)
         right = self.get_right_child_index(index)
         
         largest_index = index
-        if left <= heap_size-1 and array[left] > array[index]:
-            largest_index = left
-
-        if right <= heap_size-1 and array[right] > array[largest_index]:
-            largest_index = right
+        if without_data is False:
+            if left <= heap_size-1 and array[left][0] > array[index][0]:
+                largest_index = left
+            if right <= heap_size-1 and array[right][0] > array[largest_index][0]:
+                largest_index = right
+        else:
+            if left <= heap_size-1 and array[left] > array[index]:
+                largest_index = left
+            if right <= heap_size-1 and array[right] > array[largest_index]:
+                largest_index = right
 
         if largest_index != index:     # 如果父节点不是最大的，那么与对应最大的子节点交换位置，并继续递归判断下一级
             array[index], array[largest_index] = array[largest_index], array[index]
-            self.max_heapify(array, largest_index, heap_size)
+            self.max_heapify(array, largest_index, heap_size, without_data)
 
-    def build_max_heap(self, array: list):
+    def build_max_heap(self, array: list, without_data=True):
         """构建最大堆
         
         自底向上的对所有的非叶子节点的数进行最大堆堆化处理。(叶子节点的数会在处理其父节点时进行被处理)
@@ -68,7 +87,19 @@ class BinaryMaxHeap:
         
         Args:
             array (list): 存放堆数据的数组
+            without_data (bool): 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True
         """
         for index in range(len(array)//2, -1, -1):
-            self.max_heapify(array, index, len(array))
+            self.max_heapify(array, index, len(array), without_data)
 
+    def extract_max(self, array: list):
+        """弹出最大值
+        
+        这时假定执行该方法之前，对array已经进行了build_max_heap操作
+        """
+        return array.pop(0)
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()

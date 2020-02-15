@@ -22,3 +22,10 @@ van_emde_boas_tree
    :undoc-members:
    :show-inheritance:
 
+
+不相交集合
+-------------
+.. automodule:: high_level_data_structures.disjoin_set
+   :members:
+   :undoc-members:
+   :show-inheritance:

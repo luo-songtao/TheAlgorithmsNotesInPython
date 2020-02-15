@@ -1,4 +1,3 @@
-
 最小生成树
 =============
 
@@ -17,7 +16,7 @@ Prim算法
    :members:
    :undoc-members:
    :show-inheritance:
-   
+
 
 Kruskal算法
 ----------------------

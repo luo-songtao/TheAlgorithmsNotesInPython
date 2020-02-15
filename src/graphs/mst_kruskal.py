@@ -18,7 +18,7 @@ connected_undirected_graph = {
 }
 
 
-class Kruskal:
+class KruskalMST:
     """最小生成树的Kruskal算法
     
     Kruskal算法的思想是每次添加的边都是图中权重最小的边(贪心策略)，因此这样可能会在生成过程中出现多颗子树(不相连),我们称为森林。因此需要直到所有的子树连接为一颗树，且覆盖完图中所有的节点，则代表树生成结束
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     
     from disjoin_set import DisjoinSet
     
-    kruskal = Kruskal(connected_undirected_graph)
-    print(kruskal.minmum_weight)
-    print(kruskal.edges)
+    kruskal_mst = KruskalMST(connected_undirected_graph)
+    print(kruskal_mst.minmum_weight)
+    print(kruskal_mst.edges)
     

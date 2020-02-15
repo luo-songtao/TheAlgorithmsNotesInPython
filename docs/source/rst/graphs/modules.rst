@@ -7,3 +7,4 @@
    bfs.rst
    dfs.rst
    mst.rst
+   ssp.rst
