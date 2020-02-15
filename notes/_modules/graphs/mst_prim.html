@@ -156,19 +156,19 @@
 <span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">PriorityQueue</span>
 
 
-<div class="viewcode-block" id="Prim"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_prim.Prim">[文档]</a><span class="k">class</span> <span class="nc">Prim</span><span class="p">:</span>
+<div class="viewcode-block" id="PrimMST"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_prim.PrimMST">[文档]</a><span class="k">class</span> <span class="nc">PrimMST</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;最小生成树Prim算法</span>
 <span class="sd">    </span>
 <span class="sd">    Prim算法的思想是每次添加的边总能构成一颗树(全部相连),且每次添加的边的权重总是与已生成的前驱子树相连的边中最小的(贪心策略)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="Prim.__init__"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_prim.Prim.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimMST.__init__"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_prim.PrimMST.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minmum_weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span></div>
     
-<div class="viewcode-block" id="Prim.create"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_prim.Prim.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PrimMST.create"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_prim.PrimMST.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;构建最小生成树</span>
 <span class="sd">        </span>
 <span class="sd">        使用优先级队列添加新的与已生成的前驱子树相连的边。不断循环添加新的边加入的已生成的前驱子树中，直到覆盖完图中所有的顶点</span>
@@ -215,9 +215,9 @@
         <span class="s2">&quot;i&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
     <span class="p">}</span>
     
-    <span class="n">prim</span> <span class="o">=</span> <span class="n">Prim</span><span class="p">(</span><span class="n">connected_undirected_graph</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">prim</span><span class="o">.</span><span class="n">minmum_weight</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">prim</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+    <span class="n">prim_mst</span> <span class="o">=</span> <span class="n">PrimMST</span><span class="p">(</span><span class="n">connected_undirected_graph</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">prim_mst</span><span class="o">.</span><span class="n">minmum_weight</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">prim_mst</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
     
 </pre></div>
 

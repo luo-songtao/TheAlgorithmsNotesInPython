@@ -13,3 +13,11 @@
    :undoc-members:
    :show-inheritance:
 
+
+
+动态优先级队列
+-----------------
+.. automodule:: data_structures.queues.dynamic_priority_queue
+   :members:
+   :undoc-members:
+   :show-inheritance:

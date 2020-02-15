@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.ssp_basics</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.ssp_basics</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.ssp_basics 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="AbstracteSingleSourcePaths"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths">[文档]</a><span class="k">class</span> <span class="nc">AbstracteSingleSourcePaths</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;单源最短路径算法抽象类</span>
+<span class="sd">    </span>
+<span class="sd">    注意：不能直接初始化进行使用，需要继承后，重写compute方法进行使用</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="AbstracteSingleSourcePaths.__init__"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            graph: 有向图</span>
+<span class="sd">            source: 源顶点</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span> <span class="o">=</span> <span class="p">{}</span>    <span class="c1"># 记录每个顶点在计算ssp过程中的信息</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_single_source</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">isexists_ssp</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="AbstracteSingleSourcePaths.initialize_single_source"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths.initialize_single_source">[文档]</a>    <span class="k">def</span> <span class="nf">initialize_single_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化单源路径图顶点信息</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>    <span class="c1"># 记录source顶点到当前顶点的距离，默认是无穷大</span>
+                <span class="s2">&quot;prev&quot;</span><span class="p">:</span> <span class="kc">None</span>    <span class="c1"># 记录当前顶点在ssp中的前驱顶点</span>
+            <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 将源顶点的距离归为0</span></div>
+    
+<div class="viewcode-block" id="AbstracteSingleSourcePaths.relax"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths.relax">[文档]</a>    <span class="k">def</span> <span class="nf">relax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w_uv</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;对边`u-&gt;v`进行松弛处理</span>
+<span class="sd">        </span>
+<span class="sd">        如果（源顶点s到后向顶点v的距离）大于（源顶点s到其前驱顶点u的距离+边`u-&gt;v`的权重），则需要对源顶点s到后向顶点v的距离进行一次更新</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">w_uv</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">w_uv</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;prev&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span></div>
+    
+<div class="viewcode-block" id="AbstracteSingleSourcePaths.generate_ssp"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths.generate_ssp">[文档]</a>    <span class="k">def</span> <span class="nf">generate_ssp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;根据已经构建的SSP信息(`vertex_info`)，生成每一条路径</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;prev&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;prev&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_ssp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;prev&quot;</span><span class="p">])</span>
+            <span class="k">yield</span> <span class="n">t</span></div>
+    
+<div class="viewcode-block" id="AbstracteSingleSourcePaths.show"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths.show">[文档]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;打印每一条SSP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;prev&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">+</span><span class="s2">&quot; -&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot; -&gt; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_ssp</span><span class="p">(</span><span class="n">v</span><span class="p">)),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;weights: &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="AbstracteSingleSourcePaths.compute"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.ssp_basics.AbstracteSingleSourcePaths.compute">[文档]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算SSP</span>
+<span class="sd">        </span>
+<span class="sd">        该方法需要被重写</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

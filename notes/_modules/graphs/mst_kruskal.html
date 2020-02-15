@@ -169,17 +169,17 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="Kruskal"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_kruskal.Kruskal">[文档]</a><span class="k">class</span> <span class="nc">Kruskal</span><span class="p">:</span>
+<div class="viewcode-block" id="KruskalMST"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_kruskal.KruskalMST">[文档]</a><span class="k">class</span> <span class="nc">KruskalMST</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;最小生成树的Kruskal算法</span>
 <span class="sd">    </span>
 <span class="sd">    Kruskal算法的思想是每次添加的边都是图中权重最小的边(贪心策略)，因此这样可能会在生成过程中出现多颗子树(不相连),我们称为森林。因此需要直到所有的子树连接为一颗树，且覆盖完图中所有的节点，则代表树生成结束</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="Kruskal.__init__"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_kruskal.Kruskal.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+<div class="viewcode-block" id="KruskalMST.__init__"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_kruskal.KruskalMST.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">minmum_weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Kruskal.create"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_kruskal.Kruskal.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="KruskalMST.create"><a class="viewcode-back" href="../../rst/graphs/mst.html#graphs.mst_kruskal.KruskalMST.create">[文档]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">vertexs_already_in_tree</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">queue</span> <span class="o">=</span> <span class="n">PriorityQueue</span><span class="p">()</span>
         <span class="n">disjoin_set</span> <span class="o">=</span> <span class="n">DisjoinSet</span><span class="p">()</span>
@@ -207,9 +207,9 @@
     
     <span class="kn">from</span> <span class="nn">disjoin_set</span> <span class="kn">import</span> <span class="n">DisjoinSet</span>
     
-    <span class="n">kruskal</span> <span class="o">=</span> <span class="n">Kruskal</span><span class="p">(</span><span class="n">connected_undirected_graph</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kruskal</span><span class="o">.</span><span class="n">minmum_weight</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kruskal</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
+    <span class="n">kruskal_mst</span> <span class="o">=</span> <span class="n">KruskalMST</span><span class="p">(</span><span class="n">connected_undirected_graph</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">kruskal_mst</span><span class="o">.</span><span class="n">minmum_weight</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">kruskal_mst</span><span class="o">.</span><span class="n">edges</span><span class="p">)</span>
     
 </pre></div>
 

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.shorttest_paths_on_dag</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.shorttest_paths_on_dag</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.shorttest_paths_on_dag 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">ssp_basics</span> <span class="kn">import</span> <span class="n">AbstracteSingleSourcePaths</span> <span class="k">as</span> <span class="n">SSP</span>
+<span class="kn">from</span> <span class="nn">topological_sort</span> <span class="kn">import</span> <span class="n">topological_sort</span>
+
+
+<span class="n">the_dag</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)],</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)],</span>
+    <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+<span class="n">the_dag_wthout_weights</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;z&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="ShortestPathsOnDAG"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.shorttest_paths_on_dag.ShortestPathsOnDAG">[文档]</a><span class="k">class</span> <span class="nc">ShortestPathsOnDAG</span><span class="p">(</span><span class="n">SSP</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;有向无环图上的最短路径</span>
+<span class="sd">    </span>
+<span class="sd">    这里由于已经要求给定图是有向无环图，所以本算法等于是对`BellmanFordSSP`的特殊情况做的修改，以提高运行效率。</span>
+<span class="sd">    </span>
+<span class="sd">    相比bellman-ford算法，由于已经要求给定图是有向无环图，因此无需对图中的边进行|V|-1次松弛操作，而是利用对DAG的拓扑排序序列，依次取出每一条边，然后进行1次松弛操作即可</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; dag_ssp = ShortestPathsOnDAG(the_dag, &quot;s&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; dag_ssp.show()</span>
+<span class="sd">        s -&gt; t, weights:  2</span>
+<span class="sd">        s -&gt; x, weights:  6</span>
+<span class="sd">        s -&gt; x -&gt; y, weights:  5</span>
+<span class="sd">        s -&gt; x -&gt; y -&gt; z, weights:  3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="ShortestPathsOnDAG.compute"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.shorttest_paths_on_dag.ShortestPathsOnDAG.compute">[文档]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算SSP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 使用已经生成的无权重的图进行拓扑排序，因为之前的dfs实现暂不支持带权重的图结构</span>
+        <span class="c1"># 注意：这里为了简便，帮助理解，直接使用了全局变量the_dag_wthout_weight</span>
+        <span class="n">topo_sequence</span> <span class="o">=</span> <span class="n">topological_sort</span><span class="p">(</span><span class="n">the_dag_wthout_weights</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">topo_sequence</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">w_uv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">relax</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w_uv</span><span class="p">)</span></div></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

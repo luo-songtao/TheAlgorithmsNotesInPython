@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>data_structures.heaps.binary_max_heap</title>
+      <title>data_structures.heaps.binary_min_heap</title>
     
       <link rel="stylesheet" href="../../../_static/pygments.css">
       <link rel="stylesheet" href="../../../_static/theme.css">
@@ -137,7 +137,7 @@
     
       <li><a href="../../index.html">模块代码</a> &raquo;</li>
     
-    <li>data_structures.heaps.binary_max_heap</li>
+    <li>data_structures.heaps.binary_min_heap</li>
   </ul>
   
 
@@ -148,7 +148,7 @@
 <hr>
           <div class="content" role="main">
             
-  <h1>data_structures.heaps.binary_max_heap 源代码</h1><div class="highlight"><pre>
+  <h1>data_structures.heaps.binary_min_heap 源代码</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># -*- coding:utf-8 -*-</span>
 <span class="c1"># Author: Luo-Songtao</span>
@@ -158,46 +158,46 @@
 <span class="kn">import</span> <span class="nn">math</span>
 
 
-<div class="viewcode-block" id="BinaryMaxHeap"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap">[文档]</a><span class="k">class</span> <span class="nc">BinaryMaxHeap</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;二叉最大堆</span>
+<div class="viewcode-block" id="BinaryMinHeap"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap">[文档]</a><span class="k">class</span> <span class="nc">BinaryMinHeap</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;二叉最小堆</span>
 <span class="sd">    </span>
 <span class="sd">    Example:</span>
-<span class="sd">        &gt;&gt;&gt; binary_max_heap = BinaryMaxHeap()</span>
+<span class="sd">        &gt;&gt;&gt; binary_min_heap = BinaryMinHeap()</span>
 <span class="sd">        &gt;&gt;&gt; array = [5, 2, 7, 1, 8, 10, 3]</span>
-<span class="sd">        &gt;&gt;&gt; binary_max_heap.build_max_heap(array)</span>
-<span class="sd">        &gt;&gt;&gt; binary_max_heap.extract_max(array)</span>
-<span class="sd">        10</span>
+<span class="sd">        &gt;&gt;&gt; binary_min_heap.build_min_heap(array)</span>
+<span class="sd">        &gt;&gt;&gt; binary_min_heap.extract_min(array)</span>
+<span class="sd">        1</span>
 <span class="sd">        &gt;&gt;&gt; array2 = [(5, &quot;i1&quot;), (2, &quot;i2&quot;), (7, &quot;i3&quot;), (1, &quot;i4&quot;), (8, &quot;i5&quot;), (10, &quot;i6&quot;), (3, &quot;i7&quot;)]</span>
-<span class="sd">        &gt;&gt;&gt; binary_max_heap.build_max_heap(array2, without_data=False)</span>
-<span class="sd">        &gt;&gt;&gt; binary_max_heap.extract_max(array2)</span>
-<span class="sd">        (10, &#39;i6&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; binary_min_heap.build_min_heap(array2, without_data=False)</span>
+<span class="sd">        &gt;&gt;&gt; binary_min_heap.extract_min(array2)</span>
+<span class="sd">        (1, &#39;i4&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="BinaryMaxHeap.get_parent_index"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap.get_parent_index">[文档]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BinaryMinHeap.get_parent_index"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap.get_parent_index">[文档]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_parent_index</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;计算父节点索引</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">index</span><span class="o">/</span><span class="mi">2</span> <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">fmod</span><span class="p">(</span><span class="n">index</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">(</span><span class="n">index</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span></div>
 
-<div class="viewcode-block" id="BinaryMaxHeap.get_left_child_index"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap.get_left_child_index">[文档]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BinaryMinHeap.get_left_child_index"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap.get_left_child_index">[文档]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_left_child_index</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;计算左子节点索引</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">index</span></div>
 
-<div class="viewcode-block" id="BinaryMaxHeap.get_right_child_index"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap.get_right_child_index">[文档]</a>    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BinaryMinHeap.get_right_child_index"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap.get_right_child_index">[文档]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_right_child_index</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;计算右子节点索引</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="BinaryMaxHeap.max_heapify"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap.max_heapify">[文档]</a>    <span class="k">def</span> <span class="nf">max_heapify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;最大堆堆化处理，维护最大堆的性质</span>
+<div class="viewcode-block" id="BinaryMinHeap.min_heapify"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap.min_heapify">[文档]</a>    <span class="k">def</span> <span class="nf">min_heapify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;最小堆堆化处理，维护最小堆的性质</span>
 <span class="sd">        </span>
-<span class="sd">        最大堆性质：父节点必须大于等于左右子节点</span>
+<span class="sd">        最小堆性质：父节点必须小于等于左右子节点</span>
 <span class="sd">        </span>
-<span class="sd">        根据最大堆的性质将指定索引处的数调整到堆的它合适的位置:</span>
-<span class="sd">            - 将指定index处的值x与其左右孩子的进行比较，将最大的孩子与其交换位置，以满足最大堆性质，并再次递归处理x</span>
+<span class="sd">        根据最小堆的性质将指定索引处的数调整到堆的它合适的位置:</span>
+<span class="sd">            - 将指定index处的值x与其左右孩子的进行比较，将最小的孩子与其交换位置，以满足最小堆性质，并再次递归处理x</span>
 <span class="sd">            - 当指定index处的值x比其左右孩子的都大，则不用再递归</span>
 
 <span class="sd">        时间复杂度：:math:`O(lg n)`,n表示堆大小</span>
@@ -211,26 +211,28 @@
         <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_left_child_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_right_child_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
         
-        <span class="n">largest_index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">index</span>
         <span class="k">if</span> <span class="n">without_data</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">largest_index</span> <span class="o">=</span> <span class="n">left</span>
-            <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">largest_index</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">largest_index</span> <span class="o">=</span> <span class="n">right</span>
+            <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">left</span>
+
+            <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">right</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
-                <span class="n">largest_index</span> <span class="o">=</span> <span class="n">left</span>
-            <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="p">[</span><span class="n">largest_index</span><span class="p">]:</span>
-                <span class="n">largest_index</span> <span class="o">=</span> <span class="n">right</span>
+            <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+                <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">left</span>
 
-        <span class="k">if</span> <span class="n">largest_index</span> <span class="o">!=</span> <span class="n">index</span><span class="p">:</span>     <span class="c1"># 如果父节点不是最大的，那么与对应最大的子节点交换位置，并继续递归判断下一级</span>
-            <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">largest_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">largest_index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_heapify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">largest_index</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">,</span> <span class="n">without_data</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">]:</span>
+                <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">right</span>
 
-<div class="viewcode-block" id="BinaryMaxHeap.build_max_heap"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap.build_max_heap">[文档]</a>    <span class="k">def</span> <span class="nf">build_max_heap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;构建最大堆</span>
+        <span class="k">if</span> <span class="n">smallest_index</span> <span class="o">!=</span> <span class="n">index</span><span class="p">:</span>     <span class="c1"># 如果父节点不是最小的，那么与对应最小的子节点交换位置，并继续递归判断下一级</span>
+            <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">smallest_index</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">,</span> <span class="n">without_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BinaryMinHeap.build_min_heap"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap.build_min_heap">[文档]</a>    <span class="k">def</span> <span class="nf">build_min_heap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;构建二叉最小堆</span>
 <span class="sd">        </span>
-<span class="sd">        自底向上的对所有的非叶子节点的数进行最大堆堆化处理。(叶子节点的数会在处理其父节点时进行被处理)</span>
+<span class="sd">        自底向上的对所有的非叶子节点的数进行最小堆堆化处理。(叶子节点的数会在处理其父节点时进行被处理)</span>
 <span class="sd">        </span>
 <span class="sd">        因为二叉堆可以可以看成一颗近似的完全二叉树，所以`index &gt;= len(array)//2 + 1` 的都是叶子节点</span>
 <span class="sd">        </span>
@@ -241,12 +243,12 @@
 <span class="sd">            without_data (bool): 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_heapify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">),</span> <span class="n">without_data</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">),</span> <span class="n">without_data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BinaryMaxHeap.extract_max"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_max_heap.BinaryMaxHeap.extract_max">[文档]</a>    <span class="k">def</span> <span class="nf">extract_max</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;弹出最大值</span>
+<div class="viewcode-block" id="BinaryMinHeap.extract_min"><a class="viewcode-back" href="../../../rst/data_structures/heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap.extract_min">[文档]</a>    <span class="k">def</span> <span class="nf">extract_min</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;弹出最小值</span>
 <span class="sd">        </span>
-<span class="sd">        这时假定执行该方法之前，对array已经进行了build_max_heap操作</span>
+<span class="sd">        这时假定执行该方法之前，对array已经进行了build_min_heap操作</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div></div>
 
@@ -254,6 +256,7 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
 </pre></div>
 
           </div>

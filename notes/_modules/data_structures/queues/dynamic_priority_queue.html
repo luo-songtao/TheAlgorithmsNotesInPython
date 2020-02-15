@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>data_structures.queues.dynamic_priority_queue</title>
+    
+      <link rel="stylesheet" href="../../../_static/pygments.css">
+      <link rel="stylesheet" href="../../../_static/theme.css">
+      <link rel="stylesheet" href="../../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../../_static/theme-vendors.js"></script>
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../../genindex.html" />
+  <link rel="search" title="搜索" href="../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../index.html">模块代码</a> &raquo;</li>
+    
+    <li>data_structures.queues.dynamic_priority_queue</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>data_structures.queues.dynamic_priority_queue 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;../&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">data_structures.heaps.binary_min_heap</span> <span class="kn">import</span> <span class="n">BinaryMinHeap</span> <span class="k">as</span> <span class="n">BaseQueue</span>
+
+
+<div class="viewcode-block" id="DynamicPriorityQueue"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue">[文档]</a><span class="k">class</span> <span class="nc">DynamicPriorityQueue</span><span class="p">(</span><span class="n">BaseQueue</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;优先队列-动态化</span>
+<span class="sd">    </span>
+<span class="sd">    基于二叉最小堆实现的优先级队列，同时支持一些特殊形式的权重值进行比较。这也是这里命名为`动态`的原因。</span>
+<span class="sd">    </span>
+<span class="sd">    动态化是指支持多种形式的权重值形式:</span>
+<span class="sd">        - 纯权重形式: `[1,2,3,4,5,6]`</span>
+<span class="sd">        - 一般形式(同标准库中的PriorityQueue): `[(1, &quot;v1&quot;), (2, &quot;v2&quot;), (3, &quot;v3&quot;), (4, &quot;v4&quot;), (5, &quot;v5&quot;), (6, &quot;v6&quot;), ]`</span>
+<span class="sd">        - 函数形式: `[(function, args), (function, args), ...]`。该形式下将在每次比较时，对函数进行调用，将其返回值作为比较值，这样可以用在一些特定的需要动态更改权重值的场景下</span>
+<span class="sd">        </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; queue = DynamicPriorityQueue()</span>
+<span class="sd">        &gt;&gt;&gt; data = [9,3,5,8,7,2,6]</span>
+<span class="sd">        &gt;&gt;&gt; _ = [queue.put(i) for i in data]</span>
+<span class="sd">        &gt;&gt;&gt; queue.get()</span>
+<span class="sd">        2</span>
+<span class="sd">        &gt;&gt;&gt; queue = DynamicPriorityQueue(without_data=False)</span>
+<span class="sd">        &gt;&gt;&gt; f = lambda x,y: x*y</span>
+<span class="sd">        &gt;&gt;&gt; data = [9,3,5,8,7,2,6]</span>
+<span class="sd">        &gt;&gt;&gt; _ = [queue.put((f,(i,j))) for i in data for j in data]</span>
+<span class="sd">        &gt;&gt;&gt; _f, args = queue.get()</span>
+<span class="sd">        &gt;&gt;&gt; _f(*args)</span>
+<span class="sd">        4</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="DynamicPriorityQueue.__init__"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">without_data</span> <span class="o">=</span> <span class="n">without_data</span></div>
+    
+<div class="viewcode-block" id="DynamicPriorityQueue.put"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.put">[文档]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">without_data</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DynamicPriorityQueue.get"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get">[文档]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">resort</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build_min_heap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">without_data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DynamicPriorityQueue.empty"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.empty">[文档]</a>    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span></div>
+    
+<div class="viewcode-block" id="DynamicPriorityQueue.min_heapify"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.min_heapify">[文档]</a>    <span class="k">def</span> <span class="nf">min_heapify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;最小堆堆化处理，维护最小堆的性质</span>
+<span class="sd">        </span>
+<span class="sd">        最小堆性质：父节点必须小于等于左右子节点</span>
+<span class="sd">        </span>
+<span class="sd">        根据最小堆的性质将指定索引处的数调整到堆的它合适的位置:</span>
+<span class="sd">            - 将指定index处的值x与其左右孩子的进行比较，将最小的孩子与其交换位置，以满足最小堆性质，并再次递归处理x</span>
+<span class="sd">            - 当指定index处的值x比其左右孩子的都大，则不用再递归</span>
+
+<span class="sd">        时间复杂度：:math:`O(lg n)`,n表示堆大小</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            array (list): 存放堆数据的数组</span>
+<span class="sd">            index (int): 指定的索引</span>
+<span class="sd">            heap_size (int): 当前堆有效元素个数。(array[0:heap_size-1]中存放的才是堆上有效的元素)</span>
+<span class="sd">            without_data (bool): 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_left_child_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_right_child_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        
+        <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">if</span> <span class="n">without_data</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">0</span><span class="p">](</span><span class="o">*</span><span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">](</span><span class="o">*</span><span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">left</span>
+                <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">0</span><span class="p">](</span><span class="o">*</span><span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">][</span><span class="mi">0</span><span class="p">](</span><span class="o">*</span><span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">right</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">left</span>
+                <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">right</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+                <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">left</span>
+            <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;=</span> <span class="n">heap_size</span><span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">array</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">]:</span>
+                <span class="n">smallest_index</span> <span class="o">=</span> <span class="n">right</span>
+
+        <span class="k">if</span> <span class="n">smallest_index</span> <span class="o">!=</span> <span class="n">index</span><span class="p">:</span>     <span class="c1"># 如果父节点不是最小的，那么与对应最小的子节点交换位置，并继续递归判断下一级</span>
+            <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">smallest_index</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">,</span> <span class="n">without_data</span><span class="p">)</span></div></div>
+        
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

@@ -166,6 +166,19 @@
 <dt id="data_structures.heaps.binary_max_heap.BinaryMaxHeap">
 <em class="property">class </em><code class="sig-prename descclassname">data_structures.heaps.binary_max_heap.</code><code class="sig-name descname">BinaryMaxHeap</code><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>二叉最大堆</p>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_max_heap</span> <span class="o">=</span> <span class="n">BinaryMaxHeap</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_max_heap</span><span class="o">.</span><span class="n">build_max_heap</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_max_heap</span><span class="o">.</span><span class="n">extract_max</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="go">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array2</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;i1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;i2&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;i3&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;i4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;i5&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;i6&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;i7&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_max_heap</span><span class="o">.</span><span class="n">build_max_heap</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_max_heap</span><span class="o">.</span><span class="n">extract_max</span><span class="p">(</span><span class="n">array2</span><span class="p">)</span>
+<span class="go">(10, &#39;i6&#39;)</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="data_structures.heaps.binary_max_heap.BinaryMaxHeap.get_parent_index">
 <em class="property">static </em><code class="sig-name descname">get_parent_index</code><span class="sig-paren">(</span><em class="sig-param">index: int</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap.get_parent_index"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap.get_parent_index" title="永久链接至目标">¶</a></dt>
@@ -186,7 +199,7 @@
 
 <dl class="method">
 <dt id="data_structures.heaps.binary_max_heap.BinaryMaxHeap.max_heapify">
-<code class="sig-name descname">max_heapify</code><span class="sig-paren">(</span><em class="sig-param">array: list</em>, <em class="sig-param">index: int</em>, <em class="sig-param">heap_size: int</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap.max_heapify"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap.max_heapify" title="永久链接至目标">¶</a></dt>
+<code class="sig-name descname">max_heapify</code><span class="sig-paren">(</span><em class="sig-param">array: list</em>, <em class="sig-param">index: int</em>, <em class="sig-param">heap_size: int</em>, <em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap.max_heapify"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap.max_heapify" title="永久链接至目标">¶</a></dt>
 <dd><p>最大堆堆化处理，维护最大堆的性质</p>
 <p>最大堆性质：父节点必须大于等于左右子节点</p>
 <dl class="simple">
@@ -203,6 +216,7 @@
 <li><p><strong>array</strong> (<em>list</em>) – 存放堆数据的数组</p></li>
 <li><p><strong>index</strong> (<em>int</em>) – 指定的索引</p></li>
 <li><p><strong>heap_size</strong> (<em>int</em>) – 当前堆有效元素个数。(array[0:heap_size-1]中存放的才是堆上有效的元素)</p></li>
+<li><p><strong>without_data</strong> (<em>bool</em>) – 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</p></li>
 </ul>
 </dd>
 </dl>
@@ -210,16 +224,115 @@
 
 <dl class="method">
 <dt id="data_structures.heaps.binary_max_heap.BinaryMaxHeap.build_max_heap">
-<code class="sig-name descname">build_max_heap</code><span class="sig-paren">(</span><em class="sig-param">array: list</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap.build_max_heap"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap.build_max_heap" title="永久链接至目标">¶</a></dt>
+<code class="sig-name descname">build_max_heap</code><span class="sig-paren">(</span><em class="sig-param">array: list</em>, <em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap.build_max_heap"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap.build_max_heap" title="永久链接至目标">¶</a></dt>
 <dd><p>构建最大堆</p>
 <p>自底向上的对所有的非叶子节点的数进行最大堆堆化处理。(叶子节点的数会在处理其父节点时进行被处理)</p>
 <p>因为二叉堆可以可以看成一颗近似的完全二叉树，所以`index &gt;= len(array)//2 + 1` 的都是叶子节点</p>
 <p>时间复杂度：<span class="math notranslate nohighlight">\(O(n)\)</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">参数</dt>
-<dd class="field-odd"><p><strong>array</strong> (<em>list</em>) – 存放堆数据的数组</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – 存放堆数据的数组</p></li>
+<li><p><strong>without_data</strong> (<em>bool</em>) – 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</p></li>
+</ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.heaps.binary_max_heap.BinaryMaxHeap.extract_max">
+<code class="sig-name descname">extract_max</code><span class="sig-paren">(</span><em class="sig-param">array: list</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_max_heap.html#BinaryMaxHeap.extract_max"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_max_heap.BinaryMaxHeap.extract_max" title="永久链接至目标">¶</a></dt>
+<dd><p>弹出最大值</p>
+<p>这时假定执行该方法之前，对array已经进行了build_max_heap操作</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-data_structures.heaps.binary_min_heap">
+<span id="id3"></span><h2>最小二叉堆<a class="headerlink" href="#module-data_structures.heaps.binary_min_heap" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.heaps.binary_min_heap.</code><code class="sig-name descname">BinaryMinHeap</code><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>二叉最小堆</p>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">binary_min_heap</span> <span class="o">=</span> <span class="n">BinaryMinHeap</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_min_heap</span><span class="o">.</span><span class="n">build_min_heap</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_min_heap</span><span class="o">.</span><span class="n">extract_min</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">array2</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;i1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;i2&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;i3&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;i4&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;i5&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;i6&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;i7&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_min_heap</span><span class="o">.</span><span class="n">build_min_heap</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_min_heap</span><span class="o">.</span><span class="n">extract_min</span><span class="p">(</span><span class="n">array2</span><span class="p">)</span>
+<span class="go">(1, &#39;i4&#39;)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap.get_parent_index">
+<em class="property">static </em><code class="sig-name descname">get_parent_index</code><span class="sig-paren">(</span><em class="sig-param">index: int</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap.get_parent_index"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap.get_parent_index" title="永久链接至目标">¶</a></dt>
+<dd><p>计算父节点索引</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap.get_left_child_index">
+<em class="property">static </em><code class="sig-name descname">get_left_child_index</code><span class="sig-paren">(</span><em class="sig-param">index: int</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap.get_left_child_index"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap.get_left_child_index" title="永久链接至目标">¶</a></dt>
+<dd><p>计算左子节点索引</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap.get_right_child_index">
+<em class="property">static </em><code class="sig-name descname">get_right_child_index</code><span class="sig-paren">(</span><em class="sig-param">index: int</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap.get_right_child_index"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap.get_right_child_index" title="永久链接至目标">¶</a></dt>
+<dd><p>计算右子节点索引</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap.min_heapify">
+<code class="sig-name descname">min_heapify</code><span class="sig-paren">(</span><em class="sig-param">array: list</em>, <em class="sig-param">index: int</em>, <em class="sig-param">heap_size: int</em>, <em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap.min_heapify"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap.min_heapify" title="永久链接至目标">¶</a></dt>
+<dd><p>最小堆堆化处理，维护最小堆的性质</p>
+<p>最小堆性质：父节点必须小于等于左右子节点</p>
+<dl class="simple">
+<dt>根据最小堆的性质将指定索引处的数调整到堆的它合适的位置:</dt><dd><ul class="simple">
+<li><p>将指定index处的值x与其左右孩子的进行比较，将最小的孩子与其交换位置，以满足最小堆性质，并再次递归处理x</p></li>
+<li><p>当指定index处的值x比其左右孩子的都大，则不用再递归</p></li>
+</ul>
+</dd>
+</dl>
+<p>时间复杂度：<span class="math notranslate nohighlight">\(O(lg n)\)</span>,n表示堆大小</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – 存放堆数据的数组</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – 指定的索引</p></li>
+<li><p><strong>heap_size</strong> (<em>int</em>) – 当前堆有效元素个数。(array[0:heap_size-1]中存放的才是堆上有效的元素)</p></li>
+<li><p><strong>without_data</strong> (<em>bool</em>) – 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap.build_min_heap">
+<code class="sig-name descname">build_min_heap</code><span class="sig-paren">(</span><em class="sig-param">array: list</em>, <em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap.build_min_heap"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap.build_min_heap" title="永久链接至目标">¶</a></dt>
+<dd><p>构建二叉最小堆</p>
+<p>自底向上的对所有的非叶子节点的数进行最小堆堆化处理。(叶子节点的数会在处理其父节点时进行被处理)</p>
+<p>因为二叉堆可以可以看成一颗近似的完全二叉树，所以`index &gt;= len(array)//2 + 1` 的都是叶子节点</p>
+<p>时间复杂度：<span class="math notranslate nohighlight">\(O(n)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – 存放堆数据的数组</p></li>
+<li><p><strong>without_data</strong> (<em>bool</em>) – 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.heaps.binary_min_heap.BinaryMinHeap.extract_min">
+<code class="sig-name descname">extract_min</code><span class="sig-paren">(</span><em class="sig-param">array: list</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/heaps/binary_min_heap.html#BinaryMinHeap.extract_min"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.heaps.binary_min_heap.BinaryMinHeap.extract_min" title="永久链接至目标">¶</a></dt>
+<dd><p>弹出最小值</p>
+<p>这时假定执行该方法之前，对array已经进行了build_min_heap操作</p>
 </dd></dl>
 
 </dd></dl>

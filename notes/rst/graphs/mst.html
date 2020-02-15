@@ -25,6 +25,7 @@
     
   <link rel="index" title="索引" href="../../genindex.html" />
   <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="单源最短路径" href="ssp.html" />
   <link rel="prev" title="深度优先搜索" href="dfs.html" /> 
   </head>
 
@@ -147,6 +148,10 @@
     <a href="dfs.html"
        title="上一章">← 深度优先搜索</a>
   </li>
+  <li class="next">
+    <a href="ssp.html"
+       title="下一章">单源最短路径 →</a>
+  </li>
 </ul>
   
 </div>
@@ -205,20 +210,20 @@
 <div class="section" id="module-graphs.mst_prim">
 <span id="prim"></span><h2>Prim算法<a class="headerlink" href="#module-graphs.mst_prim" title="永久链接至标题">¶</a></h2>
 <dl class="class">
-<dt id="graphs.mst_prim.Prim">
-<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_prim.</code><code class="sig-name descname">Prim</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#Prim"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.Prim" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.mst_prim.PrimMST">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_prim.</code><code class="sig-name descname">PrimMST</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#PrimMST"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.PrimMST" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>最小生成树Prim算法</p>
 <p>Prim算法的思想是每次添加的边总能构成一颗树(全部相连),且每次添加的边的权重总是与已生成的前驱子树相连的边中最小的(贪心策略)</p>
 <dl class="method">
-<dt id="graphs.mst_prim.Prim.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#Prim.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.Prim.__init__" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.mst_prim.PrimMST.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">root</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#PrimMST.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.PrimMST.__init__" title="永久链接至目标">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="graphs.mst_prim.Prim.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#Prim.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.Prim.create" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.mst_prim.PrimMST.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_prim.html#PrimMST.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_prim.PrimMST.create" title="永久链接至目标">¶</a></dt>
 <dd><p>构建最小生成树</p>
 <p>使用优先级队列添加新的与已生成的前驱子树相连的边。不断循环添加新的边加入的已生成的前驱子树中，直到覆盖完图中所有的顶点</p>
 <p>由于生成过程中会不断将边加入到队列中，因此该算法的时间复杂度在于优先级队列的实现方式。</p>
@@ -230,20 +235,20 @@
 <div class="section" id="module-graphs.mst_kruskal">
 <span id="kruskal"></span><h2>Kruskal算法<a class="headerlink" href="#module-graphs.mst_kruskal" title="永久链接至标题">¶</a></h2>
 <dl class="class">
-<dt id="graphs.mst_kruskal.Kruskal">
-<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_kruskal.</code><code class="sig-name descname">Kruskal</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#Kruskal"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.Kruskal" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.mst_kruskal.KruskalMST">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.mst_kruskal.</code><code class="sig-name descname">KruskalMST</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#KruskalMST"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.KruskalMST" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>最小生成树的Kruskal算法</p>
 <p>Kruskal算法的思想是每次添加的边都是图中权重最小的边(贪心策略)，因此这样可能会在生成过程中出现多颗子树(不相连),我们称为森林。因此需要直到所有的子树连接为一颗树，且覆盖完图中所有的节点，则代表树生成结束</p>
 <dl class="method">
-<dt id="graphs.mst_kruskal.Kruskal.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#Kruskal.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.Kruskal.__init__" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.mst_kruskal.KruskalMST.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#KruskalMST.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.KruskalMST.__init__" title="永久链接至目标">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="graphs.mst_kruskal.Kruskal.create">
-<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#Kruskal.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.Kruskal.create" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.mst_kruskal.KruskalMST.create">
+<code class="sig-name descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/mst_kruskal.html#KruskalMST.create"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.mst_kruskal.KruskalMST.create" title="永久链接至目标">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -258,6 +263,10 @@
   <li class="prev">
     <a href="dfs.html"
        title="上一章">← 深度优先搜索</a>
+  </li>
+  <li class="next">
+    <a href="ssp.html"
+       title="下一章">单源最短路径 →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; 版权所有 2020, luo-songtao.

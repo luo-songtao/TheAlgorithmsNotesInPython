@@ -215,6 +215,86 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-data_structures.queues.dynamic_priority_queue">
+<span id="id3"></span><h2>动态优先级队列<a class="headerlink" href="#module-data_structures.queues.dynamic_priority_queue" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue">
+<em class="property">class </em><code class="sig-prename descclassname">data_structures.queues.dynamic_priority_queue.</code><code class="sig-name descname">DynamicPriorityQueue</code><span class="sig-paren">(</span><em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="heaps.html#data_structures.heaps.binary_min_heap.BinaryMinHeap" title="data_structures.heaps.binary_min_heap.BinaryMinHeap"><code class="xref py py-class docutils literal notranslate"><span class="pre">data_structures.heaps.binary_min_heap.BinaryMinHeap</span></code></a></p>
+<p>优先队列-动态化</p>
+<p>基于二叉最小堆实现的优先级队列，同时支持一些特殊形式的权重值进行比较。这也是这里命名为`动态`的原因。</p>
+<dl class="simple">
+<dt>动态化是指支持多种形式的权重值形式:</dt><dd><ul class="simple">
+<li><p>纯权重形式: <cite>[1,2,3,4,5,6]</cite></p></li>
+<li><p>一般形式(同标准库中的PriorityQueue): <cite>[(1, “v1”), (2, “v2”), (3, “v3”), (4, “v4”), (5, “v5”), (6, “v6”), ]</cite></p></li>
+<li><p>函数形式: <cite>[(function, args), (function, args), …]</cite>。该形式下将在每次比较时，对函数进行调用，将其返回值作为比较值，这样可以用在一些特定的需要动态更改权重值的场景下</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">queue</span> <span class="o">=</span> <span class="n">DynamicPriorityQueue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">queue</span> <span class="o">=</span> <span class="n">DynamicPriorityQueue</span><span class="p">(</span><span class="n">without_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">f</span><span class="p">,(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_f</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.put">
+<code class="sig-name descname">put</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.put"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.put" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">resort=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.get"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.empty">
+<code class="sig-name descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.empty"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.empty" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.min_heapify">
+<code class="sig-name descname">min_heapify</code><span class="sig-paren">(</span><em class="sig-param">array: list</em>, <em class="sig-param">index: int</em>, <em class="sig-param">heap_size: int</em>, <em class="sig-param">without_data=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.min_heapify"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.min_heapify" title="永久链接至目标">¶</a></dt>
+<dd><p>最小堆堆化处理，维护最小堆的性质</p>
+<p>最小堆性质：父节点必须小于等于左右子节点</p>
+<dl class="simple">
+<dt>根据最小堆的性质将指定索引处的数调整到堆的它合适的位置:</dt><dd><ul class="simple">
+<li><p>将指定index处的值x与其左右孩子的进行比较，将最小的孩子与其交换位置，以满足最小堆性质，并再次递归处理x</p></li>
+<li><p>当指定index处的值x比其左右孩子的都大，则不用再递归</p></li>
+</ul>
+</dd>
+</dl>
+<p>时间复杂度：<span class="math notranslate nohighlight">\(O(lg n)\)</span>,n表示堆大小</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – 存放堆数据的数组</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – 指定的索引</p></li>
+<li><p><strong>heap_size</strong> (<em>int</em>) – 当前堆有效元素个数。(array[0:heap_size-1]中存放的才是堆上有效的元素)</p></li>
+<li><p><strong>without_data</strong> (<em>bool</em>) – 如果为False，则期望每个元素应是一个二元元组，并将元组第一个元素作为值进行比较，默认为True</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
