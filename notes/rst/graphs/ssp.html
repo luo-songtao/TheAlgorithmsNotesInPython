@@ -25,6 +25,7 @@
     
   <link rel="index" title="索引" href="../../genindex.html" />
   <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="next" title="结点对最短路径算法" href="psp.html" />
   <link rel="prev" title="最小生成树" href="mst.html" /> 
   </head>
 
@@ -76,13 +77,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -147,6 +148,10 @@
     <a href="mst.html"
        title="上一章">← 最小生成树</a>
   </li>
+  <li class="next">
+    <a href="psp.html"
+       title="下一章">结点对最短路径算法 →</a>
+  </li>
 </ul>
   
 </div>
@@ -196,6 +201,11 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="graphs.ssp_basics.AbstracteSingleSourcePaths.get_shortest_weight">
+<code class="sig-name descname">get_shortest_weight</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/ssp_basics.html#AbstracteSingleSourcePaths.get_shortest_weight"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.ssp_basics.AbstracteSingleSourcePaths.get_shortest_weight" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="graphs.ssp_basics.AbstracteSingleSourcePaths.show">
 <code class="sig-name descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/ssp_basics.html#AbstracteSingleSourcePaths.show"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.ssp_basics.AbstracteSingleSourcePaths.show" title="永久链接至目标">¶</a></dt>
 <dd><p>打印每一条SSP</p>
@@ -218,9 +228,17 @@
 <em class="property">class </em><code class="sig-prename descclassname">graphs.ssp_bellman_ford.</code><code class="sig-name descname">BellmanFordSSP</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/ssp_bellman_ford.html#BellmanFordSSP"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.ssp_bellman_ford.BellmanFordSSP" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">ssp_basics.AbstracteSingleSourcePaths</span></code></p>
 <p>单源最短路径的BellmanFord算法</p>
-<p>BellmanFord算法可以解决一般情况下的单源最短路径(后面简称SSP)问题，边的权重值可以为负值</p>
+<p>BellmanFord算法可以解决一般情况下的单源最短路径(后面简称SSP)问题，边的权重值可以为负值。</p>
+<p>BellmanFord算法运行时间为: <span class="math notranslate nohighlight">\(O(VE)\)</span></p>
 <p class="rubric">示例</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bellman_ford_ssp</span> <span class="o">=</span> <span class="n">BellmanFordSSP</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">the_graph</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: [(&#39;t&#39;, 6), (&#39;y&#39;, 7)],</span>
+<span class="go"> &#39;t&#39;: [(&#39;x&#39;, 5), (&#39;y&#39;, 8), (&#39;z&#39;, -4)],</span>
+<span class="go"> &#39;x&#39;: [(&#39;t&#39;, -2)],</span>
+<span class="go"> &#39;y&#39;: [(&#39;x&#39;, -3), (&#39;z&#39;, 9)],</span>
+<span class="go"> &#39;z&#39;: [(&#39;s&#39;, 2), (&#39;x&#39;, 7)]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bellman_ford_ssp</span> <span class="o">=</span> <span class="n">BellmanFordSSP</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bellman_ford_ssp</span><span class="o">.</span><span class="n">isexists_ssp</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bellman_ford_ssp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -246,11 +264,11 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-graphs.shorttest_paths_on_dag">
-<span id="id3"></span><h2>有向图上的最短路径<a class="headerlink" href="#module-graphs.shorttest_paths_on_dag" title="永久链接至标题">¶</a></h2>
+<div class="section" id="module-graphs.shortest_paths_on_dag">
+<span id="id3"></span><h2>有向图上的最短路径<a class="headerlink" href="#module-graphs.shortest_paths_on_dag" title="永久链接至标题">¶</a></h2>
 <dl class="class">
-<dt id="graphs.shorttest_paths_on_dag.ShortestPathsOnDAG">
-<em class="property">class </em><code class="sig-prename descclassname">graphs.shorttest_paths_on_dag.</code><code class="sig-name descname">ShortestPathsOnDAG</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/shorttest_paths_on_dag.html#ShortestPathsOnDAG"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.shorttest_paths_on_dag.ShortestPathsOnDAG" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.shortest_paths_on_dag.ShortestPathsOnDAG">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.shortest_paths_on_dag.</code><code class="sig-name descname">ShortestPathsOnDAG</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">source</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/shortest_paths_on_dag.html#ShortestPathsOnDAG"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.shortest_paths_on_dag.ShortestPathsOnDAG" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">ssp_basics.AbstracteSingleSourcePaths</span></code></p>
 <p>有向无环图上的最短路径</p>
 <p>这里由于已经要求给定图是有向无环图，所以本算法等于是对`BellmanFordSSP`的特殊情况做的修改，以提高运行效率。</p>
@@ -265,8 +283,8 @@
 </pre></div>
 </div>
 <dl class="method">
-<dt id="graphs.shorttest_paths_on_dag.ShortestPathsOnDAG.compute">
-<code class="sig-name descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/shorttest_paths_on_dag.html#ShortestPathsOnDAG.compute"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.shorttest_paths_on_dag.ShortestPathsOnDAG.compute" title="永久链接至目标">¶</a></dt>
+<dt id="graphs.shortest_paths_on_dag.ShortestPathsOnDAG.compute">
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/shortest_paths_on_dag.html#ShortestPathsOnDAG.compute"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.shortest_paths_on_dag.ShortestPathsOnDAG.compute" title="永久链接至目标">¶</a></dt>
 <dd><p>计算SSP</p>
 </dd></dl>
 
@@ -282,7 +300,14 @@
 <p>单源最短路径Dijkstra算法</p>
 <p>Dijkstra算法可解决有向图上的单源最短路径问题，但是它要求所有边的权重都必须是正值</p>
 <p class="rubric">示例</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dijkstra_ssp</span> <span class="o">=</span> <span class="n">DijkstraSSP</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">the_graph</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: [(&#39;t&#39;, 10), (&#39;y&#39;, 5)],</span>
+<span class="go"> &#39;t&#39;: [(&#39;x&#39;, 1), (&#39;y&#39;, 2)],</span>
+<span class="go"> &#39;x&#39;: [(&#39;z&#39;, 4)],</span>
+<span class="go"> &#39;y&#39;: [(&#39;t&#39;, 3), (&#39;x&#39;, 9), (&#39;z&#39;, 2)],</span>
+<span class="go"> &#39;z&#39;: [(&#39;s&#39;, 7), (&#39;x&#39;, 6)]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dijkstra_ssp</span> <span class="o">=</span> <span class="n">DijkstraSSP</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dijkstra_ssp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="go">s -&gt; y -&gt; t, weights:  8</span>
 <span class="go">s -&gt; y -&gt; t -&gt; x, weights:  9</span>
@@ -296,9 +321,13 @@
 <dd><p>Dijkstra算法核心逻辑</p>
 <p>Dijkstra算法在运行过程中将图的顶点集合V分为了两部分，一部分是已经计算出最短路径的顶点，这里称为集合S，一部分是还没有计算处最短路径的顶点，即集合V-S。</p>
 <p>Dijkstra算法总是选择集合V-S中最近的节点来加入到集合S中(贪心策略)，主循环次数是图的顶点集合数，第一次迭代中进行计算的顶点u是源节点</p>
-<p>由于每轮迭代，V-S中的节点的距离值都可能发生变化，是在动态发生变化，也就意味着需要在每次提取新的最小值时，重新去排序</p>
-<p>实际上可以看到，在`DynamicPriorityQueue`的实现中，<cite>get`方法如果传入`resort=True</cite>，则表示在每次获取最小值的时候，会计算队列中每个元素的权重，然后进行比较。</p>
-<p>而整个算法的性能表现也是在这个优先队列的实现上。这里单独封了一个`DynamicPriorityQueue`，不是必须的，仅是为了简化这里的代码。</p>
+<p>由于每轮迭代，V-S中的节点的距离值都可能发生变化，是在动态发生变化。
+而Python中无法直接给优先级队列传递指针，因此这里单独封装了一个DynamicPriorityQueue，可以用于在每次获取下一个数据时，实时的计算当前队列中最小的值并返回。
+只要调用queue.get方法时传入rebuild=True参数，但是这样会增加程序的运行时间。</p>
+<p>而整个Dijkstra算法的运行时间其实也主要是在于这个优先级队列的实现上，理论上使用最小二叉堆实现的优先级队列，运行时间为 <span class="math notranslate nohighlight">\(O((V+E)\lg V)\)</span> 当边数远远大于结点数时 <span class="math notranslate nohighlight">\(O(E\lg V)\)</span>.</p>
+<p>不过本实现中，使用的最小二叉堆的实现还不是最优的情况，属于待优化的情况。</p>
+<p>另外如果使用斐波那契堆( <span class="math notranslate nohighlight">\(O(V\lg V + E)\)</span> )或者使用van emde boas tree ( <span class="math notranslate nohighlight">\(O((V+E)\lg \lg V)\)</span> ) 实现的优先队列，可以达到更好的性能。</p>
+<p>由此可见 Dijkstra算法的性能其实主要在于使用的最小优先队列的实现上。</p>
 </dd></dl>
 
 </dd></dl>
@@ -313,6 +342,10 @@
   <li class="prev">
     <a href="mst.html"
        title="上一章">← 最小生成树</a>
+  </li>
+  <li class="next">
+    <a href="psp.html"
+       title="下一章">结点对最短路径算法 →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; 版权所有 2020, luo-songtao.

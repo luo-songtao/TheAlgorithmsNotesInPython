@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>graphs.shorttest_paths_on_dag</title>
+      <title>graphs.shortest_paths_on_dag</title>
     
       <link rel="stylesheet" href="../../_static/pygments.css">
       <link rel="stylesheet" href="../../_static/theme.css">
@@ -75,13 +75,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -137,7 +137,7 @@
     
       <li><a href="../index.html">模块代码</a> &raquo;</li>
     
-    <li>graphs.shorttest_paths_on_dag</li>
+    <li>graphs.shortest_paths_on_dag</li>
   </ul>
   
 
@@ -148,7 +148,7 @@
 <hr>
           <div class="content" role="main">
             
-  <h1>graphs.shorttest_paths_on_dag 源代码</h1><div class="highlight"><pre>
+  <h1>graphs.shortest_paths_on_dag 源代码</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># -*- coding:utf-8 -*-</span>
 <span class="c1"># Author: Luo-Songtao</span>
@@ -176,7 +176,7 @@
 <span class="p">}</span>
 
 
-<div class="viewcode-block" id="ShortestPathsOnDAG"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.shorttest_paths_on_dag.ShortestPathsOnDAG">[文档]</a><span class="k">class</span> <span class="nc">ShortestPathsOnDAG</span><span class="p">(</span><span class="n">SSP</span><span class="p">):</span>
+<div class="viewcode-block" id="ShortestPathsOnDAG"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.shortest_paths_on_dag.ShortestPathsOnDAG">[文档]</a><span class="k">class</span> <span class="nc">ShortestPathsOnDAG</span><span class="p">(</span><span class="n">SSP</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;有向无环图上的最短路径</span>
 <span class="sd">    </span>
 <span class="sd">    这里由于已经要求给定图是有向无环图，所以本算法等于是对`BellmanFordSSP`的特殊情况做的修改，以提高运行效率。</span>
@@ -192,7 +192,7 @@
 <span class="sd">        s -&gt; x -&gt; y -&gt; z, weights:  3</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="ShortestPathsOnDAG.compute"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.shorttest_paths_on_dag.ShortestPathsOnDAG.compute">[文档]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ShortestPathsOnDAG.compute"><a class="viewcode-back" href="../../rst/graphs/ssp.html#graphs.shortest_paths_on_dag.ShortestPathsOnDAG.compute">[文档]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;计算SSP</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># 使用已经生成的无权重的图进行拓扑排序，因为之前的dfs实现暂不支持带权重的图结构</span>

@@ -20,7 +20,7 @@ Bellman Ford算法
 
 有向图上的最短路径
 -------------------------
-.. automodule:: graphs.shorttest_paths_on_dag
+.. automodule:: graphs.shortest_paths_on_dag
    :members:
    :undoc-members:
    :show-inheritance:

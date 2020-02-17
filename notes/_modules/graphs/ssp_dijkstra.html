@@ -75,13 +75,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -178,6 +178,13 @@
 <span class="sd">    Dijkstra算法可解决有向图上的单源最短路径问题，但是它要求所有边的权重都必须是正值</span>
 <span class="sd">    </span>
 <span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; pprint(the_graph)</span>
+<span class="sd">        {&#39;s&#39;: [(&#39;t&#39;, 10), (&#39;y&#39;, 5)],</span>
+<span class="sd">         &#39;t&#39;: [(&#39;x&#39;, 1), (&#39;y&#39;, 2)],</span>
+<span class="sd">         &#39;x&#39;: [(&#39;z&#39;, 4)],</span>
+<span class="sd">         &#39;y&#39;: [(&#39;t&#39;, 3), (&#39;x&#39;, 9), (&#39;z&#39;, 2)],</span>
+<span class="sd">         &#39;z&#39;: [(&#39;s&#39;, 7), (&#39;x&#39;, 6)]}</span>
 <span class="sd">        &gt;&gt;&gt; dijkstra_ssp = DijkstraSSP(the_graph, &quot;s&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; dijkstra_ssp.show()</span>
 <span class="sd">        s -&gt; y -&gt; t, weights:  8</span>
@@ -193,28 +200,30 @@
 <span class="sd">        </span>
 <span class="sd">        Dijkstra算法总是选择集合V-S中最近的节点来加入到集合S中(贪心策略)，主循环次数是图的顶点集合数，第一次迭代中进行计算的顶点u是源节点</span>
 <span class="sd">        </span>
-<span class="sd">        由于每轮迭代，V-S中的节点的距离值都可能发生变化，是在动态发生变化，也就意味着需要在每次提取新的最小值时，重新去排序</span>
+<span class="sd">        由于每轮迭代，V-S中的节点的距离值都可能发生变化，是在动态发生变化。</span>
+<span class="sd">        而Python中无法直接给优先级队列传递指针，因此这里单独封装了一个DynamicPriorityQueue，可以用于在每次获取下一个数据时，实时的计算当前队列中最小的值并返回。</span>
+<span class="sd">        只要调用queue.get方法时传入rebuild=True参数，但是这样会增加程序的运行时间。</span>
 <span class="sd">        </span>
-<span class="sd">        实际上可以看到，在`DynamicPriorityQueue`的实现中，`get`方法如果传入`resort=True`，则表示在每次获取最小值的时候，会计算队列中每个元素的权重，然后进行比较。</span>
+<span class="sd">        而整个Dijkstra算法的运行时间其实也主要是在于这个优先级队列的实现上，理论上使用最小二叉堆实现的优先级队列，运行时间为 :math:`O((V+E)\lg V)` 当边数远远大于结点数时 :math:`O(E\lg V)`.</span>
 <span class="sd">        </span>
-<span class="sd">        而整个算法的性能表现也是在这个优先队列的实现上。这里单独封了一个`DynamicPriorityQueue`，不是必须的，仅是为了简化这里的代码。</span>
+<span class="sd">        不过本实现中，使用的最小二叉堆的实现还不是最优的情况，属于待优化的情况。</span>
+<span class="sd">        </span>
+<span class="sd">        另外如果使用斐波那契堆( :math:`O(V\lg V + E)` )或者使用van emde boas tree ( :math:`O((V+E)\lg \lg V)` ) 实现的优先队列，可以达到更好的性能。</span>
+<span class="sd">        </span>
+<span class="sd">        由此可见 Dijkstra算法的性能其实主要在于使用的最小优先队列的实现上。</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">queue</span> <span class="o">=</span> <span class="n">DynamicPriorityQueue</span><span class="p">(</span><span class="n">without_data</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
-                <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
-                    <span class="p">(</span>
-                        <span class="k">lambda</span> <span class="n">info</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">],</span> 
-                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-                    <span class="p">)</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">info</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;distance&quot;</span><span class="p">],</span> 
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
                 <span class="p">)</span>
- 
+            <span class="p">)</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-            <span class="n">f</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="n">_</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">args</span>
+            <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rebuild</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">w_uv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">relax</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w_uv</span><span class="p">)</span></div></div>
-                
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span>

@@ -77,13 +77,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -137,7 +137,7 @@
   <ul class="breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
     
-      <li><a href="modules.html">数据结构</a> &raquo;</li>
+      <li><a href="modules.html">基础数据结构</a> &raquo;</li>
     
     <li>队列</li>
   </ul>
@@ -259,12 +259,20 @@
 
 <dl class="method">
 <dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get">
-<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">resort=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.get"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get" title="永久链接至目标">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">rebuild=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.get"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get" title="永久链接至目标">¶</a></dt>
+<dd><p>默认情况下，该方法的运行时间是:  <span class="math notranslate nohighlight">\(O(\lg n)\)</span></p>
+<p>但如果开启rebuild，那么该方法的运行时间时 <span class="math notranslate nohighlight">\(O(n\lg n)\)</span>。</p>
+<p>当提供函数类型权重，且提供给函数的参数是外部的可变类型变量，而且在随时发生变动，那么为了在调用时获得实时的最小值，应当开启rebuild方式，但这样会增加程序运行时间。</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.empty">
 <code class="sig-name descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.empty"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.empty" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.size">
+<code class="sig-name descname">size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/data_structures/queues/dynamic_priority_queue.html#DynamicPriorityQueue.size"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.size" title="永久链接至目标">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">

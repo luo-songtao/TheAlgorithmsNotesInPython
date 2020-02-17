@@ -75,13 +75,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -154,34 +154,64 @@
 <span class="c1"># Author: Luo-Songtao</span>
 <span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
 
-        
-<div class="viewcode-block" id="bfs"><a class="viewcode-back" href="../../rst/graphs/bfs.html#graphs.breadth_first_search.bfs">[文档]</a><span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start_vertex</span><span class="p">):</span>
+<span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">],</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="bfs"><a class="viewcode-back" href="../../rst/graphs/bfs.html#graphs.breadth_first_search.bfs">[文档]</a><span class="k">def</span> <span class="nf">bfs</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;广度优先搜索</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; pprint(the_graph)</span>
+<span class="sd">        {&#39;A&#39;: [&#39;B&#39;, &#39;C&#39;],</span>
+<span class="sd">         &#39;B&#39;: [&#39;A&#39;, &#39;D&#39;, &#39;E&#39;],</span>
+<span class="sd">         &#39;C&#39;: [&#39;A&#39;, &#39;F&#39;],</span>
+<span class="sd">         &#39;D&#39;: [&#39;B&#39;],</span>
+<span class="sd">         &#39;E&#39;: [&#39;B&#39;, &#39;F&#39;],</span>
+<span class="sd">         &#39;F&#39;: [&#39;C&#39;, &#39;E&#39;]}</span>
+<span class="sd">        &gt;&gt;&gt; source = &quot;A&quot;</span>
+<span class="sd">        &gt;&gt;&gt; target = &quot;F&quot;</span>
+<span class="sd">        &gt;&gt;&gt; bfs(the_graph, source, target)</span>
+<span class="sd">        [&#39;A&#39;, &#39;C&#39;, &#39;F&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">discoverd</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_vertex</span><span class="p">}</span>
-    <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_vertex</span><span class="p">]</span>
-    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">paths_info</span> <span class="o">=</span> <span class="p">{</span><span class="n">source</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+    <span class="n">discoverd</span> <span class="o">=</span> <span class="p">{</span><span class="n">source</span><span class="p">}</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="p">]</span>
+    <span class="n">queue_size</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">queue_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">vertex</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">queue_size</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">next_vert</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">vertex</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">next_vert</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">paths_info</span><span class="p">[</span><span class="n">next_vert</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex</span>
+                <span class="n">queue_size</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">break</span>
             <span class="k">if</span> <span class="n">next_vert</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">discoverd</span><span class="p">:</span>
                 <span class="n">discoverd</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">next_vert</span><span class="p">)</span>
                 <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_vert</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">vertex</span></div>
+                <span class="n">queue_size</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">paths_info</span><span class="p">[</span><span class="n">next_vert</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex</span>
+        
+    <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">paths_info</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+        <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pre</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">pre</span>
+    <span class="k">return</span> <span class="n">path</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;F&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">],</span>
-    <span class="p">}</span>
-    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">bfs</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="n">start_vertex</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-    
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
 </pre></div>
 
           </div>

@@ -77,13 +77,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -164,8 +164,23 @@
 <span id="id2"></span><h2>广度优先搜索算法<a class="headerlink" href="#module-graphs.breadth_first_search" title="永久链接至标题">¶</a></h2>
 <dl class="function">
 <dt id="graphs.breadth_first_search.bfs">
-<code class="sig-prename descclassname">graphs.breadth_first_search.</code><code class="sig-name descname">bfs</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">start_vertex</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/breadth_first_search.html#bfs"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.breadth_first_search.bfs" title="永久链接至目标">¶</a></dt>
+<code class="sig-prename descclassname">graphs.breadth_first_search.</code><code class="sig-name descname">bfs</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">source</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/breadth_first_search.html#bfs"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.breadth_first_search.bfs" title="永久链接至目标">¶</a></dt>
 <dd><p>广度优先搜索</p>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">the_graph</span><span class="p">)</span>
+<span class="go">{&#39;A&#39;: [&#39;B&#39;, &#39;C&#39;],</span>
+<span class="go"> &#39;B&#39;: [&#39;A&#39;, &#39;D&#39;, &#39;E&#39;],</span>
+<span class="go"> &#39;C&#39;: [&#39;A&#39;, &#39;F&#39;],</span>
+<span class="go"> &#39;D&#39;: [&#39;B&#39;],</span>
+<span class="go"> &#39;E&#39;: [&#39;B&#39;, &#39;F&#39;],</span>
+<span class="go"> &#39;F&#39;: [&#39;C&#39;, &#39;E&#39;]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;F&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bfs</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;, &#39;C&#39;, &#39;F&#39;]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

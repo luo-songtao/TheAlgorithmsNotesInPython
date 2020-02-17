@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.psp_transitive_closure</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.psp_transitive_closure</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.psp_transitive_closure 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">inf</span>
+
+<span class="n">the_graph</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span>    <span class="mi">3</span><span class="p">,</span>    <span class="mi">8</span><span class="p">,</span>   <span class="n">inf</span><span class="p">,</span>  <span class="o">-</span><span class="mi">4</span> <span class="p">],</span>
+    <span class="p">[</span><span class="n">inf</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>    <span class="n">inf</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>    <span class="mi">7</span>  <span class="p">],</span>
+    <span class="p">[</span><span class="n">inf</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>   <span class="n">inf</span><span class="p">,</span>  <span class="n">inf</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span>    <span class="n">inf</span><span class="p">,</span>  <span class="o">-</span><span class="mi">5</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>    <span class="n">inf</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">inf</span><span class="p">,</span>  <span class="n">inf</span><span class="p">,</span>  <span class="n">inf</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>    <span class="mi">0</span>  <span class="p">]</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="transitive_closure"><a class="viewcode-back" href="../../rst/graphs/psp.html#graphs.psp_transitive_closure.transitive_closure">[文档]</a><span class="k">def</span> <span class="nf">transitive_closure</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;有向图的传递闭包</span>
+<span class="sd">    </span>
+<span class="sd">    有向图 :math:`G(V,E)` 的传递闭包指的是一个图 :math:`T(V, E^*)` ，如果G中有两个结点i,j之间存在一条路径，则  :math:`T(V, E^*)` 中结点i,j之间存在一条边 :math:`(i,j)\in E^*`</span>
+<span class="sd">    </span>
+<span class="sd">    计算有向图G的传递闭包，可以借助floyd-warshall算法，将每条给定边的权重设为1，然后使用floyd-warshall算法计算，如果结点i,j之间存在一条路径，则有 :math:`D_{ij}&lt;n`，否则 :math:`D_{ij}= \infty` </span>
+<span class="sd">    </span>
+<span class="sd">    图T的递归定义:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: </span>
+<span class="sd">    </span>
+<span class="sd">        T^{(0)}_{ij} = \left \{ \\begin{aligned} &amp;0 \qquad &amp;i!=j 且(i,j) \\notin E \\\\ &amp;1 \\qquad &amp; i==j 或(i,j) \in E \end{aligned} \\right.</span>
+<span class="sd">    </span>
+<span class="sd">    当 :math:`k\ge 1` 时:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: T^{(k)}_{ij} = T^{(k-1)}_{ij} \space \\vert \space (T^{(k-1)}_{ij} \space \&amp; \space T^{(k-1)}_{ij})</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; pprint(the_graph)</span>
+<span class="sd">        [[0, 3, 8, inf, -4],</span>
+<span class="sd">         [inf, 0, inf, 1, 7],</span>
+<span class="sd">         [inf, 4, 0, inf, inf],</span>
+<span class="sd">         [2, inf, -5, 0, inf],</span>
+<span class="sd">         [inf, inf, inf, 6, 0]]</span>
+<span class="sd">        &gt;&gt;&gt; T = transitive_closure(the_graph)</span>
+<span class="sd">        &gt;&gt;&gt; pprint(T)</span>
+<span class="sd">        [[1, 1, 1, 1, 1],</span>
+<span class="sd">         [1, 1, 1, 1, 1],</span>
+<span class="sd">         [1, 1, 1, 1, 1],</span>
+<span class="sd">         [1, 1, 1, 1, 1],</span>
+<span class="sd">         [1, 1, 1, 1, 1]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    
+    <span class="n">T</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">T</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">graph</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">inf</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">|</span> <span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">T</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">T</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+    
+    
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

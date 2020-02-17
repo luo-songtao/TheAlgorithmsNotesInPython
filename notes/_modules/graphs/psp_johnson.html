@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.psp_johnson</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.psp_johnson</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.psp_johnson 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">ssp_bellman_ford</span> <span class="kn">import</span> <span class="n">BellmanFordSSP</span> <span class="k">as</span> <span class="n">BellmanFord</span>
+<span class="kn">from</span> <span class="nn">ssp_dijkstra</span> <span class="kn">import</span> <span class="n">DijkstraSSP</span> <span class="k">as</span> <span class="n">Dijkstra</span>
+
+
+<span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">)],</span>
+    <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)],</span>
+    <span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)],</span>
+    <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)],</span>
+    <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="johnson"><a class="viewcode-back" href="../../rst/graphs/psp.html#graphs.psp_johnson.johnson">[文档]</a><span class="k">def</span> <span class="nf">johnson</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="n">v_s</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;结点对最短路径Johnson算法</span>
+<span class="sd">    </span>
+<span class="sd">    Johnson算法寻找结点对主要是借助了Bellman-Ford算法和Dijkstra算法特征和优势实现的，这样能使得在大型稀疏图上的其性能比Floyd-Warrshall算法表示要好。</span>
+<span class="sd">    </span>
+<span class="sd">    Johnson算法的主要思想是，先借助Bellman-Ford算法对给定有向图(权重可为负数，但同样不能右权重为负值的环)的所有边，进行权重调整，使得：</span>
+<span class="sd">    第一：调整后，每个结点对之间的最短路径保持不变；第二，每条边的权重都调整为了正值。为满足这样的形式，有以下公式：</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \widehat{\omega}_{uv} = \omega_{uv} + h(u) + h(v)</span>
+<span class="sd">        </span>
+<span class="sd">    其中 :math:`\widehat{\omega}_{uv}` 表示调整后的权重， :math:`h` 表示一个将结点映射到实数的函数。</span>
+<span class="sd">    </span>
+<span class="sd">    经过调整后，权重值为正数，然后对每个结点使用Dijkstra算法来求得所有结点对的最短路径。</span>
+
+<span class="sd">    可见，Johnson算法理论上运行时间，主要和Dijkstra算法中的优先队列的实现方式相关，算法中总共对Dijkstra算法调用了V次，因此Johnson算法只要在Dijkstra算法中的优先队列实现</span>
+<span class="sd">    性能较好情况下，Johnson算法的运行时间是比Floyd-Warrshall算法的 :math:`O(n^3)` 要好的</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; pprint(the_graph)</span>
+<span class="sd">        {&#39;a&#39;: [(&#39;b&#39;, 3), (&#39;c&#39;, 8), (&#39;e&#39;, -4)],</span>
+<span class="sd">         &#39;b&#39;: [(&#39;d&#39;, 1), (&#39;e&#39;, 7)],</span>
+<span class="sd">         &#39;c&#39;: [(&#39;b&#39;, 4)],</span>
+<span class="sd">         &#39;d&#39;: [(&#39;a&#39;, 2), (&#39;c&#39;, -5)],</span>
+<span class="sd">         &#39;e&#39;: [(&#39;d&#39;, 6)]}</span>
+<span class="sd">        &gt;&gt;&gt; shortest_paths_graph = johnson(the_graph)</span>
+<span class="sd">        &gt;&gt;&gt; pprint(shortest_paths_graph)</span>
+<span class="sd">        {&#39;a&#39;: [(&#39;b&#39;, 1), (&#39;c&#39;, -3), (&#39;d&#39;, 2), (&#39;e&#39;, -4)],</span>
+<span class="sd">         &#39;b&#39;: [(&#39;a&#39;, 3), (&#39;c&#39;, -4), (&#39;d&#39;, 1), (&#39;e&#39;, -1)],</span>
+<span class="sd">         &#39;c&#39;: [(&#39;a&#39;, 7), (&#39;b&#39;, 4), (&#39;d&#39;, 5), (&#39;e&#39;, 3)],</span>
+<span class="sd">         &#39;d&#39;: [(&#39;a&#39;, 2), (&#39;b&#39;, -1), (&#39;c&#39;, -5), (&#39;e&#39;, -2)],</span>
+<span class="sd">         &#39;e&#39;: [(&#39;a&#39;, 8), (&#39;b&#39;, 5), (&#39;c&#39;, 1), (&#39;d&#39;, 6)]}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">the_graph_added_s</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">the_graph</span><span class="p">)</span>
+    <span class="n">the_graph_added_s</span><span class="p">[</span><span class="n">v_s</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">the_graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">the_graph_added_s</span><span class="p">[</span><span class="n">v_s</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">bellman_ford</span> <span class="o">=</span> <span class="n">BellmanFord</span><span class="p">(</span><span class="n">the_graph_added_s</span><span class="p">,</span> <span class="n">v_s</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">bellman_ford</span><span class="o">.</span><span class="n">isexists_ssp</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The input graph contains a negative-weight cycle&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">updated_weight_graph</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">the_graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">updated_weight_graph</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">w_uv</span> <span class="ow">in</span> <span class="n">the_graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="n">h_u</span> <span class="o">=</span> <span class="n">bellman_ford</span><span class="o">.</span><span class="n">get_shortest_weight</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+                <span class="n">h_v</span> <span class="o">=</span> <span class="n">bellman_ford</span><span class="o">.</span><span class="n">get_shortest_weight</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">updated_w_uv</span> <span class="o">=</span> <span class="n">w_uv</span> <span class="o">+</span> <span class="n">h_u</span> <span class="o">-</span> <span class="n">h_v</span>
+                <span class="n">updated_weight_graph</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">updated_w_uv</span><span class="p">))</span>
+        
+        <span class="n">shortest_paths_graph</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">updated_weight_graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">dijkstra</span> <span class="o">=</span> <span class="n">Dijkstra</span><span class="p">(</span><span class="n">updated_weight_graph</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+            <span class="n">shortest_paths_graph</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">updated_weight_graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">u</span><span class="o">==</span><span class="n">v</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">min_w_uv</span> <span class="o">=</span> <span class="n">dijkstra</span><span class="o">.</span><span class="n">get_shortest_weight</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">h_u</span> <span class="o">=</span> <span class="n">bellman_ford</span><span class="o">.</span><span class="n">get_shortest_weight</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+                <span class="n">h_v</span> <span class="o">=</span> <span class="n">bellman_ford</span><span class="o">.</span><span class="n">get_shortest_weight</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">shortest_paths_graph</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="n">min_w_uv</span> <span class="o">+</span> <span class="n">h_v</span> <span class="o">-</span> <span class="n">h_u</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">shortest_paths_graph</span></div>
+                
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>流网络最大流问题</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" />
+  <link rel="prev" title="结点对最短路径算法" href="psp.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../sort/modules.html" class="reference internal ">基本排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../data_structures/modules.html" class="reference internal ">基础数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="modules.html">图算法</a> &raquo;</li>
+    
+    <li>流网络最大流问题</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="psp.html"
+       title="上一章">← 结点对最短路径算法</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <div class="section" id="id1">
+<h1>流网络最大流问题<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-graphs.flow_network_ford_fulkerson">
+<span id="ford-fulkerson"></span><h2>基本Ford-Fulkerson方法<a class="headerlink" href="#module-graphs.flow_network_ford_fulkerson" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="graphs.flow_network_ford_fulkerson.FordFulkerson">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.flow_network_ford_fulkerson.</code><code class="sig-name descname">FordFulkerson</code><span class="sig-paren">(</span><em class="sig-param">the_graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>最大流Ford-Fulderson方法</p>
+<dl>
+<dt>Ford-Fulderson方法依赖于三种重要思想：</dt><dd><ul class="simple">
+<li><p>残存网络: 对于给定流网络 <span class="math notranslate nohighlight">\(G\)</span> 和流量 <span class="math notranslate nohighlight">\(f\)</span> ，残存网络 <span class="math notranslate nohighlight">\(G_f\)</span> 指由那些网络中仍然有剩余空间对流量进行调整的边构成的网络。 <span class="math notranslate nohighlight">\(c_f(u,v) = c(u,v) 0 f(u,v) &gt; 0\)</span></p></li>
+<li><p>增广路径: 指残存网络中一条从源节点到汇点的简单路径 <span class="math notranslate nohighlight">\(p\)</span>，该路径存在一个残存容量 <span class="math notranslate nohighlight">\(c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace\)</span></p></li>
+<li><p>切割: 流网络 <span class="math notranslate nohighlight">\(G=(V,E)\)</span> 的一个切割 <span class="math notranslate nohighlight">\((S, T)\)</span> 将结点集合V划分为S和T=V-S两个集合，且有两个概念：净流量 <span class="math notranslate nohighlight">\(f(S,T)\)</span> 和切割容量 <span class="math notranslate nohighlight">\(c(S,T)\)</span></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(S,T) &amp;= \sum_{u\in S}\sum_{v\in T} f(u,v) - \sum_{u\in S}\sum_{v\in T} f(v,u) \\
+c(S,T) &amp;= \sum_{u\in S}\sum_{v\in T} c(u,v)\end{split}\]</div>
+</dd>
+<dt>最大流最小切割定理</dt><dd><dl class="simple">
+<dt>设 <span class="math notranslate nohighlight">\(f\)</span> 是流网络 <span class="math notranslate nohighlight">\(G=(V,E)\)</span> 中的一个流，该流网络的源节点为s，汇点为t，则下面的条件等价：</dt><dd><ol class="arabic simple">
+<li><p>流量 <span class="math notranslate nohighlight">\(f\)</span> 是 <span class="math notranslate nohighlight">\(G\)</span> 的一个最大流</p></li>
+<li><p>残存网络 <span class="math notranslate nohighlight">\(G_f\)</span> 不包括任何增广路径</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vert f \vert = c(S,T)\)</span> 其中 <span class="math notranslate nohighlight">\((S,T)\)</span> 是一个切割</p></li>
+</ol>
+</dd>
+</dl>
+</dd>
+<dt>Ford-Fulderson方法主要实现步骤：</dt><dd><ol class="arabic simple">
+<li><p>初始化流网络的残存网络，也就是所有的残存边的的容量等于流网络边的原始容量</p></li>
+<li><p>使用循环：不断寻找残存网络中的增广路径，并利用增广路径上的残存容量，对残存网络进行更新</p></li>
+<li><p>直到无法再从残存网络中找到增广路径，那么循环终止，并输出流网络的最大流值</p></li>
+</ol>
+</dd>
+</dl>
+<p>Ford-Fulderson方法如果使用广度优先搜索方法，并将边设为单位距离进行搜索，这样的实现也被称为Edmonds-Karp算法，本实现也正是使用这样的思路实现的，其算法运行时间为 <span class="math notranslate nohighlight">\(O(VE^2)\)</span></p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>最大流问题中的容量通常时整数，如果是有理数，那么可以通过乘以相应系数转换为整数，但如果是无理数，那么Ford-Fulderson方法可能不会终止</p>
+</div>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">the_graph</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: [(&#39;v1&#39;, 16), (&#39;v2&#39;, 13)],</span>
+<span class="go"> &#39;t&#39;: [],</span>
+<span class="go"> &#39;v1&#39;: [(&#39;v3&#39;, 12)],</span>
+<span class="go"> &#39;v2&#39;: [(&#39;v1&#39;, 4), (&#39;v4&#39;, 14)],</span>
+<span class="go"> &#39;v3&#39;: [(&#39;v2&#39;, 9), (&#39;t&#39;, 20)],</span>
+<span class="go"> &#39;v4&#39;: [(&#39;v3&#39;, 7), (&#39;t&#39;, 4)]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ford_fulkerson</span> <span class="o">=</span> <span class="n">FordFulkerson</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ford_fulkerson</span><span class="o">.</span><span class="n">max_flows</span>
+<span class="go">23</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">ford_fulkerson</span><span class="o">.</span><span class="n">residual_network</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: [(&#39;v1&#39;, (16, 12)), (&#39;v2&#39;, (13, 11))],</span>
+<span class="go"> &#39;t&#39;: [(&#39;v3&#39;, (20, 1)), (&#39;v4&#39;, (4, 0))],</span>
+<span class="go"> &#39;v1&#39;: [(&#39;s&#39;, (16, 4))],</span>
+<span class="go"> &#39;v2&#39;: [(&#39;v1&#39;, (4, 0)), (&#39;v4&#39;, (14, 11)), (&#39;s&#39;, (13, 2))],</span>
+<span class="go"> &#39;v3&#39;: [(&#39;v2&#39;, (9, 0)), (&#39;t&#39;, (20, 19)), (&#39;v1&#39;, (12, 0)), (&#39;v4&#39;, (7, 0))],</span>
+<span class="go"> &#39;v4&#39;: [(&#39;v2&#39;, (14, 3))]}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="graphs.flow_network_ford_fulkerson.FordFulkerson.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">the_graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson.__init__" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="graphs.flow_network_ford_fulkerson.FordFulkerson.search_augmenting_path_and_remaining_capacity_by_bfs">
+<code class="sig-name descname">search_augmenting_path_and_remaining_capacity_by_bfs</code><span class="sig-paren">(</span><em class="sig-param">residual_network</em>, <em class="sig-param">source</em>, <em class="sig-param">target</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson.search_augmenting_path_and_remaining_capacity_by_bfs"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson.search_augmenting_path_and_remaining_capacity_by_bfs" title="永久链接至目标">¶</a></dt>
+<dd><p>广度优先搜索</p>
+<p>利用广度优先搜索残存网络中搜索指定结点，如果找到了则生成出对应路径作为增广路径，并找出增广路径上的残存容量，并返回。</p>
+<p>如果没有找到，则返回空的路径，对应残存容量将设为0并返回</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>residual_network</strong> – 残存网络</p></li>
+<li><p><strong>source</strong> – 源节点</p></li>
+<li><p><strong>target</strong> – 汇点</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回</dt>
+<dd class="field-even"><p>augmenting_path (list), remaining_capacity (number)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.flow_network_ford_fulkerson.FordFulkerson.compute">
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson.compute"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson.compute" title="永久链接至目标">¶</a></dt>
+<dd><p>计算并更新残存网络，得出最大流值</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="psp.html"
+       title="上一章">← 结点对最短路径算法</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>

@@ -75,13 +75,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -192,13 +192,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">without_data</span><span class="p">)</span></div>
     
-<div class="viewcode-block" id="DynamicPriorityQueue.get"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get">[文档]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resort</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">resort</span><span class="p">:</span>
+<div class="viewcode-block" id="DynamicPriorityQueue.get"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.get">[文档]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rebuild</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+<span class="sd">        默认情况下，该方法的运行时间是:  :math:`O(\lg n)`</span>
+<span class="sd">        </span>
+<span class="sd">        但如果开启rebuild，那么该方法的运行时间时 :math:`O(n\lg n)`。</span>
+<span class="sd">        </span>
+<span class="sd">        当提供函数类型权重，且提供给函数的参数是外部的可变类型变量，而且在随时发生变动，那么为了在调用时获得实时的最小值，应当开启rebuild方式，但这样会增加程序运行时间。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rebuild</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">build_min_heap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">without_data</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">min_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">without_data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">min_item</span></div>
 
 <div class="viewcode-block" id="DynamicPriorityQueue.empty"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.empty">[文档]</a>    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">False</span></div>
+    
+<div class="viewcode-block" id="DynamicPriorityQueue.size"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.size">[文档]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
     
 <div class="viewcode-block" id="DynamicPriorityQueue.min_heapify"><a class="viewcode-back" href="../../../rst/data_structures/queues.html#data_structures.queues.dynamic_priority_queue.DynamicPriorityQueue.min_heapify">[文档]</a>    <span class="k">def</span> <span class="nf">min_heapify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">without_data</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;最小堆堆化处理，维护最小堆的性质</span>
@@ -241,9 +258,9 @@
         <span class="k">if</span> <span class="n">smallest_index</span> <span class="o">!=</span> <span class="n">index</span><span class="p">:</span>     <span class="c1"># 如果父节点不是最小的，那么与对应最小的子节点交换位置，并继续递归判断下一级</span>
             <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">smallest_index</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min_heapify</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">smallest_index</span><span class="p">,</span> <span class="n">heap_size</span><span class="p">,</span> <span class="n">without_data</span><span class="p">)</span></div></div>
-        
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
 
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">doctest</span>
     <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
     

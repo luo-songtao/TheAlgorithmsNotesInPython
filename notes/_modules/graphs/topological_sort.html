@@ -75,13 +75,13 @@
       </p>
       <ul class="">
         
-          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">排序算法</a>
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
 
             
           </li>
 
         
-          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">数据结构</a>
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
 
             
           </li>
@@ -155,20 +155,19 @@
 <span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
 <span class="kn">from</span> <span class="nn">deep_first_search</span> <span class="kn">import</span> <span class="n">dfs</span>
 
-<div class="viewcode-block" id="topological_sort"><a class="viewcode-back" href="../../rst/graphs/dfs.html#graphs.topological_sort.topological_sort">[文档]</a><span class="k">def</span> <span class="nf">topological_sort</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;拓扑排序</span>
-<span class="sd">    </span>
+<div class="viewcode-block" id="topological_sort"><a class="viewcode-back" href="../../rst/graphs/dfs.html#graphs.topological_sort.topological_sort">[文档]</a><span class="k">def</span> <span class="nf">topological_sort</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start_vertex</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    对图进行深度优先搜索后，顶点的探索完成顺序的逆序，就是对该graph的一种拓扑展开顺序</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">d</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">dfs</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start_vertex</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;内裤&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;裤子&quot;</span><span class="p">,</span> <span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
         <span class="s2">&quot;裤子&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;腰带&quot;</span><span class="p">,</span> <span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
         <span class="s2">&quot;衬衣&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;领带&quot;</span><span class="p">,</span> <span class="s2">&quot;腰带&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;内裤&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;裤子&quot;</span><span class="p">,</span> <span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
         <span class="s2">&quot;领带&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;夹克&quot;</span><span class="p">],</span>
         <span class="s2">&quot;腰带&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;夹克&quot;</span><span class="p">],</span>
         <span class="s2">&quot;袜子&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;鞋子&quot;</span><span class="p">],</span>
@@ -177,7 +176,7 @@
         <span class="s2">&quot;鞋子&quot;</span><span class="p">:</span> <span class="p">[]</span>
     <span class="p">}</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;穿戴顺序：&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">topological_sort</span><span class="p">(</span><span class="n">the_graph</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">topological_sort</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;内裤&quot;</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
 </pre></div>

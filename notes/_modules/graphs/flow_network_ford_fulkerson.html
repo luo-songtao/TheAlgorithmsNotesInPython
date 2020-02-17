@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.flow_network_ford_fulkerson</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.flow_network_ford_fulkerson</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.flow_network_ford_fulkerson 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">inf</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+<span class="kn">from</span> <span class="nn">breadth_first_search</span> <span class="kn">import</span> <span class="n">bfs</span>
+
+
+<span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;v2&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">)],</span>
+    <span class="s2">&quot;v1&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v3&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)],</span>
+    <span class="s2">&quot;v2&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;v4&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">)],</span>
+    <span class="s2">&quot;v3&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v2&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)],</span>
+    <span class="s2">&quot;v4&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v3&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)],</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="FordFulkerson"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_ford_fulkerson.FordFulkerson">[文档]</a><span class="k">class</span> <span class="nc">FordFulkerson</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;最大流Ford-Fulderson方法</span>
+<span class="sd">    </span>
+<span class="sd">    Ford-Fulderson方法依赖于三种重要思想：</span>
+<span class="sd">        - 残存网络: 对于给定流网络 :math:`G` 和流量 :math:`f` ，残存网络 :math:`G_f` 指由那些网络中仍然有剩余空间对流量进行调整的边构成的网络。 :math:`c_f(u,v) = c(u,v) 0 f(u,v) &gt; 0` </span>
+<span class="sd">        - 增广路径: 指残存网络中一条从源节点到汇点的简单路径 :math:`p`，该路径存在一个残存容量 :math:`c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace`</span>
+<span class="sd">        - 切割: 流网络 :math:`G=(V,E)` 的一个切割 :math:`(S, T)` 将结点集合V划分为S和T=V-S两个集合，且有两个概念：净流量 :math:`f(S,T)` 和切割容量 :math:`c(S,T)`</span>
+<span class="sd">        </span>
+<span class="sd">        .. math::</span>
+<span class="sd">        </span>
+<span class="sd">            f(S,T) &amp;= \sum_{u\in S}\sum_{v\in T} f(u,v) - \sum_{u\in S}\sum_{v\in T} f(v,u) \\</span>
+<span class="sd">            c(S,T) &amp;= \sum_{u\in S}\sum_{v\in T} c(u,v)</span>
+<span class="sd">    </span>
+<span class="sd">    最大流最小切割定理</span>
+<span class="sd">        设 :math:`f` 是流网络 :math:`G=(V,E)` 中的一个流，该流网络的源节点为s，汇点为t，则下面的条件等价：</span>
+<span class="sd">            1. 流量 :math:`f` 是 :math:`G` 的一个最大流</span>
+<span class="sd">            2. 残存网络 :math:`G_f` 不包括任何增广路径</span>
+<span class="sd">            3. :math:`\vert f \vert = c(S,T)` 其中 :math:`(S,T)` 是一个切割</span>
+<span class="sd">    </span>
+<span class="sd">    Ford-Fulderson方法主要实现步骤：</span>
+<span class="sd">        1. 初始化流网络的残存网络，也就是所有的残存边的的容量等于流网络边的原始容量</span>
+<span class="sd">        2. 使用循环：不断寻找残存网络中的增广路径，并利用增广路径上的残存容量，对残存网络进行更新</span>
+<span class="sd">        3. 直到无法再从残存网络中找到增广路径，那么循环终止，并输出流网络的最大流值</span>
+<span class="sd">    </span>
+<span class="sd">    Ford-Fulderson方法如果使用广度优先搜索方法，并将边设为单位距离进行搜索，这样的实现也被称为Edmonds-Karp算法，本实现也正是使用这样的思路实现的，其算法运行时间为 :math:`O(VE^2)`</span>
+<span class="sd">    </span>
+<span class="sd">    Attention:</span>
+<span class="sd">        最大流问题中的容量通常时整数，如果是有理数，那么可以通过乘以相应系数转换为整数，但如果是无理数，那么Ford-Fulderson方法可能不会终止</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; pprint(the_graph)</span>
+<span class="sd">        {&#39;s&#39;: [(&#39;v1&#39;, 16), (&#39;v2&#39;, 13)],</span>
+<span class="sd">         &#39;t&#39;: [],</span>
+<span class="sd">         &#39;v1&#39;: [(&#39;v3&#39;, 12)],</span>
+<span class="sd">         &#39;v2&#39;: [(&#39;v1&#39;, 4), (&#39;v4&#39;, 14)],</span>
+<span class="sd">         &#39;v3&#39;: [(&#39;v2&#39;, 9), (&#39;t&#39;, 20)],</span>
+<span class="sd">         &#39;v4&#39;: [(&#39;v3&#39;, 7), (&#39;t&#39;, 4)]}</span>
+<span class="sd">        &gt;&gt;&gt; ford_fulkerson = FordFulkerson(the_graph, &quot;s&quot;, &quot;t&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; ford_fulkerson.max_flows</span>
+<span class="sd">        23</span>
+<span class="sd">        &gt;&gt;&gt; pprint(ford_fulkerson.residual_network)</span>
+<span class="sd">        {&#39;s&#39;: [(&#39;v1&#39;, (16, 12)), (&#39;v2&#39;, (13, 11))],</span>
+<span class="sd">         &#39;t&#39;: [(&#39;v3&#39;, (20, 1)), (&#39;v4&#39;, (4, 0))],</span>
+<span class="sd">         &#39;v1&#39;: [(&#39;s&#39;, (16, 4))],</span>
+<span class="sd">         &#39;v2&#39;: [(&#39;v1&#39;, (4, 0)), (&#39;v4&#39;, (14, 11)), (&#39;s&#39;, (13, 2))],</span>
+<span class="sd">         &#39;v3&#39;: [(&#39;v2&#39;, (9, 0)), (&#39;t&#39;, (20, 19)), (&#39;v1&#39;, (12, 0)), (&#39;v4&#39;, (7, 0))],</span>
+<span class="sd">         &#39;v4&#39;: [(&#39;v2&#39;, (14, 3))]}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+<div class="viewcode-block" id="FordFulkerson.__init__"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_ford_fulkerson.FordFulkerson.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">the_graph</span><span class="p">,</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">the_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_flows</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="FordFulkerson.search_augmenting_path_and_remaining_capacity_by_bfs"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_ford_fulkerson.FordFulkerson.search_augmenting_path_and_remaining_capacity_by_bfs">[文档]</a>    <span class="k">def</span> <span class="nf">search_augmenting_path_and_remaining_capacity_by_bfs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">residual_network</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;广度优先搜索</span>
+<span class="sd">        </span>
+<span class="sd">        利用广度优先搜索残存网络中搜索指定结点，如果找到了则生成出对应路径作为增广路径，并找出增广路径上的残存容量，并返回。</span>
+<span class="sd">        </span>
+<span class="sd">        如果没有找到，则返回空的路径，对应残存容量将设为0并返回</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            residual_network: 残存网络</span>
+<span class="sd">            source:  源节点</span>
+<span class="sd">            target: 汇点</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            augmenting_path (list), remaining_capacity (number)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">paths_info</span> <span class="o">=</span> <span class="p">{</span><span class="n">source</span><span class="p">:</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">inf</span><span class="p">)}</span>
+        <span class="n">discoverd</span> <span class="o">=</span> <span class="p">{</span><span class="n">source</span><span class="p">}</span>
+        <span class="n">queue</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="p">]</span>
+        <span class="n">queue_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">queue_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">vertex</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">queue_size</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">next_vert</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_uv</span><span class="p">)</span> <span class="ow">in</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">vertex</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">next_vert</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                    <span class="n">paths_info</span><span class="p">[</span><span class="n">next_vert</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">c_uv</span><span class="o">-</span><span class="n">f_uv</span><span class="p">)</span>
+                    <span class="n">queue_size</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">next_vert</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">discoverd</span><span class="p">:</span>
+                    <span class="n">discoverd</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">next_vert</span><span class="p">)</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_vert</span><span class="p">)</span>
+                    <span class="n">queue_size</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">paths_info</span><span class="p">[</span><span class="n">next_vert</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">c_uv</span><span class="o">-</span><span class="n">f_uv</span><span class="p">)</span>
+            
+        <span class="k">if</span> <span class="n">target</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">paths_info</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[],</span> <span class="mi">0</span>
+        
+        <span class="n">path</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">remaining_capacity</span> <span class="o">=</span> <span class="n">inf</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">pre</span><span class="p">,</span> <span class="n">r_f_uv</span> <span class="o">=</span> <span class="n">paths_info</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
+            <span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">remaining_capacity</span> <span class="o">&gt;</span> <span class="n">r_f_uv</span><span class="p">:</span>
+                <span class="n">remaining_capacity</span> <span class="o">=</span> <span class="n">r_f_uv</span>
+            <span class="k">if</span> <span class="n">pre</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">pre</span>
+        <span class="k">return</span> <span class="n">path</span><span class="p">,</span> <span class="n">remaining_capacity</span></div>
+    
+<div class="viewcode-block" id="FordFulkerson.compute"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_ford_fulkerson.FordFulkerson.compute">[文档]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;计算并更新残存网络，得出最大流值</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">residual_network</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># 初始化残存网络，边上除了存储结点外，还存储的数据为(边上总的流量限制, 已经使用了的流量)</span>
+        <span class="c1"># 如果是反向边，那么第二个元素则表示，剩余可以向正向边增添的流量限额</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_uv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+        
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># 每次使用bfs对残存网络进行搜索，查找增广路径，以及增广路径上的最大残存容量</span>
+            <span class="n">augmenting_path</span><span class="p">,</span> <span class="n">remaining_capacity</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">search_augmenting_path_and_remaining_capacity_by_bfs</span><span class="p">(</span><span class="n">residual_network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+                
+            <span class="c1"># 当不存在增广路径时，则结束循环</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">augmenting_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            
+            <span class="c1"># 如果找到了增广路径，那么新找到的增广路径对残存网络进行更新</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">augmenting_path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">u</span> <span class="o">=</span> <span class="n">augmenting_path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">augmenting_path</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">forward_edge_index</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 路径上边(u,v)所在的索引位置</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">:</span>
+                        <span class="n">forward_edge_index</span> <span class="o">=</span> <span class="n">j</span>
+                        <span class="k">break</span>
+                <span class="n">c_uv</span> <span class="o">=</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">forward_edge_index</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                
+                <span class="n">backward_edge_index</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1"># 路径上边(v,u)所在的索引位置</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">])):</span>
+                    <span class="k">if</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">k</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">u</span><span class="p">:</span>
+                        <span class="n">backward_edge_index</span> <span class="o">=</span> <span class="n">k</span>
+                        <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>    <span class="c1"># 反向边有可能不存在，因此若不存在，则对其进行初始化</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">c_uv</span><span class="p">)))</span>    <span class="c1"># 反向边默认可以返回的流量正好等于边(u,v)的容量限制</span>
+                    <span class="n">backward_edge_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+                
+                <span class="n">f_uv</span> <span class="o">=</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">forward_edge_index</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">remaining_capacity</span>
+                <span class="n">f_vu</span> <span class="o">=</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">backward_edge_index</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">remaining_capacity</span>
+                <span class="k">if</span> <span class="n">f_uv</span> <span class="o">==</span> <span class="n">c_uv</span><span class="p">:</span>
+                    <span class="c1"># 当原网络中边(u,v)没有剩余流量了，那么残存网络中就只剩下反向边(v,u)了</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">backward_edge_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">forward_edge_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_uv</span><span class="p">))</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">backward_edge_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_vu</span><span class="p">))</span>
+        
+        <span class="c1"># 计算最大流的值</span>
+        <span class="n">max_flows</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">residual_network</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">]:</span>
+            <span class="n">max_flows</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_flows</span> <span class="o">=</span> <span class="n">max_flows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span> <span class="o">=</span> <span class="n">residual_network</span></div></div>
+
+                    
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>
