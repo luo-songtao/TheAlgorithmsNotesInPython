@@ -4,7 +4,7 @@
 # Email: ryomawithlst@gmail/outlook.com
 
 
-def dfs(graph):
+def dfs(graph, source, target):
     """深度优先搜索
     
     实现中不仅记录了顶点的发现顺序；还记录了顶点的探索完成顺序
@@ -15,8 +15,11 @@ def dfs(graph):
     """
     discoverd = []
     finished = []
-    for start_vertex in graph.keys():
-        dfs_recusion(graph, start_vertex, discoverd, finished)
+    dfs_recusion(graph, source, discoverd, finished)
+    for vertex in graph.keys():
+        if vertex == source:
+            continue
+        dfs_recusion(graph, vertex, discoverd, finished)
     return discoverd, finished
 
 
@@ -78,7 +81,7 @@ if __name__ == '__main__':
         "u": ["t", "v"]
     }
     
-    for v in dfs(the_graph):
+    for v in dfs(the_graph, "s"):
         print(v, end=" ")
     print()
     

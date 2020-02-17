@@ -51,13 +51,16 @@ class AbstracteSingleSourcePaths:
                 yield from self.generate_ssp(self.vertex_info[t]["prev"])
             yield t
     
+    def get_shortest_weight(self, v):
+        return self.vertex_info[v]["distance"]
+    
     def show(self):
         """打印每一条SSP
         """
         for v in self.graph.keys():
             if self.vertex_info[v]["prev"] != None:
                 print(self.source+" ->", " -> ".join(self.generate_ssp(v)), end=", ")
-                print("weights: ", self.vertex_info[v]["distance"])
+                print("weights: ", self.get_shortest_weight(v))
 
     def compute(self):
         """计算SSP

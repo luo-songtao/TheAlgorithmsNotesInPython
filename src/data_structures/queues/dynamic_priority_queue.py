@@ -41,13 +41,30 @@ class DynamicPriorityQueue(BaseQueue):
         self.items.insert(0, item)
         self.min_heapify(self.items, 0, len(self.items), self.without_data)
     
-    def get(self, resort=False):
-        if resort:
+    def get(self, rebuild=False):
+        """
+        
+        默认情况下，该方法的运行时间是:  :math:`O(\lg n)`
+        
+        但如果开启rebuild，那么该方法的运行时间时 :math:`O(n\lg n)`。
+        
+        当提供函数类型权重，且提供给函数的参数是外部的可变类型变量，而且在随时发生变动，那么为了在调用时获得实时的最小值，应当开启rebuild方式，但这样会增加程序运行时间。
+        """
+        if rebuild is True:
             self.build_min_heap(self.items, self.without_data)
-        return self.items.pop(0)
+            return self.items.pop(0)
+        else:
+            self.items[0], self.items[-1] = self.items[-1], self.items[0]
+            min_item = self.items.pop()
+            if not self.empty:
+                self.min_heapify(self.items, 0, len(self.items), self.without_data)
+            return min_item
 
     def empty(self):
-        return True if len(self.items) == 0 else False
+        return True if self.size() == 0 else False
+    
+    def size(self):
+        return len(self.items)
     
     def min_heapify(self, array: list, index: int, heap_size: int, without_data=True):
         """最小堆堆化处理，维护最小堆的性质
@@ -90,9 +107,9 @@ class DynamicPriorityQueue(BaseQueue):
         if smallest_index != index:     # 如果父节点不是最小的，那么与对应最小的子节点交换位置，并继续递归判断下一级
             array[index], array[smallest_index] = array[smallest_index], array[index]
             self.min_heapify(array, smallest_index, heap_size, without_data)
-        
-if __name__ == '__main__':
 
+
+if __name__ == '__main__':
     import doctest
     doctest.testmod()
     
