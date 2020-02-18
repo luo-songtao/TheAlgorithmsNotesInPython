@@ -1,0 +1,7 @@
+version: '3'
+services:
+  python-dev-service:
+    build: .
+    image: python-dev
+    ports:
+      - 8888:8888
