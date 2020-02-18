@@ -156,16 +156,16 @@
   <div class="section" id="id1">
 <h1>流网络最大流问题<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="section" id="module-graphs.flow_network_ford_fulkerson">
-<span id="ford-fulkerson"></span><h2>基本Ford-Fulkerson方法<a class="headerlink" href="#module-graphs.flow_network_ford_fulkerson" title="永久链接至标题">¶</a></h2>
+<span id="ford-fulkerson"></span><h2>Ford-Fulkerson方法<a class="headerlink" href="#module-graphs.flow_network_ford_fulkerson" title="永久链接至标题">¶</a></h2>
 <dl class="class">
 <dt id="graphs.flow_network_ford_fulkerson.FordFulkerson">
-<em class="property">class </em><code class="sig-prename descclassname">graphs.flow_network_ford_fulkerson.</code><code class="sig-name descname">FordFulkerson</code><span class="sig-paren">(</span><em class="sig-param">the_graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson" title="永久链接至目标">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">graphs.flow_network_ford_fulkerson.</code><code class="sig-name descname">FordFulkerson</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson" title="永久链接至目标">¶</a></dt>
 <dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>最大流Ford-Fulderson方法</p>
 <dl>
 <dt>Ford-Fulderson方法依赖于三种重要思想：</dt><dd><ul class="simple">
 <li><p>残存网络: 对于给定流网络 <span class="math notranslate nohighlight">\(G\)</span> 和流量 <span class="math notranslate nohighlight">\(f\)</span> ，残存网络 <span class="math notranslate nohighlight">\(G_f\)</span> 指由那些网络中仍然有剩余空间对流量进行调整的边构成的网络。 <span class="math notranslate nohighlight">\(c_f(u,v) = c(u,v) 0 f(u,v) &gt; 0\)</span></p></li>
-<li><p>增广路径: 指残存网络中一条从源节点到汇点的简单路径 <span class="math notranslate nohighlight">\(p\)</span>，该路径存在一个残存容量 <span class="math notranslate nohighlight">\(c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace\)</span></p></li>
+<li><p>增广路径: 指残存网络中一条从源节点到汇点的简单路径 <span class="math notranslate nohighlight">\(p\)</span> ，该路径存在一个残存容量 <span class="math notranslate nohighlight">\(c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace\)</span></p></li>
 <li><p>切割: 流网络 <span class="math notranslate nohighlight">\(G=(V,E)\)</span> 的一个切割 <span class="math notranslate nohighlight">\((S, T)\)</span> 将结点集合V划分为S和T=V-S两个集合，且有两个概念：净流量 <span class="math notranslate nohighlight">\(f(S,T)\)</span> 和切割容量 <span class="math notranslate nohighlight">\(c(S,T)\)</span></p></li>
 </ul>
 <div class="math notranslate nohighlight">
@@ -216,7 +216,7 @@ c(S,T) &amp;= \sum_{u\in S}\sum_{v\in T} c(u,v)\end{split}\]</div>
 </div>
 <dl class="method">
 <dt id="graphs.flow_network_ford_fulkerson.FordFulkerson.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">the_graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson.__init__" title="永久链接至目标">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson.__init__" title="永久链接至目标">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -243,6 +243,95 @@ c(S,T) &amp;= \sum_{u\in S}\sum_{v\in T} c(u,v)\end{split}\]</div>
 <dt id="graphs.flow_network_ford_fulkerson.FordFulkerson.compute">
 <code class="sig-name descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_ford_fulkerson.html#FordFulkerson.compute"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_ford_fulkerson.FordFulkerson.compute" title="永久链接至目标">¶</a></dt>
 <dd><p>计算并更新残存网络，得出最大流值</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-graphs.flow_network_push_relabel">
+<span id="push-relabel"></span><h2>Push-Relabel算法<a class="headerlink" href="#module-graphs.flow_network_push_relabel" title="永久链接至标题">¶</a></h2>
+<dl class="class">
+<dt id="graphs.flow_network_push_relabel.PushRelabel">
+<em class="property">class </em><code class="sig-prename descclassname">graphs.flow_network_push_relabel.</code><code class="sig-name descname">PushRelabel</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_push_relabel.html#PushRelabel"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_push_relabel.PushRelabel" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>最大流算法-Push-Relabel算法</p>
+<p>最大流算法的最快实现都是基于Push-Relabel算法，同时它也能有效解决其他流问题，如最小成本流问题。</p>
+<p>Push-Relabel算法比Ford-Fulkerson方法局域性更强。因为它不是对整个残存网络进行检查，然后选择一条增广路径，
+而是一个结点一个结点地进行查看，每一步只检查当前结点的邻结点。且执行过程中，Push-Relabel算法并不保持流量守恒性质。
+并维持一个preflow，它是一个VxV到R的一个函数f,该函数满足以下容量限制性质。
+对于所有的 <span class="math notranslate nohighlight">\(u \in V-\{ s \}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\sum_{v\in V}f(v,u) - \sum_{v \in V}f(u,v) \ge 0\]</div>
+<p>也就是进入一个结点的流可以大于流出该结点的流：</p>
+<div class="math notranslate nohighlight">
+\[e(u) = \sum_{v\in V}f(v,u) - \sum_{v \in V}f(u,v)\]</div>
+<p>称为进入结点u的超额流(excess flow)。一个结点的超额流是进入该结点的流超过流出该结点的流的部分。
+如果对于 <span class="math notranslate nohighlight">\(u \in V-\{ s, t \}\)</span> ,有 <span class="math notranslate nohighlight">\(e(u)&gt;0\)</span> ,则称结点u溢出(overflowing)</p>
+<dl class="simple">
+<dt>因此对于每一个结点 <span class="math notranslate nohighlight">\(u \in V-\{ s, t \}\)</span> ：</dt><dd><ul class="simple">
+<li><p>为了容纳额外的流，每个结点都有一个可以容纳超额流的地方</p></li>
+<li><p>每个结点都有一个高度，一开始默认为0，且会随着算法推进而增加。对于s和t结点，高度始终是 :math:<a href="#id2"><span class="problematic" id="id3">`</span></a>vert V vert`和0。</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">示例</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">the_graph</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: [(&#39;v1&#39;, 16), (&#39;v2&#39;, 13)],</span>
+<span class="go"> &#39;t&#39;: [],</span>
+<span class="go"> &#39;v1&#39;: [(&#39;v3&#39;, 12)],</span>
+<span class="go"> &#39;v2&#39;: [(&#39;v1&#39;, 4), (&#39;v4&#39;, 14)],</span>
+<span class="go"> &#39;v3&#39;: [(&#39;v2&#39;, 9), (&#39;t&#39;, 20)],</span>
+<span class="go"> &#39;v4&#39;: [(&#39;v3&#39;, 7), (&#39;t&#39;, 4)]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">push_relabel</span> <span class="o">=</span> <span class="n">PushRelabel</span><span class="p">(</span><span class="n">the_graph</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">push_relabel</span><span class="o">.</span><span class="n">max_flows</span>
+<span class="go">23</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">push_relabel</span><span class="o">.</span><span class="n">residual_network</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: [],</span>
+<span class="go"> &#39;t&#39;: [(&#39;v3&#39;, (20, 1)), (&#39;v4&#39;, (4, 0))],</span>
+<span class="go"> &#39;v1&#39;: [(&#39;s&#39;, (16, 0))],</span>
+<span class="go"> &#39;v2&#39;: [(&#39;s&#39;, (13, 0)), (&#39;v1&#39;, (4, 0)), (&#39;v4&#39;, (14, 11))],</span>
+<span class="go"> &#39;v3&#39;: [(&#39;v2&#39;, (9, 0)), (&#39;t&#39;, (20, 19)), (&#39;v1&#39;, (12, 0)), (&#39;v4&#39;, (7, 0))],</span>
+<span class="go"> &#39;v4&#39;: [(&#39;v2&#39;, (14, 3))]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">push_relabel</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">)</span>
+<span class="go">{&#39;s&#39;: {&#39;e&#39;: -23, &#39;h&#39;: 6},</span>
+<span class="go"> &#39;t&#39;: {&#39;e&#39;: 23, &#39;h&#39;: 0},</span>
+<span class="go"> &#39;v1&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 7},</span>
+<span class="go"> &#39;v2&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 7},</span>
+<span class="go"> &#39;v3&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 1},</span>
+<span class="go"> &#39;v4&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 6}}</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="graphs.flow_network_push_relabel.PushRelabel.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">graph</em>, <em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_push_relabel.html#PushRelabel.__init__"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_push_relabel.PushRelabel.__init__" title="永久链接至目标">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.flow_network_push_relabel.PushRelabel.initialize_preflow">
+<code class="sig-name descname">initialize_preflow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_push_relabel.html#PushRelabel.initialize_preflow"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_push_relabel.PushRelabel.initialize_preflow" title="永久链接至目标">¶</a></dt>
+<dd><p>初始化预流</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.flow_network_push_relabel.PushRelabel.push">
+<code class="sig-name descname">push</code><span class="sig-paren">(</span><em class="sig-param">the_u</em>, <em class="sig-param">the_v</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_push_relabel.html#PushRelabel.push"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_push_relabel.PushRelabel.push" title="永久链接至目标">¶</a></dt>
+<dd><p>push flow操作</p>
+<p>该方法调用时：u处于overflowing，且残存网络中(u,v)边还有剩余容量，并且u.h = v.h + 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.flow_network_push_relabel.PushRelabel.relabel">
+<code class="sig-name descname">relabel</code><span class="sig-paren">(</span><em class="sig-param">u</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_push_relabel.html#PushRelabel.relabel"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_push_relabel.PushRelabel.relabel" title="永久链接至目标">¶</a></dt>
+<dd><p>relabel操作(重新调整结点高度)</p>
+<p>该方法调用时：u需要处于overflowing，且对于所有的v in V，残存网络中存在边(u,v)，且u.h &lt;= v.h</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="graphs.flow_network_push_relabel.PushRelabel.compute">
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graphs/flow_network_push_relabel.html#PushRelabel.compute"><span class="viewcode-link">[源代码]</span></a><a class="headerlink" href="#graphs.flow_network_push_relabel.PushRelabel.compute" title="永久链接至目标">¶</a></dt>
+<dd><p>Push-Relabel算法主逻辑</p>
 </dd></dl>
 
 </dd></dl>

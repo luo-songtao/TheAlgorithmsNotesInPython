@@ -174,7 +174,7 @@
 <span class="sd">    </span>
 <span class="sd">    Ford-Fulderson方法依赖于三种重要思想：</span>
 <span class="sd">        - 残存网络: 对于给定流网络 :math:`G` 和流量 :math:`f` ，残存网络 :math:`G_f` 指由那些网络中仍然有剩余空间对流量进行调整的边构成的网络。 :math:`c_f(u,v) = c(u,v) 0 f(u,v) &gt; 0` </span>
-<span class="sd">        - 增广路径: 指残存网络中一条从源节点到汇点的简单路径 :math:`p`，该路径存在一个残存容量 :math:`c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace`</span>
+<span class="sd">        - 增广路径: 指残存网络中一条从源节点到汇点的简单路径 :math:`p` ，该路径存在一个残存容量 :math:`c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace`</span>
 <span class="sd">        - 切割: 流网络 :math:`G=(V,E)` 的一个切割 :math:`(S, T)` 将结点集合V划分为S和T=V-S两个集合，且有两个概念：净流量 :math:`f(S,T)` 和切割容量 :math:`c(S,T)`</span>
 <span class="sd">        </span>
 <span class="sd">        .. math::</span>
@@ -219,10 +219,10 @@
 <span class="sd">         &#39;v4&#39;: [(&#39;v2&#39;, (14, 3))]}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-<div class="viewcode-block" id="FordFulkerson.__init__"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_ford_fulkerson.FordFulkerson.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">the_graph</span><span class="p">,</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<div class="viewcode-block" id="FordFulkerson.__init__"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_ford_fulkerson.FordFulkerson.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">the_graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">s</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
         
@@ -293,7 +293,7 @@
             <span class="c1"># 每次使用bfs对残存网络进行搜索，查找增广路径，以及增广路径上的最大残存容量</span>
             <span class="n">augmenting_path</span><span class="p">,</span> <span class="n">remaining_capacity</span> <span class="o">=</span> \
                 <span class="bp">self</span><span class="o">.</span><span class="n">search_augmenting_path_and_remaining_capacity_by_bfs</span><span class="p">(</span><span class="n">residual_network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
-                
+            
             <span class="c1"># 当不存在增广路径时，则结束循环</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">augmenting_path</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
@@ -315,23 +315,23 @@
                         <span class="n">backward_edge_index</span> <span class="o">=</span> <span class="n">k</span>
                         <span class="k">break</span>
                 <span class="k">else</span><span class="p">:</span>    <span class="c1"># 反向边有可能不存在，因此若不存在，则对其进行初始化</span>
-                    <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">c_uv</span><span class="p">)))</span>    <span class="c1"># 反向边默认可以返回的流量正好等于边(u,v)的容量限制</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">c_uv</span><span class="p">)))</span>    <span class="c1"># 反向边一开始设置可以返给正向边的流量正好等于边(u,v)的容量限制</span>
                     <span class="n">backward_edge_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
                 
                 <span class="n">f_uv</span> <span class="o">=</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">forward_edge_index</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">remaining_capacity</span>
                 <span class="n">f_vu</span> <span class="o">=</span> <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">backward_edge_index</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">remaining_capacity</span>
                 <span class="k">if</span> <span class="n">f_uv</span> <span class="o">==</span> <span class="n">c_uv</span><span class="p">:</span>
                     <span class="c1"># 当原网络中边(u,v)没有剩余流量了，那么残存网络中就只剩下反向边(v,u)了</span>
-                    <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">forward_edge_index</span><span class="p">)</span>
                     <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">backward_edge_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">forward_edge_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_uv</span><span class="p">))</span>
                     <span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="n">backward_edge_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_vu</span><span class="p">))</span>
-        
+
         <span class="c1"># 计算最大流的值</span>
         <span class="n">max_flows</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">residual_network</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">]:</span>
-            <span class="n">max_flows</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">residual_network</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">]:</span>
+            <span class="n">max_flows</span> <span class="o">+=</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">max_flows</span> <span class="o">=</span> <span class="n">max_flows</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span> <span class="o">=</span> <span class="n">residual_network</span></div></div>

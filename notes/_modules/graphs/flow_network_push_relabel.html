@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html  lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>graphs.flow_network_push_relabel</title>
+    
+      <link rel="stylesheet" href="../../_static/pygments.css">
+      <link rel="stylesheet" href="../../_static/theme.css">
+      <link rel="stylesheet" href="../../_static/romnnn_sphinx_press_theme.css">
+      
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+
+      <!-- sphinx script_files -->
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/translations.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+      
+      <script src="../../_static/theme-vendors.js"></script>
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="索引" href="../../genindex.html" />
+  <link rel="search" title="搜索" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app" class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <div class="home-link-container">
+      <router-link to="../../index.html" class="home-link">
+      
+        <span class="site-name">TheAlgorithmsNotesInPython</span>
+    </router-link>
+  </div>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">搜索</span>
+    <div class="searchformwrapper">
+      <form autocomplete="off" class="search" action="../../search.html" method="get">
+        <input type="text" name="q" autocomplete="off" />
+        <input type="submit" value="转向" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#welcome-to-the-algorithms-in-python-s-documentation">Contents:</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 "><a href="../../rst/sort/modules.html" class="reference internal ">基本排序算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/data_structures/modules.html" class="reference internal ">基础数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/hashes/modules.html" class="reference internal ">哈希算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/high_level_data_structures/modules.html" class="reference internal ">高级数据结构</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/divide_and_conquer/modules.html" class="reference internal ">分治法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/greedy_algorithm/modules.html" class="reference internal ">贪心算法</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/dynamic_programming/modules.html" class="reference internal ">动态规划</a>
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 "><a href="../../rst/graphs/modules.html" class="reference internal ">图算法</a>
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">模块代码</a> &raquo;</li>
+    
+    <li>graphs.flow_network_push_relabel</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main">
+            
+  <h1>graphs.flow_network_push_relabel 源代码</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="c1"># Author: Luo-Songtao</span>
+<span class="c1"># Email: ryomawithlst@gmail/outlook.com</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">inf</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="n">the_graph</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;v2&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">)],</span>
+    <span class="s2">&quot;v1&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v3&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">)],</span>
+    <span class="s2">&quot;v2&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v1&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;v4&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">)],</span>
+    <span class="s2">&quot;v3&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v2&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)],</span>
+    <span class="s2">&quot;v4&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;v3&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)],</span>
+    <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="PushRelabel"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_push_relabel.PushRelabel">[文档]</a><span class="k">class</span> <span class="nc">PushRelabel</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;最大流算法-Push-Relabel算法</span>
+<span class="sd">    </span>
+<span class="sd">    最大流算法的最快实现都是基于Push-Relabel算法，同时它也能有效解决其他流问题，如最小成本流问题。</span>
+<span class="sd">    </span>
+<span class="sd">    Push-Relabel算法比Ford-Fulkerson方法局域性更强。因为它不是对整个残存网络进行检查，然后选择一条增广路径，</span>
+<span class="sd">    而是一个结点一个结点地进行查看，每一步只检查当前结点的邻结点。且执行过程中，Push-Relabel算法并不保持流量守恒性质。</span>
+<span class="sd">    并维持一个preflow，它是一个VxV到R的一个函数f,该函数满足以下容量限制性质。</span>
+<span class="sd">    对于所有的 :math:`u \in V-\{ s \}`</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: \sum_{v\in V}f(v,u) - \sum_{v \in V}f(u,v) \ge 0</span>
+<span class="sd">    </span>
+<span class="sd">    也就是进入一个结点的流可以大于流出该结点的流：</span>
+<span class="sd">    </span>
+<span class="sd">    .. math:: e(u) = \sum_{v\in V}f(v,u) - \sum_{v \in V}f(u,v)</span>
+<span class="sd">    </span>
+<span class="sd">    称为进入结点u的超额流(excess flow)。一个结点的超额流是进入该结点的流超过流出该结点的流的部分。</span>
+<span class="sd">    如果对于 :math:`u \in V-\{ s, t \}` ,有 :math:`e(u)&gt;0` ,则称结点u溢出(overflowing)</span>
+
+<span class="sd">    因此对于每一个结点 :math:`u \in V-\{ s, t \}` ：</span>
+<span class="sd">        - 为了容纳额外的流，每个结点都有一个可以容纳超额流的地方</span>
+<span class="sd">        - 每个结点都有一个高度，一开始默认为0，且会随着算法推进而增加。对于s和t结点，高度始终是 :math:`\vert V \vert`和0。</span>
+<span class="sd">    </span>
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">        &gt;&gt;&gt; pprint(the_graph)</span>
+<span class="sd">        {&#39;s&#39;: [(&#39;v1&#39;, 16), (&#39;v2&#39;, 13)],</span>
+<span class="sd">         &#39;t&#39;: [],</span>
+<span class="sd">         &#39;v1&#39;: [(&#39;v3&#39;, 12)],</span>
+<span class="sd">         &#39;v2&#39;: [(&#39;v1&#39;, 4), (&#39;v4&#39;, 14)],</span>
+<span class="sd">         &#39;v3&#39;: [(&#39;v2&#39;, 9), (&#39;t&#39;, 20)],</span>
+<span class="sd">         &#39;v4&#39;: [(&#39;v3&#39;, 7), (&#39;t&#39;, 4)]}</span>
+<span class="sd">        &gt;&gt;&gt; push_relabel = PushRelabel(the_graph, &quot;s&quot;, &quot;t&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; push_relabel.max_flows</span>
+<span class="sd">        23</span>
+<span class="sd">        &gt;&gt;&gt; pprint(push_relabel.residual_network)</span>
+<span class="sd">        {&#39;s&#39;: [],</span>
+<span class="sd">         &#39;t&#39;: [(&#39;v3&#39;, (20, 1)), (&#39;v4&#39;, (4, 0))],</span>
+<span class="sd">         &#39;v1&#39;: [(&#39;s&#39;, (16, 0))],</span>
+<span class="sd">         &#39;v2&#39;: [(&#39;s&#39;, (13, 0)), (&#39;v1&#39;, (4, 0)), (&#39;v4&#39;, (14, 11))],</span>
+<span class="sd">         &#39;v3&#39;: [(&#39;v2&#39;, (9, 0)), (&#39;t&#39;, (20, 19)), (&#39;v1&#39;, (12, 0)), (&#39;v4&#39;, (7, 0))],</span>
+<span class="sd">         &#39;v4&#39;: [(&#39;v2&#39;, (14, 3))]}</span>
+<span class="sd">        &gt;&gt;&gt; pprint(push_relabel.vertex_info)</span>
+<span class="sd">        {&#39;s&#39;: {&#39;e&#39;: -23, &#39;h&#39;: 6},</span>
+<span class="sd">         &#39;t&#39;: {&#39;e&#39;: 23, &#39;h&#39;: 0},</span>
+<span class="sd">         &#39;v1&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 7},</span>
+<span class="sd">         &#39;v2&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 7},</span>
+<span class="sd">         &#39;v3&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 1},</span>
+<span class="sd">         &#39;v4&#39;: {&#39;e&#39;: 0, &#39;h&#39;: 6}}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PushRelabel.__init__"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_push_relabel.PushRelabel.__init__">[文档]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">t</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_flows</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span></div>
+        
+<div class="viewcode-block" id="PushRelabel.initialize_preflow"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_push_relabel.PushRelabel.initialize_preflow">[文档]</a>    <span class="k">def</span> <span class="nf">initialize_preflow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化预流</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="c1"># 将所有结点的超额流和高度都初始化为0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;h&quot;</span><span class="p">:</span> <span class="mi">0</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">u</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_uv</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">:</span>    
+                    <span class="c1"># 设置了预流后，等同于从源节点预先推送了与其相邻边的容量大小的流，</span>
+                    <span class="c1"># 因此它的超流是所有与其相邻边的容量大小的流的和的相反数</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="n">c_uv</span>
+                    <span class="c1"># 同时由于边(s,v)已经饱和，所以不能将边(s,v)加入到残存网络，但需要将其反向边加入到网络</span>
+                    <span class="c1"># 并把反向边的流设为0，因为原始边处于饱和了</span>
+                    <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">))]</span>    <span class="c1"># 反向边</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># 其余所有原始边依次加入搭配残存网络中</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+        <span class="c1"># 将源结点高度设为结点的数|V|</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
+        <span class="c1"># 将与源结点相邻的所有结点的超额流设置为c(s,v)</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">c_uv</span> <span class="ow">in</span>  <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">s</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_uv</span></div>
+
+<div class="viewcode-block" id="PushRelabel.push"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_push_relabel.PushRelabel.push">[文档]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">the_u</span><span class="p">,</span> <span class="n">the_v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;push flow操作</span>
+<span class="sd">        </span>
+<span class="sd">        该方法调用时：u处于overflowing，且残存网络中(u,v)边还有剩余容量，并且u.h = v.h + 1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">delta_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">[</span><span class="n">the_u</span><span class="p">]:</span>  
+            <span class="c1"># 如果残存边(u,v)是原始边，那么将进行正向增流  </span>
+            <span class="k">if</span> <span class="n">the_v</span> <span class="o">==</span> <span class="n">v</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">])):</span>
+                    <span class="c1"># (u,v)必定存在，此处判断的目的只是为了确认v的位置,</span>
+                    <span class="c1"># 并且由于已经确认了位置，那么将在最后break出这一层for循环</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">v</span><span class="p">:</span>
+                        <span class="n">c_uv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">delta_f</span> <span class="o">&gt;</span> <span class="n">c_uv</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">delta_f</span> <span class="o">=</span> <span class="n">c_uv</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="c1"># 对残存网络中的原始边增流</span>
+                        <span class="n">f_uv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">delta_f</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_uv</span><span class="p">))</span>
+                        
+                        <span class="c1"># 对原始边的反向边减流</span>
+                        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">])):</span>
+                            <span class="n">b_u</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">f_vu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="k">if</span> <span class="n">b_u</span> <span class="o">==</span> <span class="n">the_u</span><span class="p">:</span>    <span class="c1"># 判断当前原始边的反向边是否在残存网络中，如果在，那么直接减流</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">the_u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">f_vu</span><span class="o">-</span><span class="n">delta_f</span><span class="p">))</span>
+                                <span class="k">break</span>
+                        <span class="k">else</span><span class="p">:</span>    <span class="c1"># 如果没有，那么就要添加一条，并将反向边默认的流先设为边的容量限额，再减流</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">the_u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_uv</span><span class="p">,</span> <span class="n">c_uv</span><span class="o">-</span><span class="n">delta_f</span><span class="p">)))</span>
+                        <span class="k">break</span>
+                <span class="k">break</span>    <span class="c1"># 因为已经确认当前残存边是一条原始边，因此必须break，这样后面的else代码块的代码才会跳过</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 如果for循环中没有触发break，那么说明当前残存边是一条原始边的反向边，所以进行逆向增流</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">])):</span>
+                <span class="c1"># (v,u)必定存在，此处判断的目的只是为了确认u的位置</span>
+                <span class="c1"># 并且由于已经确认了位置，那么将在最后break出这一层for循环</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">the_u</span><span class="p">:</span>
+                    <span class="n">c_vu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">delta_f</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">delta_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                    
+                    <span class="c1"># 将反向边的流减少</span>
+                    <span class="n">f_vu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">delta_f</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">the_u</span><span class="p">,</span> <span class="p">(</span><span class="n">c_vu</span><span class="p">,</span> <span class="n">f_vu</span><span class="p">))</span>
+                    
+                    <span class="c1"># 将反向边的原始边的流增加</span>
+                    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">])):</span>
+                        <span class="n">b_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">f_uv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">b_v</span> <span class="o">==</span> <span class="n">the_v</span><span class="p">:</span>    <span class="c1"># 判断当前反向边的原始边是否还在残存网络中，如果在，那么直接增加</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">the_v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_vu</span><span class="p">,</span> <span class="n">f_uv</span><span class="o">+</span><span class="n">delta_f</span><span class="p">))</span>
+                            <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>    <span class="c1"># 否则意味着当前反向边的原始边已经被删掉了，那么重新添加新的</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">the_u</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">the_v</span><span class="p">,</span> <span class="p">(</span><span class="n">c_vu</span><span class="p">,</span> <span class="n">delta_f</span><span class="p">)))</span>
+                    <span class="k">break</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">the_u</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="n">delta_f</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">the_v</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">delta_f</span></div>
+        
+<div class="viewcode-block" id="PushRelabel.relabel"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_push_relabel.PushRelabel.relabel">[文档]</a>    <span class="k">def</span> <span class="nf">relabel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;relabel操作(重新调整结点高度)</span>
+<span class="sd">        </span>
+<span class="sd">        该方法调用时：u需要处于overflowing，且对于所有的v in V，残存网络中存在边(u,v)，且u.h &lt;= v.h</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">min_h</span> <span class="o">=</span> <span class="n">inf</span>
+        <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">min_h</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]:</span>
+                <span class="n">min_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_h</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="PushRelabel.compute"><a class="viewcode-back" href="../../rst/graphs/flow_network.html#graphs.flow_network_push_relabel.PushRelabel.compute">[文档]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Push-Relabel算法主逻辑</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialize_preflow</span><span class="p">()</span>
+        
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">s</span> <span class="ow">or</span> <span class="n">u</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="c1"># 当结点超额流&gt;0时才进行push和relabel操作</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">])):</span>
+                        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">c_uv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">f_uv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="c1"># 重打标签调整高度 u</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">relabel</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+                        <span class="c1"># 推流 u -&gt; v</span>
+                        <span class="k">if</span> <span class="n">c_uv</span> <span class="o">-</span> <span class="n">f_uv</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="n">v</span><span class="p">][</span><span class="s2">&quot;h&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+                            <span class="c1"># 判断推流后，边(u,v)是否达到饱和状态，如果是，那么需要从残存网络删掉它</span>
+                            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">residual_network</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                                <span class="k">break</span>
+                    <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_flows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_info</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">][</span><span class="s2">&quot;e&quot;</span><span class="p">]</span></div></div>
+    
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; 版权所有 2020, luo-songtao.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1 with <a href="https://github.com/romnnn/sphinx_press_theme">Press Theme</a>.
+</div>
+            </div>
+          </div>
+      </page>
+    </div>
+    
+    
+  </body>
+</html>
