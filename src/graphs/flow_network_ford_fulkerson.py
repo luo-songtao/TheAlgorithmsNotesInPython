@@ -23,7 +23,7 @@ class FordFulkerson:
     
     Ford-Fulderson方法依赖于三种重要思想：
         - 残存网络: 对于给定流网络 :math:`G` 和流量 :math:`f` ，残存网络 :math:`G_f` 指由那些网络中仍然有剩余空间对流量进行调整的边构成的网络。 :math:`c_f(u,v) = c(u,v) 0 f(u,v) > 0` 
-        - 增广路径: 指残存网络中一条从源节点到汇点的简单路径 :math:`p`，该路径存在一个残存容量 :math:`c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace`
+        - 增广路径: 指残存网络中一条从源节点到汇点的简单路径 :math:`p` ，该路径存在一个残存容量 :math:`c_f(p) = \min \lbrace c_f(u,v): (u,v) \in p \rbrace`
         - 切割: 流网络 :math:`G=(V,E)` 的一个切割 :math:`(S, T)` 将结点集合V划分为S和T=V-S两个集合，且有两个概念：净流量 :math:`f(S,T)` 和切割容量 :math:`c(S,T)`
         
         .. math::
@@ -68,10 +68,10 @@ class FordFulkerson:
          'v4': [('v2', (14, 3))]}
     """
     
-    def __init__(self, the_graph,s, t):
+    def __init__(self, graph, s, t):
         """
         """
-        self.graph = the_graph
+        self.graph = graph
         self.s = s
         self.t = t
         
@@ -142,7 +142,7 @@ class FordFulkerson:
             # 每次使用bfs对残存网络进行搜索，查找增广路径，以及增广路径上的最大残存容量
             augmenting_path, remaining_capacity = \
                 self.search_augmenting_path_and_remaining_capacity_by_bfs(residual_network, self.s, self.t)
-                
+            
             # 当不存在增广路径时，则结束循环
             if len(augmenting_path) == 0:
                 break
@@ -164,23 +164,23 @@ class FordFulkerson:
                         backward_edge_index = k
                         break
                 else:    # 反向边有可能不存在，因此若不存在，则对其进行初始化
-                    residual_network[v].append((u, (c_uv, c_uv)))    # 反向边默认可以返回的流量正好等于边(u,v)的容量限制
+                    residual_network[v].append((u, (c_uv, c_uv)))    # 反向边一开始设置可以返给正向边的流量正好等于边(u,v)的容量限制
                     backward_edge_index = len(residual_network[v])-1
                 
                 f_uv = residual_network[u][forward_edge_index][1][1] + remaining_capacity
                 f_vu = residual_network[v][backward_edge_index][1][1] - remaining_capacity
                 if f_uv == c_uv:
                     # 当原网络中边(u,v)没有剩余流量了，那么残存网络中就只剩下反向边(v,u)了
-                    residual_network[u].pop(j)
+                    residual_network[u].pop(forward_edge_index)
                     residual_network[v][backward_edge_index] = (u, (c_uv, 0))
                 else:
                     residual_network[u][forward_edge_index] = (v, (c_uv, f_uv))
                     residual_network[v][backward_edge_index] = (u, (c_uv, f_vu))
-        
+
         # 计算最大流的值
         max_flows = 0
-        for v in residual_network[self.s]:
-            max_flows += v[1][1]
+        for v in residual_network[self.t]:
+            max_flows += v[1][0] - v[1][1]
         
         self.max_flows = max_flows
         self.residual_network = residual_network
